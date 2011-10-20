@@ -19,13 +19,14 @@ public class NuNeGoeieClient {
 
     private static MulticastSocket socket;
     private static InetAddress group;
+    private static InetAddress ownAdress;
     private static DatagramPacket packet;
+    private static String eigenIp;
 
     public static void main(String[] args) {
         sendBroadcast();
         while (true) {
             receiveAnswer();
-            sendBroadcast();
         }
     }
 
@@ -35,11 +36,13 @@ public class NuNeGoeieClient {
             group = InetAddress.getByName("230.0.0.1");
             socket.joinGroup(group);
 
-
+            ownAdress = InetAddress.getLocalHost();
+            eigenIp = "/"+ ownAdress.getHostAddress().toString();
             byte[] buf = new byte[256];
-            String message = "broadcastrequest";
+            String message = eigenIp;
             buf = message.getBytes();
             packet = new DatagramPacket(buf, buf.length, group, 4446);
+            
 
             socket.send(packet);
             System.out.println("sent");
@@ -57,6 +60,8 @@ public class NuNeGoeieClient {
         }
 
         String received = new String(packet.getData(), 0, packet.getLength());
-        System.out.println(received + "from " + packet.getAddress().toString());
+        if(!received.equals(eigenIp))
+            System.out.println("eigen ip adres wordt teruggezonden");
+        System.out.println(received + " from " + packet.getAddress().toString());
     }
 }
