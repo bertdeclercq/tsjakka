@@ -23,8 +23,10 @@ public class NuNeGoeieClient {
 
     public static void main(String[] args) {
         sendBroadcast();
-        while(true)
-        receiveAnswer();
+        while (true) {
+            receiveAnswer();
+            sendBroadcast();
+        }
     }
 
     public static void sendBroadcast() {
