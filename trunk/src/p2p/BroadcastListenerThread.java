@@ -19,7 +19,6 @@ import java.util.logging.Logger;
  */
 public class BroadcastListenerThread implements Runnable {
 
-    private UserMapThread userMapThread = new UserMapThread();
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
     private String ownIp;
@@ -42,10 +41,9 @@ public class BroadcastListenerThread implements Runnable {
                 String inPcname = inMessage.nextToken();
                 if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
+                    P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
                 }
-                userMapThread.addToUserMap(inIpaddress, inPcname);
-                Thread t = new Thread(userMapThread);
-                t.start();
+                P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
             } while (true);
         } catch (IOException ex) {
             Logger.getLogger(BroadcastListenerThread.class.getName()).log(Level.SEVERE, null, ex);
