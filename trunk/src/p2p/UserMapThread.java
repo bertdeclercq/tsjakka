@@ -31,13 +31,13 @@ public class UserMapThread implements Runnable {
                 if (!ip.isReachable(200)) {
                     userMap.remove(ip);
                 }
-                printUserMap();
-                
+                 
             } catch (IOException ex) {
                 Logger.getLogger(UserMapThread.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }
+        printUserMap();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
@@ -47,7 +47,6 @@ public class UserMapThread implements Runnable {
     }
     
     public void printUserMap(){
-        System.out.println("jimmy isn en dikken klootzak");
         for(Map.Entry<InetAddress, String> anEntry : userMap.entrySet()){
  			InetAddress ip = anEntry.getKey();
                         String pcname = anEntry.getValue();
