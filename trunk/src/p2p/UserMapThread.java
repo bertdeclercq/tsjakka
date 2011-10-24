@@ -25,11 +25,13 @@ public class UserMapThread implements Runnable {
 
     @Override
     public void run() {
+        do{
         for (InetAddress ip : userMap.keySet()) {
             try {
                 if (!ip.isReachable(200)) {
                     userMap.remove(ip);
                 }
+                printUserMap();
                 
             } catch (IOException ex) {
                 Logger.getLogger(UserMapThread.class.getName()).log(Level.SEVERE, null, ex);
@@ -41,9 +43,11 @@ public class UserMapThread implements Runnable {
         } catch (InterruptedException ex) {
             Logger.getLogger(UserMapThread.class.getName()).log(Level.SEVERE, null, ex);
         }
+        }while(true);
     }
     
     public void printUserMap(){
+        System.out.println("jimmy isn en dikken klootzak");
         for(Map.Entry<InetAddress, String> anEntry : userMap.entrySet()){
  			InetAddress ip = anEntry.getKey();
                         String pcname = anEntry.getValue();
