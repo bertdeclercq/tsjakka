@@ -38,7 +38,6 @@ public class UsersListThread implements Runnable {
                 ownIp = InetAddress.getLocalHost().getHostAddress().toString();
                 String broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
                 StringTokenizer inMessage = new StringTokenizer(broadcastMessage, "*");
-
                 if (inMessage.nextToken().equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
                 }

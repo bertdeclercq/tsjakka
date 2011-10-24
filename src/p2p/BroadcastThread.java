@@ -37,7 +37,7 @@ public class BroadcastThread implements Runnable {
                 String OwnAddress = ownIp.getHostAddress().toString();
                 String ownHostname = ownIp.getHostName();
                 byte[] buf = new byte[256];
-                String message = OwnAddress + " * " + ownHostname;
+                String message = OwnAddress + "*" + ownHostname;
                 buf = message.getBytes();
                 multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
                 multiSocket.send(multiPacket);
