@@ -17,15 +17,12 @@ import java.util.logging.Logger;
  */
 public class UserMapThread implements Runnable {
 
-    private Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
-
-    public void addToUserMap(InetAddress inIp, String inPcname) {
-        userMap.put(inIp, inPcname);
-    }
+    private Map<InetAddress, String> userMap;
 
     @Override
     public void run() {
         do{
+            userMap = P2Pclient.getInstance().getUserMap();
         for (InetAddress ip : userMap.keySet()) {
             try {
                 if (!ip.isReachable(200)) {
@@ -37,21 +34,12 @@ public class UserMapThread implements Runnable {
             }
             
         }
-        printUserMap();
+        P2Pclient.getInstance().printUserMap();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
             Logger.getLogger(UserMapThread.class.getName()).log(Level.SEVERE, null, ex);
         }
         }while(true);
-    }
-    
-    public void printUserMap(){
-        for(Map.Entry<InetAddress, String> anEntry : userMap.entrySet()){
- 			InetAddress ip = anEntry.getKey();
-                        String pcname = anEntry.getValue();
- 			System.out.println(pcname +": "+ ip);
- 		}
-
     }
 }
