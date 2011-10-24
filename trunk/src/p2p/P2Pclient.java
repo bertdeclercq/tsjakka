@@ -12,12 +12,16 @@ import java.util.concurrent.Executors;
  * @author Joachim
  */
 public class P2Pclient {
+    private static UserMapThread userMapThread = new UserMapThread();
 
     public static void main(String[] args) {
+        
         ExecutorService threadExecutor =
-                Executors.newFixedThreadPool(2);
+                Executors.newFixedThreadPool(3);
         
         threadExecutor.execute(new BroadcastThread());
+        threadExecutor.execute(userMapThread);
         threadExecutor.execute(new BroadcastListenerThread());
+        userMapThread.printUserMap();
     }
 }

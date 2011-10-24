@@ -19,10 +19,10 @@ import java.util.logging.Logger;
  */
 public class BroadcastListenerThread implements Runnable {
 
+    private UserMapThread userMapThread = new UserMapThread();
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
     private String ownIp;
-    private Map<Integer, InetAddress> usersList;
 
     @Override
     public void run() {
@@ -37,10 +37,13 @@ public class BroadcastListenerThread implements Runnable {
                 ownIp = InetAddress.getLocalHost().getHostAddress().toString();
                 String broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
                 StringTokenizer inMessage = new StringTokenizer(broadcastMessage, "*");
-                if (inMessage.nextToken().equals(ownIp)) {
+                String inIp = inMessage.nextToken();
+                InetAddress inIpaddress = InetAddress.getByName(inIp);
+                String inPcname = inMessage.nextToken();
+                if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
                 }
-                System.out.println(inMessage.nextToken());
+                userMapThread.addToUserMap(inIpaddress, inPcname);
                 System.out.println(broadcastMessage + " from " + multiPacket.getAddress().toString());
             } while (true);
         } catch (IOException ex) {
