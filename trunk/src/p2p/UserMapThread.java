@@ -21,11 +21,11 @@ public class UserMapThread implements Runnable {
 
     @Override
     public void run() {
+        userMap = P2Pclient.getInstance().getUserMap();
         do{
-            userMap = P2Pclient.getInstance().getUserMap();
         for (InetAddress ip : userMap.keySet()) {
             try {
-                if (!ip.isReachable(200)) {
+                if (!ip.isReachable(2000)) {
                     userMap.remove(ip);
                 }
                  
