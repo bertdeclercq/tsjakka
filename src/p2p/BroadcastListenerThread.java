@@ -42,10 +42,10 @@ public class BroadcastListenerThread implements Runnable {
                 String inPcname = inMessage.nextToken();
                 if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
-                    userMapThread.addToUserMap(inIpaddress, inPcname);
                 }
                 userMapThread.addToUserMap(inIpaddress, inPcname);
-                System.out.println(broadcastMessage + " from " + multiPacket.getAddress().toString());
+                Thread t = new Thread(userMapThread);
+                t.start();
             } while (true);
         } catch (IOException ex) {
             Logger.getLogger(BroadcastListenerThread.class.getName()).log(Level.SEVERE, null, ex);
