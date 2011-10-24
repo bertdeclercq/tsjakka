@@ -18,6 +18,6 @@ public class P2Pclient {
                 Executors.newFixedThreadPool(2);
         
         threadExecutor.execute(new BroadcastThread());
-        threadExecutor.execute(new UsersListThread());
+        threadExecutor.execute(new BroadcastListenerThread());
     }
 }

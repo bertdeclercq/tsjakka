@@ -6,7 +6,6 @@ package p2p;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.Map;
@@ -18,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Joachim
  */
-public class UsersListThread implements Runnable {
+public class BroadcastListenerThread implements Runnable {
 
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
@@ -45,7 +44,7 @@ public class UsersListThread implements Runnable {
                 System.out.println(broadcastMessage + " from " + multiPacket.getAddress().toString());
             } while (true);
         } catch (IOException ex) {
-            Logger.getLogger(UsersListThread.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BroadcastListenerThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
