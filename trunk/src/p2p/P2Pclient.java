@@ -5,6 +5,7 @@
 package p2p;
 
 import java.net.InetAddress;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -16,7 +17,7 @@ import java.util.concurrent.Executors;
  */
 public class P2Pclient {
     
-    private static Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
+    private static Map<InetAddress,String> userMap = Collections.synchronizedMap(new HashMap<InetAddress,String>());
     private static P2Pclient instance;
     
     public static P2Pclient getInstance(){
