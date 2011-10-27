@@ -42,7 +42,9 @@ public class BroadcastListenerThread implements Runnable {
                 if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
                 }
+                else{
                 P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
+                }
             } while (true);
         } catch (IOException ex) {
             Logger.getLogger(BroadcastListenerThread.class.getName()).log(Level.SEVERE, null, ex);

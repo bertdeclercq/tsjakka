@@ -3,7 +3,9 @@ package p2p;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,16 +29,15 @@ public class UserMapThread implements Runnable {
     public void run() {
         userMap = P2Pclient.getInstance().getUserMap();
         do {
-            for (InetAddress ip : userMap.keySet()) {
+            Set ipSet = userMap.keySet();
+            Iterator it = ipSet.iterator(); 
+            while(it.hasNext()){
                 try {
-                    if (!ip.isReachable(2000)) {
-                        userMap.remove(ip);
-                    }
-
+                    if(!((InetAddress)it.next()).isReachable(10000))
+                        it.remove();
                 } catch (IOException ex) {
                     Logger.getLogger(UserMapThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
             P2Pclient.getInstance().printUserMap();
             try {
