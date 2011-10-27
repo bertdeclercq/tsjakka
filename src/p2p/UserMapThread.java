@@ -29,7 +29,7 @@ public class UserMapThread implements Runnable {
     public void run() {
         userMap = P2Pclient.getInstance().getUserMap();
         do {
-            Set ipSet = userMap.keySet();
+            /*Set ipSet = userMap.keySet();
             Iterator it = ipSet.iterator(); 
             while(it.hasNext()){
                 try {
@@ -38,7 +38,7 @@ public class UserMapThread implements Runnable {
                 } catch (IOException ex) {
                     Logger.getLogger(UserMapThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+            }*/
             P2Pclient.getInstance().printUserMap();
             try {
                 Thread.sleep(2000);
