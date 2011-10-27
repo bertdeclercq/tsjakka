@@ -4,7 +4,9 @@
  */
 package p2p;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -27,8 +29,10 @@ public class BroadcastThread implements Runnable {
      */
     @Override
     public void run() {
+        BufferedReader userEntry =new BufferedReader(new InputStreamReader(System.in));
         try {
             do {
+                String userMessage = userEntry.readLine();
                 multiSocket = new MulticastSocket(4446);
                 multiGroup = InetAddress.getByName("230.0.0.1");
                 multiSocket.joinGroup(multiGroup);
@@ -36,7 +40,7 @@ public class BroadcastThread implements Runnable {
                 String OwnAddress = ownIp.getHostAddress().toString();
                 String ownHostname = ownIp.getHostName();
                 byte[] buf = new byte[256];
-                String message = OwnAddress + "*" + ownHostname;
+                String message = OwnAddress + "*" + ownHostname + "*" + userMessage;
                 buf = message.getBytes();
                 multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
                 multiSocket.send(multiPacket);

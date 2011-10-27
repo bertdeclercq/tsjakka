@@ -39,12 +39,15 @@ public class BroadcastListenerThread implements Runnable {
                 String inIp = inMessage.nextToken();
                 InetAddress inIpaddress = InetAddress.getByName(inIp);
                 String inPcname = inMessage.nextToken();
+                String inChoice = inMessage.nextToken();
                 if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
-                    P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
                 }
-                else{
+                if(inChoice.equals("ben er")){
                 P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
+                }
+                if(inChoice.equals("ben weg")){
+                    P2Pclient.getInstance().getUserMap().remove(inIpaddress);
                 }
             } while (true);
         } catch (IOException ex) {
