@@ -15,14 +15,19 @@ public class Message implements Serializable {
     
     private String tag, typeObject;
     private Object content;
-    private InetAddress ownAddress;
+    private String ownAddress, hostName;
     private boolean onlineMessage = false, signOutMessage = false;
     
     private static String ONLINE = "<online>",
                           SIGNOUT = "<signout>";
 
-//    public Message(String tag, InetAdress ownAddress, String hostName, ) {
-//    }
+    public Message(String tag, String ownAddress, String hostName, Object content) {
+        this.tag = tag;
+        this.ownAddress = ownAddress;
+        this.hostName = hostName;
+        this.content = content;
+        typeObject = content.getClass().getName();
+    }
     
 
     public Message(String tag) {
@@ -82,8 +87,24 @@ public class Message implements Serializable {
     public void setContent(Object content) {
         this.content = content;
     }
+
+    public String getHostName() {
+        return hostName;
+    }
+
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
+
+    public String getOwnAddress() {
+        return ownAddress;
+    }
+
+    public void setOwnAddress(String ownAddress) {
+        this.ownAddress = ownAddress;
+    }
     
-    
+     
     
     
     
