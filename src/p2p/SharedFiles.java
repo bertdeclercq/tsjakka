@@ -49,6 +49,8 @@ public class SharedFiles {
         if (!sharedList.isEmpty())
             sharedList.clear();
         File dir = new File(strDir);
+        if (!dir.exists())
+            dir.mkdirs();
         FilenameFilter filter = new FilenameFilter() {
 
             @Override
