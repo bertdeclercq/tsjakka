@@ -10,6 +10,8 @@
  */
 package view;
 
+import p2p.UserTableModel;
+
 /**
  *
  * @author Jimmy
@@ -19,6 +21,7 @@ public class HoofdFrame extends javax.swing.JFrame {
     /** Creates new form HoofdFrame */
     public HoofdFrame() {
         initComponents();
+        setTableModel();
     }
 
     /** This method is called from within the constructor to
@@ -264,4 +267,9 @@ public class HoofdFrame extends javax.swing.JFrame {
     private javax.swing.JList userList;
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
+
+        private void setTableModel() {
+        jTable1.setModel(new UserTableModel());
+    }
+
 }

@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,11 +27,10 @@ public class BroadcastListener implements Runnable {
     private String ownIp, inIp, broadcastMessage, inPcname, inChoice;
     //private String[] messageTags;;
     private InetAddress multiGroup, inIpaddress;
-    private List<String> sharedList;
+    private Map<InetAddress, ArrayList<String>> sharedMap;
 
     @Override
     public void run() {
-        sharedList = new ArrayList<String>();
         try {
             multiGroup = InetAddress.getByName("230.0.0.1");
            // buf = new byte[256];
