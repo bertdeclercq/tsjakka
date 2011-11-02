@@ -30,7 +30,13 @@ public class UserTableModel extends AbstractTableModel implements Observer {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         //TODO Implementeren
-        throw new UnsupportedOperationException("Not supported yet.");
+        switch (columnIndex)
+        {
+            case 0 : return "case0";
+            case 1 : return "case1";
+            case 2 : return "case2";
+        }
+        return null;
     }
 
     @Override
