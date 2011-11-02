@@ -66,7 +66,7 @@ public class P2Pclient {
         String outMessage;
         try {
             dgramSocket = new DatagramSocket();
-            outMessage = ("CEE kan nie mee OLé OLé!!!");
+            outMessage = ("Joachim en Jimmy stinken, neih neih");
             outPacket = new DatagramPacket(outMessage.getBytes(), outMessage.length(), InetAddress.getLocalHost(), PORT);
             dgramSocket.send(outPacket);
         } catch (IOException ex) {
