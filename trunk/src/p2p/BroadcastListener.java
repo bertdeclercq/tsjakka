@@ -32,22 +32,26 @@ public class BroadcastListener implements Runnable {
     public void run() {
         try {
             multiGroup = InetAddress.getByName("230.0.0.1");
-            buf = new byte[256];
-            multiPacket = new DatagramPacket(buf, buf.length);
+           // buf = new byte[256];
+          //  multiPacket = new DatagramPacket(buf, buf.length);
             multiSocket = new MulticastSocket(4446);
             ownIp = InetAddress.getLocalHost().getHostAddress().toString();
             Message message = null;
             do {
                 multiSocket.joinGroup(multiGroup);
+                byte[] buffer = new byte[65535];
+                ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
+                multiPacket = new DatagramPacket(buffer, buffer.length);
                 multiSocket.receive(multiPacket);
-                //
-                String incomingWord = new String(multiPacket.getData());
-                System.out.println(incomingWord);
-                byte[] incomingBytes = incomingWord.getBytes();
-                ByteArrayInputStream bais = new ByteArrayInputStream(incomingBytes);
                 ObjectInputStream ois = new ObjectInputStream(bais);
                 try {
-                    message = (Message) ois.readObject();
+                    Object o = ois.readObject();
+                    multiPacket.setLength(buffer.length);
+                    bais.reset();
+                    message = (Message) o;
+                    System.out.println(message.getContent());
+                    ois.close();
+    //            try {
     //                broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
     //                messageTags = broadcastMessage.split("[*]");
     //                inIp = messageTags[0];
@@ -64,11 +68,10 @@ public class BroadcastListener implements Runnable {
     //                if (message.isSignOutMessage()) {
     //                }
     //                }
+                    
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(BroadcastListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                ois.close();
-                System.out.println(message.getContent());
             } while (true);
         } catch (IOException ex) {
             Logger.getLogger(BroadcastListener.class.getName()).log(Level.SEVERE, null, ex);
