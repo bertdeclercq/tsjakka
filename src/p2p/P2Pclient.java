@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -39,7 +38,7 @@ public class P2Pclient {
         threadExecutor.execute(new DownloadRequestListener());
         threadExecutor.execute(new Broadcaster());
         threadExecutor.execute(new BroadcastListener());
-        
+        sendDownloadRequest();
         
     }
 
@@ -60,18 +59,21 @@ public class P2Pclient {
 
     }
 
-    public void sendDownloadRequest() {
-        int PORT = 1234;
-        DatagramSocket dgramSocket;
+    public static void sendDownloadRequest() {
+        int PORT = 1237;
+        DatagramSocket dgramSocket = null;
         DatagramPacket outPacket;
         String outMessage;
         try {
-            dgramSocket = new DatagramSocket(PORT);
-            outMessage = ("test");
-            outPacket = new DatagramPacket(outMessage.getBytes(), outMessage.length(), DownloadRequestListener.getClientAddress(), PORT);
+            dgramSocket = new DatagramSocket();
+            outMessage = ("CEE kan nie mee OLé OLé!!!");
+            outPacket = new DatagramPacket(outMessage.getBytes(), outMessage.length(), InetAddress.getLocalHost(), PORT);
             dgramSocket.send(outPacket);
         } catch (IOException ex) {
             Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            dgramSocket.close();
         }
     }
 }

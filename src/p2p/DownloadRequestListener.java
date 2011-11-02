@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class DownloadRequestListener implements Runnable {
 
-    private static final int PORT = 1234;
+    private static final int PORT = 1237;
     private static DatagramSocket dgramSocket;
     private static DatagramPacket inPacket, outPacket;
     private static byte[] buffer;
@@ -37,12 +37,15 @@ public class DownloadRequestListener implements Runnable {
                 buffer = new byte[256];
                 inPacket = new DatagramPacket(buffer, buffer.length);
                 dgramSocket.receive(inPacket);
-                 clientAddress = inPacket.getAddress();
+                clientAddress = inPacket.getAddress();
                 messageIn = new String(inPacket.getData(), 0, inPacket.getLength());
-                System.out.println("Message received.");
+                System.out.println(messageIn);
             } while (true);
         } catch (IOException ex) {
             Logger.getLogger(DownloadRequestListener.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+        finally{
+            dgramSocket.close();
+        }
+    } 
 }
