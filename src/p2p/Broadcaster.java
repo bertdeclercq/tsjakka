@@ -55,5 +55,21 @@ public class Broadcaster implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(Broadcaster.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+    }
+    
+    public void sendOnlineMessage()
+    {
+        
+    }
+    
+    public void sendSignoutMessage()
+    {
+        
+    }
+    
+    public void sendSharedFileList()
+    {
+        
     }
 }
