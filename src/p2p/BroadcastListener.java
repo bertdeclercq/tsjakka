@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Joachim
  */
-public class BroadcastListenerThread implements Runnable {
+public class BroadcastListener implements Runnable {
 
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
@@ -23,7 +25,6 @@ public class BroadcastListenerThread implements Runnable {
     private String[] messageTags;
     private byte[] buf;
     private InetAddress multiGroup, inIpaddress;
-    private Message message;
 
     @Override
     public void run() {
@@ -45,21 +46,15 @@ public class BroadcastListenerThread implements Runnable {
                 if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
                 }
-                message = new Message(inChoice);
-                
-                if (message.isOnlineMessage()) {
+                if (inChoice.equals("ben er")) {
                     P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
                 }
-                if (message.isSignOutMessage()) {
+                if (inChoice.equals("ben weg")) {
                     P2Pclient.getInstance().getUserMap().remove(inIpaddress);
                 }
             } while (true);
         } catch (IOException ex) {
-            Logger.getLogger(BroadcastListenerThread.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
-            multiSocket.close();
+            Logger.getLogger(BroadcastListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
