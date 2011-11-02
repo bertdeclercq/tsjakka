@@ -46,6 +46,8 @@ public class SharedFiles {
     }
 
     private static void findShared(String strDir) {
+        if (!sharedList.isEmpty())
+            sharedList.clear();
         File dir = new File(strDir);
         FilenameFilter filter = new FilenameFilter() {
 
