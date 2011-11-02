@@ -29,6 +29,9 @@ public class Message implements Serializable {
         typeObject = content.getClass().getName();
     }
     
+    public Message() {
+        
+    }
 
     public Message(String tag) {
         this.tag = tag;
