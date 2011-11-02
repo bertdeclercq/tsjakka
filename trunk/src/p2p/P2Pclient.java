@@ -67,35 +67,7 @@ public class P2Pclient {
         try {
             dgramSocket = new DatagramSocket();
             outMessage = ("Bert Olé Olé");
-            outPack
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    et = new DatagramPacket(outMessage.getBytes(), outMessage.length(), InetAddress.getLocalHost(), PORT);
+            outPacket = new DatagramPacket(outMessage.getBytes(), outMessage.length(), InetAddress.getLocalHost(), PORT);
             dgramSocket.send(outPacket);
         } catch (IOException ex) {
             Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
