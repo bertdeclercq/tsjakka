@@ -21,32 +21,35 @@ public class BroadcastListenerThread implements Runnable {
 
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
-    private String ownIp;
+    private String ownIp, inIp, broadcastMessage, inPcname, inChoice;
+    private String[] messageTags;
+    private byte[] buf;
+    private InetAddress multiGroup, inIpaddress;
 
     @Override
     public void run() {
         try {
+            multiGroup = InetAddress.getByName("230.0.0.1");
+            buf = new byte[256];
+            multiPacket = new DatagramPacket(buf, buf.length);
+            multiSocket = new MulticastSocket(4446);
+            ownIp = InetAddress.getLocalHost().getHostAddress().toString();
             do {
-                InetAddress multiGroup = InetAddress.getByName("230.0.0.1");
-                byte[] buf = new byte[256];
-                multiPacket = new DatagramPacket(buf, buf.length);
-                multiSocket = new MulticastSocket(4446);
                 multiSocket.joinGroup(multiGroup);
-                multiSocket.receive(multiPacket);
-                ownIp = InetAddress.getLocalHost().getHostAddress().toString();
-                String broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
-                StringTokenizer inMessage = new StringTokenizer(broadcastMessage, "*");
-                String inIp = inMessage.nextToken();
-                InetAddress inIpaddress = InetAddress.getByName(inIp);
-                String inPcname = inMessage.nextToken();
-                String inChoice = inMessage.nextToken();
+                multiSocket.receive(multiPacket); 
+                broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
+                messageTags = broadcastMessage.split("[*]");
+                inIp = messageTags[0];
+                inIpaddress = InetAddress.getByName(inIp);
+                inPcname = messageTags[1];
+                inChoice = messageTags[2];
                 if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
                 }
-                if(inChoice.equals("ben er")){
-                P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
+                if (inChoice.equals("ben er")) {
+                    P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
                 }
-                if(inChoice.equals("ben weg")){
+                if (inChoice.equals("ben weg")) {
                     P2Pclient.getInstance().getUserMap().remove(inIpaddress);
                 }
             } while (true);
