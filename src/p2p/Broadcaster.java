@@ -5,9 +5,12 @@
 package p2p;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -40,7 +43,13 @@ public class Broadcaster implements Runnable {
                 byte[] buf = new byte[256];
                 //String content = OwnAddress + "*" + ownHostname;
                 //buf = message.getBytes();
-                message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedList());
+                ByteArrayOutputStream b_out = new ByteArrayOutputStream();
+                ObjectOutputStream o_out = new ObjectOutputStream(b_out);
+                               
+                message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedList());           
+                o_out.writeObject(message);
+                
+                buf = b_out.toByteArray();
                 multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
                 multiSocket.send(multiPacket);
                 System.out.println("sent");
