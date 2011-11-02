@@ -4,7 +4,9 @@
  */
 package p2p;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
@@ -25,7 +27,6 @@ public class BroadcastListener implements Runnable {
     private String[] messageTags;
     private byte[] buf;
     private InetAddress multiGroup, inIpaddress;
-    private Message message;
 
     @Override
     public void run() {
@@ -35,25 +36,39 @@ public class BroadcastListener implements Runnable {
             multiPacket = new DatagramPacket(buf, buf.length);
             multiSocket = new MulticastSocket(4446);
             ownIp = InetAddress.getLocalHost().getHostAddress().toString();
+            Message message = null;
             do {
                 multiSocket.joinGroup(multiGroup);
                 multiSocket.receive(multiPacket);
-                broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
-                messageTags = broadcastMessage.split("[*]");
-                inIp = messageTags[0];
-                inIpaddress = InetAddress.getByName(inIp);
-                inPcname = messageTags[1];
-                inChoice = messageTags[2];
-                if (inIp.equals(ownIp)) {
-                    System.out.println("eigen broadcast ontvangen");
+                //
+                String incomingWord = new String(multiPacket.getData());
+                System.out.println(incomingWord);
+                byte[] incomingBytes = incomingWord.getBytes();
+                ByteArrayInputStream bais = new ByteArrayInputStream(incomingBytes);
+                ObjectInputStream ois = new ObjectInputStream(bais);
+                try {
+                    message = (Message) ois.readObject();
+    //                broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
+    //                messageTags = broadcastMessage.split("[*]");
+    //                inIp = messageTags[0];
+    //                inIpaddress = InetAddress.getByName(inIp);
+    //                inPcname = messageTags[1];
+    //                inChoice = messageTags[2];
+    //                if (inIp.equals(ownIp)) {
+    //                    System.out.println("eigen broadcast ontvangen");
+    //                }
+    //                message = new Message(inChoice);
+    //                if (message.isOnlineMessage()) {
+    //                    P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
+    //                }
+    //                if (message.isSignOutMessage()) {
+    //                }
+    //                }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(BroadcastListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                message = new Message(inChoice);
-                if (message.isOnlineMessage()) {
-                    P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
-                }
-                if (message.isSignOutMessage()) {
-                    P2Pclient.getInstance().getUserMap().remove(inIpaddress);
-                }
+                ois.close();
+                System.out.println(message.getContent());
             } while (true);
         } catch (IOException ex) {
             Logger.getLogger(BroadcastListener.class.getName()).log(Level.SEVERE, null, ex);
