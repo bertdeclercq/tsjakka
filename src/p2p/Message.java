@@ -5,6 +5,7 @@
 package p2p;
 
 import java.io.Serializable;
+import java.net.InetAddress;
 
 /**
  *
@@ -14,10 +15,15 @@ public class Message implements Serializable {
     
     private String tag, typeObject;
     private Object content;
+    private InetAddress ownAddress;
     private boolean onlineMessage = false, signOutMessage = false;
     
     private static String ONLINE = "<online>",
                           SIGNOUT = "<signout>";
+
+//    public Message(String tag, InetAdress ownAddress, String hostName, ) {
+//    }
+    
 
     public Message(String tag) {
         this.tag = tag;
@@ -69,12 +75,12 @@ public class Message implements Serializable {
         return typeObject;
     }
 
-    public Object getObject() {
+    public Object getContent() {
         return content;
     }
 
-    public void setObject(Object object) {
-        this.content = object;
+    public void setContent(Object content) {
+        this.content = content;
     }
     
     
