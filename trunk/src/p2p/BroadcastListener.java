@@ -37,8 +37,8 @@ public class BroadcastListener implements Runnable {
             multiSocket = new MulticastSocket(4446);
             ownIp = InetAddress.getLocalHost().getHostAddress().toString();
             Message message = null;
-            do {
-                multiSocket.joinGroup(multiGroup);
+            multiSocket.joinGroup(multiGroup);
+            do {              
                 byte[] buffer = new byte[65535];
                 ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
                 multiPacket = new DatagramPacket(buffer, buffer.length);

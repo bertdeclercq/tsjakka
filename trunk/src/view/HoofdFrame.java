@@ -51,10 +51,10 @@ public class HoofdFrame extends javax.swing.JFrame {
         leftPanel.setBackground(new java.awt.Color(204, 204, 204));
         leftPanel.setPreferredSize(new java.awt.Dimension(174, 495));
 
-        welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
         welcomeLabel.setText("Welcome, 'username'");
 
-        availableLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        availableLabel.setFont(new java.awt.Font("Tahoma", 0, 12));
         availableLabel.setText("available users:");
 
         userList.setBackground(new java.awt.Color(204, 204, 204));
@@ -121,7 +121,7 @@ public class HoofdFrame extends javax.swing.JFrame {
                 .addComponent(downloadButton)
                 .addContainerGap(235, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(478, Short.MAX_VALUE)
+                .addContainerGap(488, Short.MAX_VALUE)
                 .addComponent(toggleLog)
                 .addContainerGap())
         );
@@ -180,7 +180,7 @@ public class HoofdFrame extends javax.swing.JFrame {
             .addGroup(ContentPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         ContentPanelLayout.setVerticalGroup(
             ContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

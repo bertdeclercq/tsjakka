@@ -34,8 +34,8 @@ public class Broadcaster implements Runnable {
             multiGroup = InetAddress.getByName("230.0.0.1");
             ownIp = InetAddress.getLocalHost();
             Message message;
+            multiSocket.joinGroup(multiGroup);
             do {
-                multiSocket.joinGroup(multiGroup);
                 byte[] buf = new byte[65535];
                 //String content = OwnAddress + "*" + ownHostname;
                 //buf = message.getBytes();
