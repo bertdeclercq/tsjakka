@@ -31,10 +31,13 @@ public class SharedFiles {
     }
 
     public List<String> getSharedList() {
+        updateSharedList();
         return sharedList;
     }
     
     public static void updateSharedList() {
+        if (!sharedList.isEmpty())
+            sharedList.clear();
         try {
             FileInputStream in = new FileInputStream(CONFIG_FILE);
             properties.load(in);
@@ -46,8 +49,6 @@ public class SharedFiles {
     }
 
     private static void findShared(String strDir) {
-        if (!sharedList.isEmpty())
-            sharedList.clear();
         File dir = new File(strDir);
         if (!dir.exists())
             dir.mkdirs();
