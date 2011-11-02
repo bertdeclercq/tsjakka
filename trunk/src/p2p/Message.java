@@ -13,10 +13,9 @@ import java.io.Serializable;
 public class Message implements Serializable {
     
     private String tag;
-    private boolean onlineMessage = false, onlineTooMessage = false, signOutMessage = false;
+    private boolean onlineMessage = false, signOutMessage = false;
     
     private static String ONLINE = "<online>",
-                          ONLINETOO = "<online2>",
                           SIGNOUT = "<signout>";
     
     
@@ -29,8 +28,6 @@ public class Message implements Serializable {
     {
         if(tag.equalsIgnoreCase(ONLINE))
             setOnlineMessage(true);
-        if(tag.equalsIgnoreCase(ONLINETOO))
-            setOnlineTooMessage(true);
         if(tag.equalsIgnoreCase(SIGNOUT))
             setSignOutMessage(true);
     }
@@ -41,14 +38,6 @@ public class Message implements Serializable {
 
     public void setOnlineMessage(boolean onlineMessage) {
         this.onlineMessage = onlineMessage;
-    }
-
-    public boolean isOnlineTooMessage() {
-        return onlineTooMessage;
-    }
-
-    public void setOnlineTooMessage(boolean onlineTooMessage) {
-        this.onlineTooMessage = onlineTooMessage;
     }
 
     public boolean isSignOutMessage() {
