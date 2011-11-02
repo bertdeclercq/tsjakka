@@ -25,6 +25,7 @@ public class BroadcastListener implements Runnable {
     private String[] messageTags;
     private byte[] buf;
     private InetAddress multiGroup, inIpaddress;
+    private Message message;
 
     @Override
     public void run() {
@@ -46,10 +47,11 @@ public class BroadcastListener implements Runnable {
                 if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
                 }
-                if (inChoice.equals("ben er")) {
+                message = new Message(inChoice);
+                if (message.isOnlineMessage()) {
                     P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
                 }
-                if (inChoice.equals("ben weg")) {
+                if (message.isSignOutMessage()) {
                     P2Pclient.getInstance().getUserMap().remove(inIpaddress);
                 }
             } while (true);
