@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.util.Map;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +23,7 @@ public class BroadcastListenerThread implements Runnable {
     private String[] messageTags;
     private byte[] buf;
     private InetAddress multiGroup, inIpaddress;
+    private Message message;
 
     @Override
     public void run() {
@@ -46,15 +45,21 @@ public class BroadcastListenerThread implements Runnable {
                 if (inIp.equals(ownIp)) {
                     System.out.println("eigen broadcast ontvangen");
                 }
-                if (inChoice.equals("ben er")) {
+                message = new Message(inChoice);
+                
+                if (message.isOnlineMessage()) {
                     P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
                 }
-                if (inChoice.equals("ben weg")) {
+                if (message.isSignOutMessage()) {
                     P2Pclient.getInstance().getUserMap().remove(inIpaddress);
                 }
             } while (true);
         } catch (IOException ex) {
             Logger.getLogger(BroadcastListenerThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            multiSocket.close();
         }
     }
 }
