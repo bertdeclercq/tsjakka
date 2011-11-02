@@ -29,23 +29,23 @@ public class BroadcastThread implements Runnable {
      */
     @Override
     public void run() {
-        BufferedReader userEntry =new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader userEntry = new BufferedReader(new InputStreamReader(System.in));
         try {
+            multiSocket = new MulticastSocket(4446);
+            multiGroup = InetAddress.getByName("230.0.0.1");
+            ownIp = InetAddress.getLocalHost();
+            String OwnAddress = ownIp.getHostAddress().toString();
+            String ownHostname = ownIp.getHostName();
             do {
                 String userMessage = userEntry.readLine();
-                multiSocket = new MulticastSocket(4446);
-                multiGroup = InetAddress.getByName("230.0.0.1");
                 multiSocket.joinGroup(multiGroup);
-                ownIp = InetAddress.getLocalHost();
-                String OwnAddress = ownIp.getHostAddress().toString();
-                String ownHostname = ownIp.getHostName();
                 byte[] buf = new byte[256];
                 String message = OwnAddress + "*" + ownHostname + "*" + userMessage;
                 buf = message.getBytes();
                 multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
                 multiSocket.send(multiPacket);
                 System.out.println("sent");
-                Thread.sleep(10000);
+                Thread.sleep(8000);
             } while (true);
         } catch (InterruptedException ex) {
             Logger.getLogger(BroadcastThread.class.getName()).log(Level.SEVERE, null, ex);
