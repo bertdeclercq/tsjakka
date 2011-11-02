@@ -37,7 +37,7 @@ public class BroadcastListener implements Runnable {
             ownIp = InetAddress.getLocalHost().getHostAddress().toString();
             do {
                 multiSocket.joinGroup(multiGroup);
-                multiSocket.receive(multiPacket); 
+                multiSocket.receive(multiPacket);
                 broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
                 messageTags = broadcastMessage.split("[*]");
                 inIp = messageTags[0];
