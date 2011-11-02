@@ -10,8 +10,8 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,12 +24,13 @@ public class BroadcastListener implements Runnable {
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
     private String ownIp, inIp, broadcastMessage, inPcname, inChoice;
-    private String[] messageTags;
-    private byte[] buf;
+    //private String[] messageTags;;
     private InetAddress multiGroup, inIpaddress;
+    private List<String> sharedList;
 
     @Override
     public void run() {
+        sharedList = new ArrayList<String>();
         try {
             multiGroup = InetAddress.getByName("230.0.0.1");
            // buf = new byte[256];
@@ -44,12 +45,19 @@ public class BroadcastListener implements Runnable {
                 multiPacket = new DatagramPacket(buffer, buffer.length);
                 multiSocket.receive(multiPacket);
                 ObjectInputStream ois = new ObjectInputStream(bais);
+                
                 try {
                     Object o = ois.readObject();
                     multiPacket.setLength(buffer.length);
                     bais.reset();
                     message = (Message) o;
-                    System.out.println(message.getContent());
+                    if (message.isOnlineMessage())
+                        P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
+//                        sharedList.addAll((ArrayList<String>) message.getContent());
+                        System.out.println(message.getContent());
+//                        System.out.println(sharedList.toString());
+                    if (message.isSignOutMessage())
+                        System.out.println("Yooo bedankt e!");
                     ois.close();
     //            try {
     //                broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
