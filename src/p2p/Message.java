@@ -12,16 +12,22 @@ import java.io.Serializable;
  */
 public class Message implements Serializable {
     
-    private String tag;
+    private String tag, typeObject;
+    private Object content;
     private boolean onlineMessage = false, signOutMessage = false;
     
     private static String ONLINE = "<online>",
                           SIGNOUT = "<signout>";
+
+    public Message(String tag) {
+        this.tag = tag;
+    }
     
-    
-    public Message(String tag)
+    public Message(String tag, Object content)
     {
         this.tag = tag;
+        this.content = content;
+        this.typeObject = content.getClass().getName();        
     }
             
     public void checkStatusTag()
@@ -58,6 +64,22 @@ public class Message implements Serializable {
         else
             throw new IllegalArgumentException("Tag is not in the right format!");
     }
+
+    public String getTypeObject() {
+        return typeObject;
+    }
+
+    public Object getObject() {
+        return content;
+    }
+
+    public void setObject(Object object) {
+        this.content = object;
+    }
+    
+    
+    
+    
     
     
     
