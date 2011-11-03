@@ -37,9 +37,9 @@ public class P2Pclient {
                 Executors.newFixedThreadPool(3);
 
         threadExecutor.execute(new FileTransferListener());
-        threadExecutor.execute(new Broadcaster(false));
+        threadExecutor.execute(new Broadcaster(true));
         threadExecutor.execute(new BroadcastListener());
-        printUserMap();
+
         sendDownloadRequest();
         
     }
