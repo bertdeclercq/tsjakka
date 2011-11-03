@@ -51,11 +51,12 @@ public class BroadcastListener implements Runnable {
                     multiPacket.setLength(buffer.length);
                     bais.reset();
                     message = (Message) o;
+                    message.checkStatusTag();
                     if (message.isOnlineMessage())
+                    {
                         P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
-//                        sharedList.addAll((ArrayList<String>) message.getContent());
                         System.out.println(message.getContent());
-//                        System.out.println(sharedList.toString());
+                    }
                     if (message.isSignOutMessage())
                     {
                         P2Pclient.getInstance().removeUser(inIpaddress);

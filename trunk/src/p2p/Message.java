@@ -5,7 +5,6 @@
 package p2p;
 
 import java.io.Serializable;
-import java.net.InetAddress;
 
 /**
  *
@@ -35,13 +34,14 @@ public class Message implements Serializable {
 
     public Message(String tag) {
         this.tag = tag;
+
     }
     
     public Message(String tag, Object content)
     {
         this.tag = tag;
         this.content = content;
-        this.typeObject = content.getClass().getName();        
+        this.typeObject = content.getClass().getName(); 
     }
             
     public void checkStatusTag()
