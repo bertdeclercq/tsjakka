@@ -13,20 +13,27 @@ import javax.swing.AbstractListModel;
  * @author Gebruiker
  */
 public class UserListModel extends AbstractListModel implements Observer {
+    
+    private DomeinController dc;
+
+    public UserListModel(DomeinController dc) {
+        this.dc = dc;
+    }
 
     @Override
     public int getSize() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return dc.getUserMapSize();
     }
 
     @Override
     public Object getElementAt(int index) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       return dc.getUserNameList(index);
+        
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.fireContentsChanged(this, 0, dc.getUserMapSize());
     }
     
 }
