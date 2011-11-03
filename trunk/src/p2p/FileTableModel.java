@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Gebruiker
  */
-public class UserTableModel extends AbstractTableModel implements Observer {
+public class FileTableModel extends AbstractTableModel implements Observer {
     
     private final String[] COLUMNAMES = {"File name", "File size", "Owned"};
 
