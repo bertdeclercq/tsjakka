@@ -4,6 +4,8 @@
  */
 package view;
 
+import p2p.DomeinController;
+
 /**
  *
  * @author Jimmy
@@ -37,7 +39,9 @@ public class StartupGui {
         //</editor-fold>
         
         
-        hoofdFrame = new HoofdFrame();
+        
+        hoofdFrame = new HoofdFrame(new DomeinController());
         hoofdFrame.setVisible(true);
+        
     }   
 }

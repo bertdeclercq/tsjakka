@@ -27,10 +27,12 @@
               <Component id="leftPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="ContentPanel" max="32767" attributes="0"/>
-                  <Component id="topPanel" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="topPanel" max="32767" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="ContentPanel" alignment="0" max="32767" attributes="1"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -123,15 +125,6 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
-                <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                    <StringItem index="4" value="Item 5"/>
-                  </StringArray>
-                </Property>
               </Properties>
             </Component>
           </SubComponents>
@@ -153,17 +146,8 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
-                  <Component id="broadButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="updateButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="downloadButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="235" max="32767" attributes="0"/>
-              </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="488" max="32767" attributes="0"/>
+                  <EmptySpace pref="442" max="32767" attributes="0"/>
                   <Component id="toggleLog" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -174,33 +158,12 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                   <Component id="toggleLog" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="broadButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="updateButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="downloadButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="37" max="32767" attributes="0"/>
+                  <EmptySpace pref="71" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="broadButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Send broadcast"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="updateButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="update"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="downloadButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Download"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JToggleButton" name="toggleLog">
           <Properties>
             <Property name="text" type="java.lang.String" value="Log on/off"/>
@@ -218,17 +181,27 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="537" max="-2" attributes="0"/>
-                  <EmptySpace pref="34" max="32767" attributes="0"/>
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="253" max="-2" attributes="0"/>
+                          <Component id="downloadButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" pref="497" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="405" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <Component id="jScrollPane1" pref="376" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="downloadButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -278,6 +251,11 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="downloadButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Download"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
