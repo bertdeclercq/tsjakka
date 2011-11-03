@@ -4,17 +4,12 @@
  */
 package p2p;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +18,7 @@ import java.util.logging.Logger;
 public class P2Pclient {
 
     private static Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
+    private static Map<InetAddress, ArrayList<String>> sharedMap = new HashMap<InetAddress, ArrayList<String>>();
     private static P2Pclient instance;
 
     public static P2Pclient getInstance() {
@@ -64,6 +60,26 @@ public class P2Pclient {
             System.out.println(pcname + ": " + ip);
         }
 
+    }
+    
+    public void addToSharedMap(InetAddress ip, ArrayList<String> sharedList)
+    {
+        this.sharedMap.put(ip, sharedList);
+    }
+    
+    public void removeSharedList(InetAddress ip)
+    {
+        this.sharedMap.remove(ip);
+    }
+    
+    public static void printSharedMap()
+    {
+        for (Map.Entry<InetAddress, ArrayList<String>> anEntry : sharedMap.entrySet()) 
+        {
+            InetAddress ip = anEntry.getKey();
+            String bestanden = anEntry.getValue().toString();
+            System.out.println(ip + " : " + bestanden);
+        }
     }
 
     public static void sendDownloadRequest() {
