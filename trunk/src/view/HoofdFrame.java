@@ -10,18 +10,25 @@
  */
 package view;
 
+import p2p.DomeinController;
 import p2p.FileTableModel;
+import p2p.UserListModel;
 
 /**
  *
  * @author Jimmy
  */
 public class HoofdFrame extends javax.swing.JFrame {
+    
+    private DomeinController dc;
 
     /** Creates new form HoofdFrame */
-    public HoofdFrame() {
+    public HoofdFrame(DomeinController dc) {
+        
+        this.dc = dc;
         initComponents();
         setTableModel();
+        setListModel();
     }
 
     /** This method is called from within the constructor to
@@ -40,13 +47,11 @@ public class HoofdFrame extends javax.swing.JFrame {
         userList = new javax.swing.JList();
         refreshUsersButton = new javax.swing.JButton();
         topPanel = new javax.swing.JPanel();
-        broadButton = new javax.swing.JButton();
-        updateButton = new javax.swing.JButton();
-        downloadButton = new javax.swing.JButton();
         toggleLog = new javax.swing.JToggleButton();
         ContentPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        downloadButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tsjakka!");
@@ -61,11 +66,6 @@ public class HoofdFrame extends javax.swing.JFrame {
         availableLabel.setText("available users:");
 
         userList.setBackground(new java.awt.Color(204, 204, 204));
-        userList.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(userList);
 
         refreshUsersButton.setText("refresh");
@@ -103,28 +103,14 @@ public class HoofdFrame extends javax.swing.JFrame {
 
         topPanel.setBackground(new java.awt.Color(153, 153, 153));
 
-        broadButton.setText("Send broadcast");
-
-        updateButton.setText("update");
-
-        downloadButton.setText("Download");
-
         toggleLog.setText("Log on/off");
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(topPanelLayout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(broadButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(downloadButton)
-                .addContainerGap(235, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(488, Short.MAX_VALUE)
+                .addContainerGap(442, Short.MAX_VALUE)
                 .addComponent(toggleLog)
                 .addContainerGap())
         );
@@ -133,12 +119,7 @@ public class HoofdFrame extends javax.swing.JFrame {
             .addGroup(topPanelLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
                 .addComponent(toggleLog)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(broadButton)
-                    .addComponent(updateButton)
-                    .addComponent(downloadButton))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         ContentPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -176,19 +157,28 @@ public class HoofdFrame extends javax.swing.JFrame {
         jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
         jTable1.getColumnModel().getColumn(2).setMaxWidth(150);
 
+        downloadButton.setText("Download");
+
         javax.swing.GroupLayout ContentPanelLayout = new javax.swing.GroupLayout(ContentPanel);
         ContentPanel.setLayout(ContentPanelLayout);
         ContentPanelLayout.setHorizontalGroup(
             ContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ContentPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addGroup(ContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ContentPanelLayout.createSequentialGroup()
+                        .addGap(253, 253, 253)
+                        .addComponent(downloadButton))
+                    .addGroup(ContentPanelLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         ContentPanelLayout.setVerticalGroup(
             ContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ContentPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ContentPanelLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(downloadButton)
                 .addContainerGap())
         );
 
@@ -200,9 +190,10 @@ public class HoofdFrame extends javax.swing.JFrame {
                 .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(ContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,7 +213,6 @@ public class HoofdFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ContentPanel;
     private javax.swing.JLabel availableLabel;
-    private javax.swing.JButton broadButton;
     private javax.swing.JButton downloadButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -231,13 +221,16 @@ public class HoofdFrame extends javax.swing.JFrame {
     private javax.swing.JButton refreshUsersButton;
     private javax.swing.JToggleButton toggleLog;
     private javax.swing.JPanel topPanel;
-    private javax.swing.JButton updateButton;
     private javax.swing.JList userList;
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 
         private void setTableModel() {
-        jTable1.setModel(new FileTableModel());
+        jTable1.setModel(new FileTableModel(dc));
+    }
+
+    private void setListModel() {
+        userList.setModel(new UserListModel(dc));
     }
 
 }
