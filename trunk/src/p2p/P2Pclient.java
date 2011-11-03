@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class P2Pclient {
 
-    private Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
+    private static Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
     private static P2Pclient instance;
 
     public static P2Pclient getInstance() {
