@@ -49,9 +49,7 @@ public class Broadcaster implements Runnable {
                     sendOnlineMessage();
                 else
                     sendSignoutMessage();
-            System.out.println("***********");
             P2Pclient.getInstance().printUserMap();
-            System.out.println("***********");
                 Thread.sleep(8000);
             } while (true);
         } catch (InterruptedException ex) {

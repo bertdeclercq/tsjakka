@@ -27,7 +27,6 @@ public class BroadcastListener implements Runnable {
     private String ownIp, inIp, broadcastMessage, inPcname, inChoice;
     //private String[] messageTags;;
     private InetAddress multiGroup, inIpaddress;
-    private Map<InetAddress, ArrayList<String>> sharedMap;
 
     @Override
     public void run() {
@@ -57,7 +56,8 @@ public class BroadcastListener implements Runnable {
                         inIpaddress = InetAddress.getByName(message.getOwnAddress());
                         inPcname = message.getHostName();
                         P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
-                        System.out.println(message.getContent());
+                        P2Pclient.getInstance().addToSharedMap(inIpaddress, (ArrayList<String>) message.getContent());
+                        P2Pclient.getInstance().printSharedMap();
                     }
                     if (message.isSignOutMessage())
                     {
