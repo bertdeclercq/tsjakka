@@ -44,21 +44,12 @@ public class Broadcaster implements Runnable {
             do {
                 
                 //String content = OwnAddress + "*" + ownHostname;
-                //buf = message.getBytes();
+                //buf = message.getBytes
+                System.out.println(flag);
                 if (flag)
                     sendOnlineMessage();
                 else
                     sendSignoutMessage();
-                
-//                ByteArrayOutputStream b_out = new ByteArrayOutputStream();
-//                ObjectOutputStream o_out = new ObjectOutputStream(b_out);             
-//                message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedList());           
-//                o_out.writeObject(message);
-//                buf = b_out.toByteArray();
-//                multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
-//                multiSocket.send(multiPacket);
-//                b_out.close();
-//                System.out.println("sent");
                 Thread.sleep(8000);
             } while (true);
         } catch (InterruptedException ex) {
@@ -92,7 +83,7 @@ public class Broadcaster implements Runnable {
         
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
         ObjectOutputStream o_out = new ObjectOutputStream(b_out);             
-        message = new Message("<signout>");           
+        message = new Message("<signout>");
         o_out.writeObject(message);
         buf = b_out.toByteArray();
         multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
