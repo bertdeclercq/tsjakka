@@ -35,7 +35,7 @@ public class P2Pclient {
         ExecutorService threadExecutor =
                 Executors.newFixedThreadPool(3);
 
-        threadExecutor.execute(new DownloadRequestListener());
+        threadExecutor.execute(new FileTransferListener());
         threadExecutor.execute(new Broadcaster());
         threadExecutor.execute(new BroadcastListener());
         sendDownloadRequest();
@@ -60,20 +60,21 @@ public class P2Pclient {
     }
 
     public static void sendDownloadRequest() {
-        int PORT = 1237;
-        DatagramSocket dgramSocket = null;
-        DatagramPacket outPacket;
-        String outMessage;
-        try {
-            dgramSocket = new DatagramSocket();
-            outMessage = ("Bert Olé Olé");
-            outPacket = new DatagramPacket(outMessage.getBytes(), outMessage.length(), InetAddress.getLocalHost(), PORT);
-            dgramSocket.send(outPacket);
-        } catch (IOException ex) {
-            Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
-            dgramSocket.close();
-        }
+        
+//        int PORT = 1237;
+//        DatagramSocket dgramSocket = null;
+//        DatagramPacket outPacket;
+//        String outMessage;
+//        try {
+//            dgramSocket = new DatagramSocket();
+//            outMessage = ("Bert Olé Olé");
+//            outPacket = new DatagramPacket(outMessage.getBytes(), outMessage.length(), InetAddress.getLocalHost(), PORT);
+//            dgramSocket.send(outPacket);
+//        } catch (IOException ex) {
+//            Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        finally{
+//            dgramSocket.close();
+//        }
     }
 }
