@@ -45,7 +45,7 @@ public class SharedFiles {
         } catch (IOException ex) {
             Logger.getLogger(SharedFiles.class.getName()).log(Level.SEVERE, null, ex);
         }
-        findShared(properties.getProperty("directory"));
+        findShared(properties.getProperty("directoryshared"));
     }
 
     private static void findShared(String strDir) {
@@ -74,7 +74,7 @@ public class SharedFiles {
     }
     
     public void changeDirectory(String dir) {
-        properties.setProperty("directory", dir);
+        properties.setProperty("directoryshared", dir);
         try {
             FileOutputStream out = new FileOutputStream(CONFIG_FILE);
             properties.store(out, null);

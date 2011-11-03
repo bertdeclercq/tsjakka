@@ -5,6 +5,8 @@
 package p2p;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +16,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -27,6 +30,8 @@ public class P2Pclient {
 
     private static Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
     private static Map<InetAddress, ArrayList<String>> sharedMap = new HashMap<InetAddress, ArrayList<String>>();
+    private final static String CONFIG_FILE = "config";
+    private static Properties properties = new Properties();
     private static P2Pclient instance;
 
     public static P2Pclient getInstance() {
@@ -44,7 +49,7 @@ public class P2Pclient {
         threadExecutor.execute(new Broadcaster(true));
         threadExecutor.execute(new BroadcastListener());
 
-        sendDownloadRequest("testfile","192.168.1.100");
+        sendDownloadRequest("jimmy zijn bestand.txt","192.168.1.100");
 
     }
 
@@ -96,9 +101,19 @@ public class P2Pclient {
             PrintWriter out = new PrintWriter(link.getOutputStream(), true);
             out.println(filename);
             
+            FileInputStream in = new FileInputStream(CONFIG_FILE);
+            properties.load(in);
+            in.close();
+            
+            
             byte [] mybytearray  = new byte [filesize];
             InputStream is = link.getInputStream();
-            FileOutputStream fos = new FileOutputStream("source-copy.pdf");
+            
+            String strDir = properties.getProperty("directorydownloads");
+            File dir = new File(strDir);
+            if (!dir.exists())
+            dir.mkdirs();
+            FileOutputStream fos = new FileOutputStream(strDir + "/" + "source-copy.txt");
             BufferedOutputStream bos = new BufferedOutputStream(fos);
             bytesRead = is.read(mybytearray,0,mybytearray.length);
             current = bytesRead;
