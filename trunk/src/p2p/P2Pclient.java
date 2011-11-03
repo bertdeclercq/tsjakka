@@ -4,12 +4,17 @@
  */
 package p2p;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,16 +41,15 @@ public class P2Pclient {
         threadExecutor.execute(new Broadcaster(true));
         threadExecutor.execute(new BroadcastListener());
 
-        sendDownloadRequest();
-        
+        sendDownloadRequest("testfile","192.168.1.100");
+
     }
 
     public void addToUserMap(InetAddress inIp, String inPcname) {
         this.userMap.put(inIp, inPcname);
     }
-    
-    public void removeUser(InetAddress inIp)
-    {
+
+    public void removeUser(InetAddress inIp) {
         this.userMap.remove(inIp);
     }
 
@@ -61,43 +65,42 @@ public class P2Pclient {
         }
 
     }
-    
-    public void addToSharedMap(InetAddress ip, ArrayList<String> sharedList)
-    {
+
+    public void addToSharedMap(InetAddress ip, ArrayList<String> sharedList) {
         this.sharedMap.put(ip, sharedList);
     }
-    
-    public void removeSharedList(InetAddress ip)
-    {
+
+    public void removeSharedList(InetAddress ip) {
         this.sharedMap.remove(ip);
     }
-    
-    public static void printSharedMap()
-    {
-        for (Map.Entry<InetAddress, ArrayList<String>> anEntry : sharedMap.entrySet()) 
-        {
+
+    public static void printSharedMap() {
+        for (Map.Entry<InetAddress, ArrayList<String>> anEntry : sharedMap.entrySet()) {
             InetAddress ip = anEntry.getKey();
             String bestanden = anEntry.getValue().toString();
             System.out.println(ip + " : " + bestanden);
         }
     }
 
-    public static void sendDownloadRequest() {
-        
-//        int PORT = 1237;
-//        DatagramSocket dgramSocket = null;
-//        DatagramPacket outPacket;
-//        String outMessage;
-//        try {
-//            dgramSocket = new DatagramSocket();
-//            outMessage = ("Bert Olé Olé");
-//            outPacket = new DatagramPacket(outMessage.getBytes(), outMessage.length(), InetAddress.getLocalHost(), PORT);
-//            dgramSocket.send(outPacket);
-//        } catch (IOException ex) {
-//            Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        finally{
-//            dgramSocket.close();
-//        }
+    public static void sendDownloadRequest(String filename, String ip) {
+        Socket link = null;
+
+        try {
+            InetAddress host = InetAddress.getByName(ip);
+            link = new Socket(host, 1238);
+            PrintWriter out = new PrintWriter(link.getOutputStream(), true);
+            out.println(filename);
+        } catch (IOException ex) {
+            Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            try {
+                link.close();
+            } catch (IOException ex) {
+                Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
     }
 }
