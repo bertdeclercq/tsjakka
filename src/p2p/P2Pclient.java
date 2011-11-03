@@ -4,7 +4,10 @@
  */
 package p2p;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -84,12 +87,28 @@ public class P2Pclient {
 
     public static void sendDownloadRequest(String filename, String ip) {
         Socket link = null;
-
+        int filesize=6022386;
+        int bytesRead;
+        int current = 0;
         try {
             InetAddress host = InetAddress.getByName(ip);
             link = new Socket(host, 1238);
             PrintWriter out = new PrintWriter(link.getOutputStream(), true);
             out.println(filename);
+            
+            byte [] mybytearray  = new byte [filesize];
+            InputStream is = link.getInputStream();
+            FileOutputStream fos = new FileOutputStream("source-copy.pdf");
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            bytesRead = is.read(mybytearray,0,mybytearray.length);
+            current = bytesRead;
+            do {
+                bytesRead = is.read(mybytearray, current, (mybytearray.length-current));
+                if(bytesRead >= 0) current += bytesRead;
+            } while(bytesRead > -1);
+            bos.write(mybytearray, 0 , current);
+            bos.flush();
+            bos.close();
         } catch (IOException ex) {
             Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
         }
