@@ -10,7 +10,7 @@
  */
 package view;
 
-import p2p.UserTableModel;
+import p2p.FileTableModel;
 
 /**
  *
@@ -269,7 +269,7 @@ public class HoofdFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
         private void setTableModel() {
-        jTable1.setModel(new UserTableModel());
+        jTable1.setModel(new FileTableModel());
     }
 
 }
