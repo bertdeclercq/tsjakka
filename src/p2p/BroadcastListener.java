@@ -54,6 +54,8 @@ public class BroadcastListener implements Runnable {
                     message.checkStatusTag();
                     if (message.isOnlineMessage())
                     {
+                        inIpaddress = InetAddress.getByName(message.getOwnAddress());
+                        inPcname = message.getHostName();
                         P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
                         System.out.println(message.getContent());
                     }
