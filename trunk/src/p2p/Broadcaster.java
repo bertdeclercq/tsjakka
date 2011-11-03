@@ -67,9 +67,4 @@ public class Broadcaster implements Runnable {
     {
         
     }
-    
-    public void sendSharedFileList()
-    {
-        
-    }
 }
