@@ -19,7 +19,8 @@ public class FileTableModel extends AbstractTableModel implements Observer {
     @Override
     public int getRowCount() {
         //Hier moet dan iets komen van onze map vol files. fileMap.size() of zoiets.
-        throw new UnsupportedOperationException("Not supported yet.");
+       // throw new UnsupportedOperationException("Not supported yet.");
+        return 4;
     }
 
     @Override
