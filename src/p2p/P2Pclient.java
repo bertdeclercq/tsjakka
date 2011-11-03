@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class P2Pclient {
 
-    private Map<InetAddress, String> userMap = new ConcurrentHashMap<InetAddress, String>();
+    private Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
     private static P2Pclient instance;
 
     public static P2Pclient getInstance() {
@@ -36,8 +37,9 @@ public class P2Pclient {
                 Executors.newFixedThreadPool(3);
 
         threadExecutor.execute(new FileTransferListener());
-        threadExecutor.execute(new Broadcaster(true));
+        threadExecutor.execute(new Broadcaster(false));
         threadExecutor.execute(new BroadcastListener());
+        printUserMap();
         sendDownloadRequest();
         
     }
@@ -55,7 +57,7 @@ public class P2Pclient {
         return this.userMap;
     }
 
-    public void printUserMap() {
+    public static void printUserMap() {
         for (Map.Entry<InetAddress, String> anEntry : userMap.entrySet()) {
             InetAddress ip = anEntry.getKey();
             String pcname = anEntry.getValue();

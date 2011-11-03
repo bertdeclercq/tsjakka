@@ -45,7 +45,6 @@ public class Broadcaster implements Runnable {
                 
                 //String content = OwnAddress + "*" + ownHostname;
                 //buf = message.getBytes
-                System.out.println(flag);
                 if (flag)
                     sendOnlineMessage();
                 else
