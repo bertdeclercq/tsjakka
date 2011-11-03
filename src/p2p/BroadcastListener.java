@@ -57,25 +57,11 @@ public class BroadcastListener implements Runnable {
                         System.out.println(message.getContent());
 //                        System.out.println(sharedList.toString());
                     if (message.isSignOutMessage())
+                    {
+                        P2Pclient.getInstance().removeUser(inIpaddress);
                         System.out.println("Yooo bedankt e!");
+                    }
                     ois.close();
-    //            try {
-    //                broadcastMessage = new String(multiPacket.getData(), 0, multiPacket.getLength());
-    //                messageTags = broadcastMessage.split("[*]");
-    //                inIp = messageTags[0];
-    //                inIpaddress = InetAddress.getByName(inIp);
-    //                inPcname = messageTags[1];
-    //                inChoice = messageTags[2];
-    //                if (inIp.equals(ownIp)) {
-    //                    System.out.println("eigen broadcast ontvangen");
-    //                }
-    //                message = new Message(inChoice);
-    //                if (message.isOnlineMessage()) {
-    //                    P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
-    //                }
-    //                if (message.isSignOutMessage()) {
-    //                }
-    //                }
                     
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(BroadcastListener.class.getName()).log(Level.SEVERE, null, ex);

@@ -36,7 +36,7 @@ public class P2Pclient {
                 Executors.newFixedThreadPool(3);
 
         threadExecutor.execute(new FileTransferListener());
-        threadExecutor.execute(new Broadcaster());
+        threadExecutor.execute(new Broadcaster(true));
         threadExecutor.execute(new BroadcastListener());
         sendDownloadRequest();
         
@@ -44,6 +44,11 @@ public class P2Pclient {
 
     public void addToUserMap(InetAddress inIp, String inPcname) {
         this.userMap.put(inIp, inPcname);
+    }
+    
+    public void removeUser(InetAddress inIp)
+    {
+        this.userMap.remove(inIp);
     }
 
     public Map<InetAddress, String> getUserMap() {
