@@ -15,6 +15,10 @@ import javax.swing.table.AbstractTableModel;
 public class FileTableModel extends AbstractTableModel implements Observer {
     
     private final String[] COLUMNAMES = {"File name", "File size", "Owned"};
+    
+    public String getColumnName(int kolom){
+        return COLUMNAMES[kolom];
+    }
 
     @Override
     public int getRowCount() {
