@@ -31,6 +31,7 @@ public class DomeinController {
     
     private Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
     private Map<InetAddress, ArrayList<String>> sharedMap = new HashMap<InetAddress, ArrayList<String>>();
+    private Map<InetAddress, ArrayList<TsjakkaFile>> sharedTsjakkaMap = new HashMap<InetAddress, ArrayList<TsjakkaFile>>();
     private Properties properties = new Properties();
     private String CONFIG_FILE = "config";
     
@@ -42,6 +43,8 @@ public class DomeinController {
 
     public DomeinController() {
         executor.execute(new Broadcaster(true));
+        executor.execute(new FileTransferListener());
+        executor.execute(new BroadcastListener(this));
     }
     
     
@@ -61,9 +64,17 @@ public class DomeinController {
      public void addToSharedMap(InetAddress ip, ArrayList<String> sharedList) {
         this.sharedMap.put(ip, sharedList);
     }
+    
+    public void addToSharedTsjakkaMap(InetAddress ip, ArrayList<TsjakkaFile> sharedList) {
+        this.sharedTsjakkaMap.put(ip, sharedList);
+    }
 
     public void removeSharedList(InetAddress ip) {
         this.sharedMap.remove(ip);
+    }
+    
+   public void removeSharedTsjakkaList(InetAddress ip) {
+        this.sharedTsjakkaMap.remove(ip);
     }
     
     public String getUserNameList(int index) {
@@ -88,20 +99,30 @@ public class DomeinController {
         return sharedFilesList;
     }
     
+    public List<TsjakkaFile> getSharedTsjakkaFilesList() {
+        List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
+        for (Map.Entry<InetAddress, ArrayList<TsjakkaFile>> anEntry : sharedTsjakkaMap.entrySet()) {
+            sharedFilesList.addAll(anEntry.getValue());
+        }
+        return sharedFilesList;
+    }
+    
     public int getSharedMapSize(){
         return sharedMap.size();
     }
     
-    //TODO:
-    //getFileName(int index)
+    public int getSharedTsjakkaMapSize()
+    {
+        return getSharedTsjakkaFilesList().size();
+    }
+    
     public String getFileName(int index){
-        return getSharedFilesList().get(index);
+        return getSharedTsjakkaFilesList().get(index).getFilename();
         
     }
-    //getFileSize(int index)
+
     public double getFileSize(int index){
-       //voorlopige waarde
-        return 50.0;
+        return getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
     }
     
     public void sendDownloadRequest(String filename, String ip) {
@@ -151,5 +172,7 @@ public class DomeinController {
 
 
     }
+    
+    
         
 }

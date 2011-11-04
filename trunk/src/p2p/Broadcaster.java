@@ -49,7 +49,7 @@ public class Broadcaster implements Runnable {
                     sendOnlineMessage();
                 else
                     sendSignoutMessage();
-            P2Pclient.getInstance().printUserMap();
+            //P2Pclient.getInstance().printUserMap();
                 Thread.sleep(8000);
             } while (true);
         } catch (InterruptedException ex) {
@@ -67,7 +67,7 @@ public class Broadcaster implements Runnable {
         
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
         ObjectOutputStream o_out = new ObjectOutputStream(b_out);             
-        message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedList());           
+        message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), /*SharedFiles.getInstance().getSharedList()*/ SharedFiles.getInstance().getSharedTsjakkaList());           
         o_out.writeObject(message);
         buf = b_out.toByteArray();
         multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
