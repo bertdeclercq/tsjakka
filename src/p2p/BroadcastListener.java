@@ -11,8 +11,6 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +25,13 @@ public class BroadcastListener implements Runnable {
     private String ownIp, inIp, broadcastMessage, inPcname, inChoice;
     //private String[] messageTags;;
     private InetAddress multiGroup, inIpaddress;
+    private DomeinController dc;
+
+    public BroadcastListener(DomeinController dc) {
+        this.dc = dc;
+    }
+    
+    
 
     @Override
     public void run() {
@@ -55,9 +60,12 @@ public class BroadcastListener implements Runnable {
                     {
                         inIpaddress = InetAddress.getByName(message.getOwnAddress());
                         inPcname = message.getHostName();
-                        P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
-                        P2Pclient.getInstance().addToSharedMap(inIpaddress, (ArrayList<String>) message.getContent());
-                        P2Pclient.getInstance().printSharedMap();
+//                        P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
+//                        P2Pclient.getInstance().addToSharedMap(inIpaddress, (ArrayList<String>) message.getContent());
+//                        P2Pclient.getInstance().printSharedMap();
+                        dc.addToUserMap(inIpaddress, inPcname);
+                        dc.addToSharedTsjakkaMap(multiGroup, (ArrayList<TsjakkaFile>) message.getContent());
+                        
                     }
                     if (message.isSignOutMessage())
                     {

@@ -14,7 +14,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class FileTableModel extends AbstractTableModel implements Observer {
     
-    private final String[] COLUMNAMES = {"File name", "File size"};
+    private final String[] COLUMNAMES = {"File name", "File size (MB)"};
     private DomeinController dc;
 
     public FileTableModel(DomeinController dc) {
@@ -29,7 +29,7 @@ public class FileTableModel extends AbstractTableModel implements Observer {
 
     @Override
     public int getRowCount() {
-        return dc.getSharedMapSize();
+        return dc.getSharedTsjakkaMapSize();
     }
 
     @Override
@@ -39,11 +39,10 @@ public class FileTableModel extends AbstractTableModel implements Observer {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        //TODO Implementeren
         switch (columnIndex)
         {
-            case 0 : return dc.getFileName(rowIndex); /*getFileName(rowIndex)*/
-            case 1 : return dc.getFileSize(rowIndex); /*getFileSize(rowIndex)*/
+            case 0 : return dc.getFileName(rowIndex);
+            case 1 : return dc.getFileSize(rowIndex);
         }
         return null;
     }

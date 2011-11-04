@@ -4,32 +4,34 @@
  */
 package p2p;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Jimmy
  */
-public class TsjakkaFile {
+public class TsjakkaFile implements Serializable {
     
     private String filename;
-    private int FileSize;
+    private double fileSize;
     private String ip;
 
-    public TsjakkaFile(String filename, int FileSize, String ip) {
+    public TsjakkaFile(String filename, double fileSize, String ip) {
         this.filename = filename;
-        this.FileSize = FileSize;
+        this.fileSize = fileSize;
         this.ip = ip;
     }
 
-    public TsjakkaFile(String filename, int FileSize) {
+    public TsjakkaFile(String filename, double fileSize) {
         this.filename = filename;
-        this.FileSize = FileSize;
+        this.fileSize = fileSize;
     }
 
     public TsjakkaFile() {
     }
 
-    public int getFileSize() {
-        return FileSize;
+    public double getFileSize() {
+        return fileSize;
     }
 
     public String getFilename() {
@@ -38,6 +40,14 @@ public class TsjakkaFile {
 
     public String getIp() {
         return ip;
+    }
+    
+    public double getFileSizeInMegaByte()
+    {
+        double inbetweenresult = (fileSize / 1048576) * 100;
+        inbetweenresult = Math.round(inbetweenresult);
+        inbetweenresult = inbetweenresult/100;
+        return inbetweenresult;
     }
     
     
