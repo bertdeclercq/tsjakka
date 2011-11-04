@@ -10,6 +10,9 @@
  */
 package view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
 import p2p.DomeinController;
 import p2p.FileTableModel;
 import p2p.UserListModel;
@@ -18,7 +21,7 @@ import p2p.UserListModel;
  *
  * @author Jimmy
  */
-public class HoofdFrame extends javax.swing.JFrame {
+public class HoofdFrame extends JFrame implements ActionListener {
     
     private DomeinController dc;
 
@@ -29,6 +32,8 @@ public class HoofdFrame extends javax.swing.JFrame {
         initComponents();
         setTableModel();
         setListModel();
+        toggleLog.setSelected(true);
+        toggleLog.addActionListener(this);
     }
 
     /** This method is called from within the constructor to
@@ -61,8 +66,8 @@ public class HoofdFrame extends javax.swing.JFrame {
         leftPanel.setBackground(new java.awt.Color(204, 204, 204));
         leftPanel.setPreferredSize(new java.awt.Dimension(174, 495));
 
-        welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
-        welcomeLabel.setText("Welcome, 'username'");
+        welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        welcomeLabel.setText("Welcome " + dc.getUsername());
 
         availableLabel.setFont(new java.awt.Font("Tahoma", 0, 12));
         availableLabel.setText("available users:");
@@ -96,14 +101,14 @@ public class HoofdFrame extends javax.swing.JFrame {
 
         topPanel.setBackground(new java.awt.Color(153, 153, 153));
 
-        toggleLog.setText("Log on/off");
+        toggleLog.setText("Log out");
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
         topPanel.setLayout(topPanelLayout);
         topPanelLayout.setHorizontalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topPanelLayout.createSequentialGroup()
-                .addContainerGap(442, Short.MAX_VALUE)
+                .addContainerGap(456, Short.MAX_VALUE)
                 .addComponent(toggleLog)
                 .addContainerGap())
         );
@@ -251,6 +256,25 @@ public class HoofdFrame extends javax.swing.JFrame {
 
     private void setListModel() {
         userList.setModel(new UserListModel(dc));
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (toggleLog.isSelected())
+        {
+            toggleLog.setText("Log uit");
+            System.out.println("Loginlogica hier!");
+        }
+        
+        if (!(toggleLog.isSelected()))
+        {
+            dc.signout();
+            toggleLog.setText("Log in");
+            System.out.println("Loguilogica hier!");
+        }
+            
+        
+            
     }
 
 }

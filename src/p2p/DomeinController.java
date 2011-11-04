@@ -169,10 +169,20 @@ public class DomeinController {
                 Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+       
 
 
     }
     
+    public void signout()
+    {
+        executor = Executors.newFixedThreadPool(1);
+        executor.execute(new Broadcaster(false));
+    }
     
+    public String getUsername()
+    {
+        return "Cédric, the P2P-King!";
+    }
         
 }
