@@ -94,8 +94,15 @@ public class DomeinController {
     
     //TODO:
     //getFileName(int index)
+    public String getFileName(int index){
+        return getSharedFilesList().get(index);
+        
+    }
     //getFileSize(int index)
-    
+    public double getFileSize(int index){
+       //voorlopige waarde
+        return 50.0;
+    }
     
     public void sendDownloadRequest(String filename, String ip) {
         Socket link = null;
