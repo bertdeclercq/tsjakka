@@ -70,6 +70,7 @@ public class BroadcastListener implements Runnable {
                     if (message.isSignOutMessage())
                     {
                         dc.removeUser(inIpaddress);
+                        dc.removeSharedTsjakkaList(inIpaddress);
                     }
                     ois.close();
                     

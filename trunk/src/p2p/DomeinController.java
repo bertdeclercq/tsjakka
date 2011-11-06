@@ -72,6 +72,8 @@ public class DomeinController extends Observable{
     
     public void addToSharedTsjakkaMap(InetAddress ip, ArrayList<TsjakkaFile> sharedList) {
         this.sharedTsjakkaMap.put(ip, sharedList);
+        setChanged();
+        notifyObservers();
     }
 
     public void removeSharedList(InetAddress ip) {
@@ -80,6 +82,8 @@ public class DomeinController extends Observable{
     
    public void removeSharedTsjakkaList(InetAddress ip) {
         this.sharedTsjakkaMap.remove(ip);
+        setChanged();
+        notifyObservers();
     }
     
     public String getUserNameList(int index) {

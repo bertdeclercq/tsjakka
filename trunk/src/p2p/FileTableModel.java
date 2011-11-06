@@ -19,6 +19,7 @@ public class FileTableModel extends AbstractTableModel implements Observer {
 
     public FileTableModel(DomeinController dc) {
         this.dc = dc;
+        dc.addObserver(this);
     }
     
     

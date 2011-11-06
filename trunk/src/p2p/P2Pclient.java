@@ -47,7 +47,7 @@ public class P2Pclient {
 
         threadExecutor.execute(new FileTransferListener());
         threadExecutor.execute(new Broadcaster(true));
-        threadExecutor.execute(new BroadcastListener());
+//        threadExecutor.execute(new BroadcastListener());
 
        // sendDownloadRequest("jimmy zijn bestand.txt","192.168.1.100");
 
