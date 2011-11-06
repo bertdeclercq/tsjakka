@@ -28,6 +28,10 @@ public class Broadcaster implements Runnable {
     public Broadcaster(boolean flag) {
         this.flag = flag;
     }
+    
+    public void setFlag(boolean flag){
+        this.flag = flag;
+    }
 
     
     
@@ -50,7 +54,7 @@ public class Broadcaster implements Runnable {
                 else
                     sendSignoutMessage();
             //P2Pclient.getInstance().printUserMap();
-                Thread.sleep(8000);
+                Thread.sleep(3000);
             } while (true);
         } catch (InterruptedException ex) {
             Logger.getLogger(Broadcaster.class.getName()).log(Level.SEVERE, null, ex);

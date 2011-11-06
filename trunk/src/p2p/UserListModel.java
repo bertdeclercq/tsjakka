@@ -18,6 +18,7 @@ public class UserListModel extends AbstractListModel implements Observer {
 
     public UserListModel(DomeinController dc) {
         this.dc = dc;
+        dc.addObserver(this);
     }
 
     @Override
