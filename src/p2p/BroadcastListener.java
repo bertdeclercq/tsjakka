@@ -69,8 +69,7 @@ public class BroadcastListener implements Runnable {
                     }
                     if (message.isSignOutMessage())
                     {
-                        P2Pclient.getInstance().removeUser(inIpaddress);
-                        System.out.println("Yooo bedankt e!");
+                        dc.removeUser(inIpaddress);
                     }
                     ois.close();
                     

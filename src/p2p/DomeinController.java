@@ -13,10 +13,12 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,22 +29,21 @@ import java.util.logging.Logger;
  *
  * @author Cédric
  */
-public class DomeinController {
+public class DomeinController extends Observable{
     
     private Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
     private Map<InetAddress, ArrayList<String>> sharedMap = new HashMap<InetAddress, ArrayList<String>>();
     private Map<InetAddress, ArrayList<TsjakkaFile>> sharedTsjakkaMap = new HashMap<InetAddress, ArrayList<TsjakkaFile>>();
     private Properties properties = new Properties();
     private String CONFIG_FILE = "config";
-    
+    private Broadcaster OnOffBroadcaster = new Broadcaster(true);
     
     
 
-
-    ExecutorService executor = Executors.newFixedThreadPool(3);
+    ExecutorService executor = Executors.newFixedThreadPool(4);
 
     public DomeinController() {
-        executor.execute(new Broadcaster(true));
+        executor.execute(OnOffBroadcaster);
         executor.execute(new FileTransferListener());
         executor.execute(new BroadcastListener(this));
     }
@@ -51,10 +52,14 @@ public class DomeinController {
     
     public void addToUserMap(InetAddress inIp, String inPcname) {
         this.userMap.put(inIp, inPcname);
+        setChanged();
+        this.notifyObservers();
     }
     
     public void removeUser(InetAddress inIp) {
         this.userMap.remove(inIp);
+        setChanged();
+        this.notifyObservers();
     }
 
     public Map<InetAddress, String> getUserMap() {
@@ -176,13 +181,22 @@ public class DomeinController {
     
     public void signout()
     {
-        executor = Executors.newFixedThreadPool(1);
-        executor.execute(new Broadcaster(false));
+        OnOffBroadcaster.setFlag(false);
+    }
+    
+    public void signin(){
+        OnOffBroadcaster.setFlag(true);
     }
     
     public String getUsername()
     {
-        return "Cédric, the P2P-King!";
+        String username = "Tsjakka";
+        try {
+            username = InetAddress.getLocalHost().getHostName().toString();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return username;
     }
         
 }

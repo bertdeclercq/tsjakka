@@ -262,6 +262,7 @@ public class HoofdFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (toggleLog.isSelected())
         {
+            dc.signin();
             toggleLog.setText("Log uit");
             System.out.println("Loginlogica hier!");
         }
@@ -270,7 +271,7 @@ public class HoofdFrame extends JFrame implements ActionListener {
         {
             dc.signout();
             toggleLog.setText("Log in");
-            System.out.println("Loguilogica hier!");
+            System.out.println("Loguitlogica hier!");
         }
             
         
