@@ -36,7 +36,6 @@ public class DomeinController extends Observable{
     private Properties properties = new Properties();
     private String CONFIG_FILE = "config";
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
-    List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
     
     
 
@@ -94,7 +93,8 @@ public class DomeinController extends Observable{
     }
     
     
-    public List<TsjakkaFile> getSharedTsjakkaFilesList() {       
+    public List<TsjakkaFile> getSharedTsjakkaFilesList() {     
+        List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
         for (Map.Entry<InetAddress, ArrayList<TsjakkaFile>> anEntry : sharedTsjakkaMap.entrySet()) {
             for (TsjakkaFile file : anEntry.getValue())
             {
@@ -112,12 +112,12 @@ public class DomeinController extends Observable{
     }
     
     public String getFileName(int index){
-        return this.sharedFilesList.get(index).getFilename();
+        return this.getSharedTsjakkaFilesList().get(index).getFilename();
         
     }
 
     public double getFileSize(int index){
-        return this.sharedFilesList.get(index).getFileSizeInMegaByte();
+        return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
     }
     
     public void sendDownloadRequest(String filename, String ip) {
