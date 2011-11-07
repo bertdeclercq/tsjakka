@@ -15,12 +15,10 @@ public class SharedFiles {
 
     private final static String CONFIG_FILE = "config";
     private static SharedFiles instance;
-    private static List<String> sharedList;
     private static List<TsjakkaFile> sharedTsjakkaList;
     private static Properties properties;
 
     private SharedFiles() {        
-        sharedList = new ArrayList<String>();
         sharedTsjakkaList = new ArrayList<TsjakkaFile>();
         properties = new Properties();
         updateSharedList();
@@ -32,20 +30,17 @@ public class SharedFiles {
         return instance;
     }
 
-    public List<String> getSharedList() {
-        updateSharedList();
-        return sharedList;
-    }
 
     public List<TsjakkaFile> getSharedTsjakkaList() {
+        updateSharedList();
         return sharedTsjakkaList;
     }
     
     
     
     public static void updateSharedList() {
-        if (!sharedList.isEmpty())
-            sharedList.clear();
+        if (!sharedTsjakkaList.isEmpty())
+            sharedTsjakkaList.clear();
         try {
             FileInputStream in = new FileInputStream(CONFIG_FILE);
             properties.load(in);
@@ -73,7 +68,6 @@ public class SharedFiles {
         } else {
             for (int i = 0; i < children.length; i++) {
                 if (!children[i].isDirectory()) {
-                    sharedList.add(children[i].getName());
                     TsjakkaFile tsjakkaFile = new TsjakkaFile(children[i].getName(), children[i].length());
                     sharedTsjakkaList.add(tsjakkaFile);
                 } else {
