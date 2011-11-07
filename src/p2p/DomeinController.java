@@ -38,6 +38,9 @@ public class DomeinController extends Observable{
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
     private List<String> userList = new ArrayList<String>();
     private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
+    int i = 0;
+    int j = 0;
+    int n = 0;
     
     
 
@@ -102,10 +105,13 @@ public class DomeinController extends Observable{
     }
     
     
-    public List<TsjakkaFile> getSharedTsjakkaFilesList() {     
+    public List<TsjakkaFile> getSharedTsjakkaFilesList() { 
+        System.out.println("i" + i++);
         for (Map.Entry<InetAddress, ArrayList<TsjakkaFile>> anEntry : sharedTsjakkaMap.entrySet()) {
+            System.out.println("j" + j++);
             for (TsjakkaFile file : anEntry.getValue())
             {
+                System.out.println("n" + n++);
                 if (!sharedFilesList.contains(file))
                     sharedFilesList.add(file);
             }
