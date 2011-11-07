@@ -64,7 +64,7 @@ public class BroadcastListener implements Runnable {
 //                        P2Pclient.getInstance().addToSharedMap(inIpaddress, (ArrayList<String>) message.getContent());
 //                        P2Pclient.getInstance().printSharedMap();
                         dc.addToUserMap(inIpaddress, inPcname);
-                        dc.addToSharedTsjakkaMap(multiGroup, (ArrayList<TsjakkaFile>) message.getContent());
+                        dc.addToSharedTsjakkaMap(inIpaddress, (ArrayList<TsjakkaFile>) message.getContent());
                         
                     }
                     if (message.isSignOutMessage())

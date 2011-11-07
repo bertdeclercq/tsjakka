@@ -37,6 +37,7 @@ public class DomeinController extends Observable{
     private String CONFIG_FILE = "config";
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
     private List<String> userList = new ArrayList<String>();
+    private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
     
     
 
@@ -94,7 +95,6 @@ public class DomeinController extends Observable{
     
     
     public List<TsjakkaFile> getSharedTsjakkaFilesList() {     
-        List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
         for (Map.Entry<InetAddress, ArrayList<TsjakkaFile>> anEntry : sharedTsjakkaMap.entrySet()) {
             for (TsjakkaFile file : anEntry.getValue())
             {
