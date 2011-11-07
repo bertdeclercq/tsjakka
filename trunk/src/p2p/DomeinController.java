@@ -32,18 +32,17 @@ import java.util.logging.Logger;
 public class DomeinController extends Observable{
     
     private Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
-    private Map<InetAddress, ArrayList<String>> sharedMap = new HashMap<InetAddress, ArrayList<String>>();
     private Map<InetAddress, ArrayList<TsjakkaFile>> sharedTsjakkaMap = new HashMap<InetAddress, ArrayList<TsjakkaFile>>();
     private Properties properties = new Properties();
     private String CONFIG_FILE = "config";
-    private Broadcaster OnOffBroadcaster = new Broadcaster(true);
+    private Broadcaster onOffBroadcaster = new Broadcaster(true);
     
     
 
     ExecutorService executor = Executors.newFixedThreadPool(4);
 
     public DomeinController() {
-        executor.execute(OnOffBroadcaster);
+        executor.execute(onOffBroadcaster);
         executor.execute(new FileTransferListener());
         executor.execute(new BroadcastListener(this));
     }
@@ -66,9 +65,6 @@ public class DomeinController extends Observable{
         return this.userMap;
     }
     
-     public void addToSharedMap(InetAddress ip, ArrayList<String> sharedList) {
-        this.sharedMap.put(ip, sharedList);
-    }
     
     public void addToSharedTsjakkaMap(InetAddress ip, ArrayList<TsjakkaFile> sharedList) {
         this.sharedTsjakkaMap.put(ip, sharedList);
@@ -76,9 +72,6 @@ public class DomeinController extends Observable{
         notifyObservers();
     }
 
-    public void removeSharedList(InetAddress ip) {
-        this.sharedMap.remove(ip);
-    }
     
    public void removeSharedTsjakkaList(InetAddress ip) {
         this.sharedTsjakkaMap.remove(ip);
@@ -99,14 +92,6 @@ public class DomeinController extends Observable{
         return userMap.size();
     }
     
-    public List<String> getSharedFilesList() {
-        List<String> sharedFilesList = new ArrayList<String>();
-        for (Map.Entry<InetAddress, ArrayList<String>> anEntry : sharedMap.entrySet()) {
-            String bestanden = anEntry.getValue().toString();
-            sharedFilesList.add(bestanden);
-        }
-        return sharedFilesList;
-    }
     
     public List<TsjakkaFile> getSharedTsjakkaFilesList() {
         List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
@@ -116,9 +101,6 @@ public class DomeinController extends Observable{
         return sharedFilesList;
     }
     
-    public int getSharedMapSize(){
-        return sharedMap.size();
-    }
     
     public int getSharedTsjakkaMapSize()
     {
@@ -185,11 +167,11 @@ public class DomeinController extends Observable{
     
     public void signout()
     {
-        OnOffBroadcaster.setFlag(false);
+        onOffBroadcaster.setFlag(false);
     }
     
     public void signin(){
-        OnOffBroadcaster.setFlag(true);
+        onOffBroadcaster.setFlag(true);
     }
     
     public String getUsername()
