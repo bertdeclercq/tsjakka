@@ -52,15 +52,23 @@ public class DomeinController extends Observable{
     
     
     public void addToUserMap(InetAddress inIp, String inPcname) {
-        this.userMap.put(inIp, inPcname);
-        setChanged();
-        this.notifyObservers();
+        String ownIp = "";
+        String inIpString = "";
+        try {
+             inIpString = inIp.getHostAddress();
+             ownIp = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("eigein ip: " + ownIp + "in ip: " + inIpString);
+        if(!ownIp.equals(inIpString)){
+            this.userMap.put(inIp, inPcname);
+        }
+        
     }
     
     public void removeUser(InetAddress inIp) {
         this.userMap.remove(inIp);
-        setChanged();
-        this.notifyObservers();
     }
 
     public Map<InetAddress, String> getUserMap() {
