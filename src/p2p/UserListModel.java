@@ -34,7 +34,7 @@ public class UserListModel extends AbstractListModel implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        this.fireContentsChanged(this, 0, dc.getUserMapSize());
+       this.fireContentsChanged(this, 0, dc.getUserMapSize());
     }
     
 }
