@@ -36,6 +36,7 @@ public class DomeinController extends Observable{
     private Properties properties = new Properties();
     private String CONFIG_FILE = "config";
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
+    private List<String> userList = new ArrayList<String>();
     
     
 
@@ -80,7 +81,6 @@ public class DomeinController extends Observable{
     }
     
     public String getUserNameList(int index) {
-        List<String> userList = new ArrayList<String>();
         for (Map.Entry<InetAddress, String> anEntry : userMap.entrySet()) {
             String pcname = anEntry.getValue();
             userList.add(pcname);
