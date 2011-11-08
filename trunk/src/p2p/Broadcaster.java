@@ -87,7 +87,7 @@ public class Broadcaster implements Runnable {
         
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
         ObjectOutputStream o_out = new ObjectOutputStream(b_out);             
-        message = new Message("<signout>");
+        message = new Message("<signout>", ownIp.getHostAddress().toString());
         o_out.writeObject(message);
         buf = b_out.toByteArray();
         multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);

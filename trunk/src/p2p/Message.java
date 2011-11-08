@@ -32,8 +32,9 @@ public class Message implements Serializable {
         
     }
 
-    public Message(String tag) {
+    public Message(String tag, String ownAddress) {
         this.tag = tag;
+        this.ownAddress = ownAddress;
 
     }
     
