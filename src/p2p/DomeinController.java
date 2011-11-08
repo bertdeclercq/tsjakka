@@ -63,15 +63,17 @@ public class DomeinController extends Observable{
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("eigein ip: " + ownIp + "in ip: " + inIpString);
-        if(!ownIp.equals(inIpString)){
+        //if(!ownIp.equals(inIpString)){
             this.userMap.put(inIp, inPcname);
-        }
+            System.out.println(userMap.toString());
+        //}
         
     }
     
     public void removeUser(InetAddress inIp) {
-        this.userMap.remove(inIp);
+        System.out.println("ip in domeincontroller in remove: "+ inIp);
+                this.userMap.remove(inIp);
+                System.out.println(userMap.toString());  
     }
 
     public Map<InetAddress, String> getUserMap() {
@@ -81,15 +83,15 @@ public class DomeinController extends Observable{
     
     public void addToSharedTsjakkaMap(InetAddress ip, ArrayList<TsjakkaFile> sharedList) {
         this.sharedTsjakkaMap.put(ip, sharedList);
-        setChanged();
-        notifyObservers();
+//        setChanged();
+//        notifyObservers();
     }
 
     
    public void removeSharedTsjakkaList(InetAddress ip) {
         this.sharedTsjakkaMap.remove(ip);
-        setChanged();
-        notifyObservers();
+//        setChanged();
+//        notifyObservers();
     }
     
     public String getUserNameList(int index) {
@@ -106,12 +108,12 @@ public class DomeinController extends Observable{
     
     
     public List<TsjakkaFile> getSharedTsjakkaFilesList() { 
-        System.out.println("i" + i++);
+       // System.out.println("i" + i++);
         for (Map.Entry<InetAddress, ArrayList<TsjakkaFile>> anEntry : sharedTsjakkaMap.entrySet()) {
-            System.out.println("j" + j++);
+         //   System.out.println("j" + j++);
             for (TsjakkaFile file : anEntry.getValue())
             {
-                System.out.println("n" + n++);
+              //  System.out.println("n" + n++);
                 if (!sharedFilesList.contains(file))
                     sharedFilesList.add(file);
             }
