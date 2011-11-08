@@ -264,14 +264,12 @@ public class HoofdFrame extends JFrame implements ActionListener {
         {
             dc.signin();
             toggleLog.setText("Log uit");
-            System.out.println("Loginlogica hier!");
         }
         
         if (!(toggleLog.isSelected()))
         {
             dc.signout();
             toggleLog.setText("Log in");
-            System.out.println("Loguitlogica hier!");
         }
             
         

@@ -31,9 +31,7 @@ public class Broadcaster implements Runnable {
     
     public void setFlag(boolean flag){
         this.flag = flag;
-    }
-
-    
+    } 
     
     /* Elke 10 sec wordt een multicast packet gestuurd om te kijken
      * wie er op de LAN zit
@@ -46,14 +44,10 @@ public class Broadcaster implements Runnable {
             ownIp = InetAddress.getLocalHost();
             multiSocket.joinGroup(multiGroup);
             do {
-                
-                //String content = OwnAddress + "*" + ownHostname;
-                //buf = message.getBytes
                 if (flag)
                     sendOnlineMessage();
                 else
                     sendSignoutMessage();
-            //P2Pclient.getInstance().printUserMap();
                 Thread.sleep(3000);
             } while (true);
         } catch (InterruptedException ex) {
