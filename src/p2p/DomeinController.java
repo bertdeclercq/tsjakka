@@ -15,6 +15,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,17 +108,39 @@ public class DomeinController extends Observable{
     }
     
     
-    public List<TsjakkaFile> getSharedTsjakkaFilesList() { 
+public List<TsjakkaFile> getSharedTsjakkaFilesList() { 
        // System.out.println("i" + i++);
-        for (Map.Entry<InetAddress, ArrayList<TsjakkaFile>> anEntry : sharedTsjakkaMap.entrySet()) {
+        Collection<ArrayList<TsjakkaFile>> coll = sharedTsjakkaMap.values();
+        System.out.println(coll);
+        sharedFilesList.clear();
+        
+        for (ArrayList<TsjakkaFile> fileList : coll)
+        {
          //   System.out.println("j" + j++);
-            for (TsjakkaFile file : anEntry.getValue())
+            for(TsjakkaFile file : fileList)
             {
+                System.out.println("Katrijn" + n++);
+                sharedFilesList.add(file);
               //  System.out.println("n" + n++);
                 if (!sharedFilesList.contains(file))
                     sharedFilesList.add(file);
+
             }
         }
+//        //System.out.println("i" + i++);
+//        for (Map.Entry<InetAddress, ArrayList<TsjakkaFile>> anEntry : sharedTsjakkaMap.entrySet()) {
+//            //System.out.println("j" + j++);
+//            for (TsjakkaFile file : anEntry.getValue())
+//            {
+//                //System.out.println("n" + n++);
+//                if (!sharedFilesList.contains(file))
+//                {
+//                    System.out.println(file.hashCode());
+//                    System.out.println(file.getFilename());
+//                    sharedFilesList.add(file);
+//                }
+//            }
+//        }
         return sharedFilesList;
     }
     
