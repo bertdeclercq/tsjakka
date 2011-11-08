@@ -39,9 +39,6 @@ public class DomeinController extends Observable {
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
     private List<String> userList = new ArrayList<String>();
     private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
-    int i = 0;
-    int j = 0;
-    int n = 0;
     ExecutorService executor = Executors.newFixedThreadPool(4);
 
     public DomeinController() {
@@ -61,7 +58,6 @@ public class DomeinController extends Observable {
         }
         if (!ownIp.equals(inIpString)) {
             this.userMap.put(inIp, inPcname);
-            System.out.println(userMap.toString());
             setChanged();
             notifyObservers();
         }
@@ -69,9 +65,7 @@ public class DomeinController extends Observable {
     }
 
     public void removeUser(InetAddress inIp) {
-        System.out.println("ip in domeincontroller in remove: " + inIp);
         this.userMap.remove(inIp);
-        System.out.println(userMap.toString());
         setChanged();
         notifyObservers();
     }
@@ -105,37 +99,18 @@ public class DomeinController extends Observable {
     }
 
     public List<TsjakkaFile> getSharedTsjakkaFilesList() {
-        // System.out.println("i" + i++);
         Collection<ArrayList<TsjakkaFile>> coll = sharedTsjakkaMap.values();
-        System.out.println(coll);
         sharedFilesList.clear();
 
         for (ArrayList<TsjakkaFile> fileList : coll) {
-            //   System.out.println("j" + j++);
             for (TsjakkaFile file : fileList) {
-                System.out.println("Katrijn" + n++);
                 sharedFilesList.add(file);
-                //  System.out.println("n" + n++);
                 if (!sharedFilesList.contains(file)) {
                     sharedFilesList.add(file);
                 }
 
             }
         }
-//        //System.out.println("i" + i++);
-//        for (Map.Entry<InetAddress, ArrayList<TsjakkaFile>> anEntry : sharedTsjakkaMap.entrySet()) {
-//            //System.out.println("j" + j++);
-//            for (TsjakkaFile file : anEntry.getValue())
-//            {
-//                //System.out.println("n" + n++);
-//                if (!sharedFilesList.contains(file))
-//                {
-//                    System.out.println(file.hashCode());
-//                    System.out.println(file.getFilename());
-//                    sharedFilesList.add(file);
-//                }
-//            }
-//        }
         return sharedFilesList;
     }
 
@@ -190,12 +165,12 @@ public class DomeinController extends Observable {
             bos.flush();
             bos.close();
         } catch (IOException ex) {
-            Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 link.close();
             } catch (IOException ex) {
-                Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

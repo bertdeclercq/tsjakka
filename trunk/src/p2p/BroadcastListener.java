@@ -22,8 +22,7 @@ public class BroadcastListener implements Runnable {
 
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
-    private String ownIp, inIp, broadcastMessage, inPcname, inChoice;
-    //private String[] messageTags;;
+    private String inPcname,ownIp;
     private InetAddress multiGroup, inIpaddress;
     private DomeinController dc;
 
@@ -37,8 +36,6 @@ public class BroadcastListener implements Runnable {
     public void run() {
         try {
             multiGroup = InetAddress.getByName("230.0.0.1");
-           // buf = new byte[256];
-          //  multiPacket = new DatagramPacket(buf, buf.length);
             multiSocket = new MulticastSocket(4446);
             ownIp = InetAddress.getLocalHost().getHostAddress().toString();
             Message message = null;
@@ -60,11 +57,7 @@ public class BroadcastListener implements Runnable {
                     if (message.isOnlineMessage())
                     {
                         
-                        System.out.println("ip in broadcastlistener: "+ inIpaddress);
                         inPcname = message.getHostName();
-//                        P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
-//                        P2Pclient.getInstance().addToSharedMap(inIpaddress, (ArrayList<String>) message.getContent());
-//                        P2Pclient.getInstance().printSharedMap();
                         dc.addToUserMap(inIpaddress, inPcname);
                         dc.addToSharedTsjakkaMap(inIpaddress, (ArrayList<TsjakkaFile>) message.getContent());
                         
@@ -72,7 +65,6 @@ public class BroadcastListener implements Runnable {
                     if (message.isSignOutMessage())
                     {
                         
-                        System.out.println("ip in broadcastlistener vlak voor de remove: "+ inIpaddress);
                         dc.removeUser(inIpaddress);
                         dc.removeSharedTsjakkaList(inIpaddress);
                     }
