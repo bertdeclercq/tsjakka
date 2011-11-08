@@ -56,9 +56,10 @@ public class BroadcastListener implements Runnable {
                     bais.reset();
                     message = (Message) o;
                     message.checkStatusTag();
+                    inIpaddress = InetAddress.getByName(message.getOwnAddress());
                     if (message.isOnlineMessage())
                     {
-                        inIpaddress = InetAddress.getByName(message.getOwnAddress());
+                        
                         System.out.println("ip in broadcastlistener: "+ inIpaddress);
                         inPcname = message.getHostName();
 //                        P2Pclient.getInstance().addToUserMap(inIpaddress, inPcname);
@@ -70,6 +71,7 @@ public class BroadcastListener implements Runnable {
                     }
                     if (message.isSignOutMessage())
                     {
+                        
                         System.out.println("ip in broadcastlistener vlak voor de remove: "+ inIpaddress);
                         dc.removeUser(inIpaddress);
                         dc.removeSharedTsjakkaList(inIpaddress);

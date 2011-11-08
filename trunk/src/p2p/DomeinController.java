@@ -30,8 +30,8 @@ import java.util.logging.Logger;
  *
  * @author Cédric
  */
-public class DomeinController extends Observable{
-    
+public class DomeinController extends Observable {
+
     private Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
     private Map<InetAddress, ArrayList<TsjakkaFile>> sharedTsjakkaMap = new HashMap<InetAddress, ArrayList<TsjakkaFile>>();
     private Properties properties = new Properties();
@@ -42,9 +42,6 @@ public class DomeinController extends Observable{
     int i = 0;
     int j = 0;
     int n = 0;
-    
-    
-
     ExecutorService executor = Executors.newFixedThreadPool(4);
 
     public DomeinController() {
@@ -52,78 +49,76 @@ public class DomeinController extends Observable{
         executor.execute(new FileTransferListener());
         executor.execute(new BroadcastListener(this));
     }
-    
-    
-    
+
     public void addToUserMap(InetAddress inIp, String inPcname) {
         String ownIp = "";
         String inIpString = "";
         try {
-             inIpString = inIp.getHostAddress();
-             ownIp = InetAddress.getLocalHost().getHostAddress();
+            inIpString = inIp.getHostAddress();
+            ownIp = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //if(!ownIp.equals(inIpString)){
+        if (!ownIp.equals(inIpString)) {
             this.userMap.put(inIp, inPcname);
             System.out.println(userMap.toString());
-        //}
-        
+            setChanged();
+            notifyObservers();
+        }
+
     }
-    
+
     public void removeUser(InetAddress inIp) {
-        System.out.println("ip in domeincontroller in remove: "+ inIp);
-                this.userMap.remove(inIp);
-                System.out.println(userMap.toString());  
+        System.out.println("ip in domeincontroller in remove: " + inIp);
+        this.userMap.remove(inIp);
+        System.out.println(userMap.toString());
+        setChanged();
+        notifyObservers();
     }
 
     public Map<InetAddress, String> getUserMap() {
         return this.userMap;
     }
-    
-    
+
     public void addToSharedTsjakkaMap(InetAddress ip, ArrayList<TsjakkaFile> sharedList) {
         this.sharedTsjakkaMap.put(ip, sharedList);
-//        setChanged();
-//        notifyObservers();
+        setChanged();
+        notifyObservers();
     }
 
-    
-   public void removeSharedTsjakkaList(InetAddress ip) {
+    public void removeSharedTsjakkaList(InetAddress ip) {
         this.sharedTsjakkaMap.remove(ip);
-//        setChanged();
-//        notifyObservers();
+        setChanged();
+        notifyObservers();
     }
-    
+
     public String getUserNameList(int index) {
         for (Map.Entry<InetAddress, String> anEntry : userMap.entrySet()) {
             String pcname = anEntry.getValue();
             userList.add(pcname);
-            }
-        return userList.get(index);
         }
-    
-    public int getUserMapSize(){
+        return userList.get(index);
+    }
+
+    public int getUserMapSize() {
         return userMap.size();
     }
-    
-    
-public List<TsjakkaFile> getSharedTsjakkaFilesList() { 
-       // System.out.println("i" + i++);
+
+    public List<TsjakkaFile> getSharedTsjakkaFilesList() {
+        // System.out.println("i" + i++);
         Collection<ArrayList<TsjakkaFile>> coll = sharedTsjakkaMap.values();
         System.out.println(coll);
         sharedFilesList.clear();
-        
-        for (ArrayList<TsjakkaFile> fileList : coll)
-        {
-         //   System.out.println("j" + j++);
-            for(TsjakkaFile file : fileList)
-            {
+
+        for (ArrayList<TsjakkaFile> fileList : coll) {
+            //   System.out.println("j" + j++);
+            for (TsjakkaFile file : fileList) {
                 System.out.println("Katrijn" + n++);
                 sharedFilesList.add(file);
-              //  System.out.println("n" + n++);
-                if (!sharedFilesList.contains(file))
+                //  System.out.println("n" + n++);
+                if (!sharedFilesList.contains(file)) {
                     sharedFilesList.add(file);
+                }
 
             }
         }
@@ -143,25 +138,23 @@ public List<TsjakkaFile> getSharedTsjakkaFilesList() {
 //        }
         return sharedFilesList;
     }
-    
-    
-    public int getSharedTsjakkaMapSize()
-    {
+
+    public int getSharedTsjakkaMapSize() {
         return getSharedTsjakkaFilesList().size();
     }
-    
-    public String getFileName(int index){
+
+    public String getFileName(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFilename();
-        
+
     }
 
-    public double getFileSize(int index){
+    public double getFileSize(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
     }
-    
+
     public void sendDownloadRequest(String filename, String ip) {
         Socket link = null;
-        int filesize=6022386;
+        int filesize = 6022386;
         int bytesRead;
         int current = 0;
         try {
@@ -169,56 +162,56 @@ public List<TsjakkaFile> getSharedTsjakkaFilesList() {
             link = new Socket(host, 1238);
             PrintWriter out = new PrintWriter(link.getOutputStream(), true);
             out.println(filename);
-            
+
             FileInputStream in = new FileInputStream(CONFIG_FILE);
             properties.load(in);
             in.close();
-            
-            
-            byte [] mybytearray  = new byte [filesize];
+
+
+            byte[] mybytearray = new byte[filesize];
             InputStream is = link.getInputStream();
-            
+
             String strDir = properties.getProperty("directorydownloads");
             File dir = new File(strDir);
-            if (!dir.exists())
-            dir.mkdirs();
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
             FileOutputStream fos = new FileOutputStream(strDir + "/" + "source-copy.txt");
             BufferedOutputStream bos = new BufferedOutputStream(fos);
-            bytesRead = is.read(mybytearray,0,mybytearray.length);
+            bytesRead = is.read(mybytearray, 0, mybytearray.length);
             current = bytesRead;
             do {
-                bytesRead = is.read(mybytearray, current, (mybytearray.length-current));
-                if(bytesRead >= 0) current += bytesRead;
-            } while(bytesRead > -1);
-            bos.write(mybytearray, 0 , current);
+                bytesRead = is.read(mybytearray, current, (mybytearray.length - current));
+                if (bytesRead >= 0) {
+                    current += bytesRead;
+                }
+            } while (bytesRead > -1);
+            bos.write(mybytearray, 0, current);
             bos.flush();
             bos.close();
         } catch (IOException ex) {
             Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
+        } finally {
             try {
                 link.close();
             } catch (IOException ex) {
                 Logger.getLogger(P2Pclient.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-       
+
 
 
     }
-    
-    public void signout()
-    {
+
+    public void signout() {
         onOffBroadcaster.setFlag(false);
     }
-    
-    public void signin(){
+
+    public void signin() {
         onOffBroadcaster.setFlag(true);
     }
-    
-    public String getUsername()
-    {
+
+    public String getUsername() {
         String username = "Tsjakka";
         try {
             username = InetAddress.getLocalHost().getHostName().toString();
@@ -227,5 +220,4 @@ public List<TsjakkaFile> getSharedTsjakkaFilesList() {
         }
         return username;
     }
-        
 }
