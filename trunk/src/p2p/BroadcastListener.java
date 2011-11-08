@@ -75,6 +75,7 @@ public class BroadcastListener implements Runnable {
                         dc.removeSharedTsjakkaList(inIpaddress);
                     }
                     ois.close();
+                    bais.close();
                     
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(BroadcastListener.class.getName()).log(Level.SEVERE, null, ex);
