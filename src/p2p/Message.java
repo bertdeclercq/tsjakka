@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 public class Message implements Serializable {
     
+    private static final long serialVersionUID = 1;
     private String tag, typeObject;
     private Object content;
     private String ownAddress, hostName;
