@@ -63,6 +63,12 @@ public class TsjakkaFile implements Serializable {
     public Icon getIcon() {
         return this.icon;
     }
+
+    @Override
+    public String toString() {
+        return "File : " + this.filename + " with : " + this.getFileSizeInMegaByte() + "MB";
+    }
+    
     
     
     
