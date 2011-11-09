@@ -33,6 +33,9 @@ public class FileTransferer implements Runnable {
     public void run() {
         String inMessage;
         try {
+            FileInputStream infile = new FileInputStream(CONFIG_FILE);
+            properties.load(infile);
+            infile.close();
             BufferedReader in = new BufferedReader( new InputStreamReader(link.getInputStream()));
             inMessage  = in.readLine();
             filename = inMessage;           
