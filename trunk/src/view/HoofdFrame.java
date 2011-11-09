@@ -33,6 +33,7 @@ public class HoofdFrame extends JFrame implements ActionListener {
         
         this.dc = dc;
         model = new FileTableModel(dc);
+        
         initComponents();
         setTableModel();
         setListModel();
@@ -47,7 +48,6 @@ public class HoofdFrame extends JFrame implements ActionListener {
                     int row=jTable1.rowAtPoint(e.getPoint());
                     int col=jTable1.columnAtPoint(e.getPoint());
                     if (col == 0)
-                    System.out.println(" Value in the cell clicked :"+ " " +jTable1.getValueAt(row,col).toString());
                      dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
                 }
             }
@@ -84,10 +84,10 @@ public class HoofdFrame extends JFrame implements ActionListener {
         leftPanel.setBackground(new java.awt.Color(204, 204, 204));
         leftPanel.setPreferredSize(new java.awt.Dimension(174, 495));
 
-        welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
         welcomeLabel.setText("Welcome " + dc.getUsername());
 
-        availableLabel.setFont(new java.awt.Font("Tahoma", 0, 12));
+        availableLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         availableLabel.setText("available users:");
 
         userList.setBackground(new java.awt.Color(204, 204, 204));

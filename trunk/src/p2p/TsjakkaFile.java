@@ -5,6 +5,7 @@
 package p2p;
 
 import java.io.Serializable;
+import javax.swing.Icon;
 
 /**
  *
@@ -15,11 +16,19 @@ public class TsjakkaFile implements Serializable {
     private String filename;
     private double fileSize;
     private String ip;
+    private Icon icon;
 
     public TsjakkaFile(String filename, double fileSize, String ip) {
         this.filename = filename;
         this.fileSize = fileSize;
         this.ip = ip;
+    }
+    
+        public TsjakkaFile(String filename, double fileSize, String ip, Icon icon) {
+        this.filename = filename;
+        this.fileSize = fileSize;
+        this.ip = ip;
+        this.icon = icon;
     }
 
     public TsjakkaFile(String filename, double fileSize) {
@@ -48,6 +57,11 @@ public class TsjakkaFile implements Serializable {
         inbetweenresult = Math.round(inbetweenresult);
         inbetweenresult = inbetweenresult/100;
         return inbetweenresult;
+    }
+    
+
+    public Icon getIcon() {
+        return this.icon;
     }
     
     
