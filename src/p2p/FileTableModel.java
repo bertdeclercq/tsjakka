@@ -43,7 +43,7 @@ public class FileTableModel extends AbstractTableModel implements Observer {
         switch (columnIndex)
         {
             case 0 : return dc.getFileName(rowIndex);
-            case 1 : return dc.getFileSize(rowIndex);
+            case 1 : return dc.getFileSize(rowIndex);  
         }
         return null;
     }
@@ -51,6 +51,12 @@ public class FileTableModel extends AbstractTableModel implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         this.fireTableDataChanged();
+    }
+    
+    
+    public String getIp(int index)
+    {
+        return dc.getFileIp(index);
     }
     
 }

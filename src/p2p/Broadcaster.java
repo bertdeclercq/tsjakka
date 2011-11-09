@@ -64,8 +64,9 @@ public class Broadcaster implements Runnable {
         byte[] buf = new byte[65535];
         
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
-        ObjectOutputStream o_out = new ObjectOutputStream(b_out);             
-        message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), /*SharedFiles.getInstance().getSharedList()*/ SharedFiles.getInstance().getSharedTsjakkaList());           
+        ObjectOutputStream o_out = new ObjectOutputStream(b_out);  
+        SharedFiles.getInstance().setIp(ownIp.getHostAddress());
+        message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedTsjakkaList());           
         o_out.writeObject(message);
         buf = b_out.toByteArray();
         multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
