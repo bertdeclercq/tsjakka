@@ -126,6 +126,11 @@ public class DomeinController extends Observable {
     public double getFileSize(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
     }
+    
+    public String getFileIp(int index)
+    {
+        return this.getSharedTsjakkaFilesList().get(index).getIp();
+    }
 
     public void sendDownloadRequest(String filename, String ip) {
         Socket link = null;
