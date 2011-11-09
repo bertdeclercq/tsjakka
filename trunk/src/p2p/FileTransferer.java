@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Properties;
 
 /**
  *
@@ -21,6 +22,8 @@ public class FileTransferer implements Runnable {
 
     private Socket link;
     private String filename;
+    private Properties properties = new Properties();
+    private String CONFIG_FILE = "config";
 
     public FileTransferer(Socket link) {
         this.link = link;
@@ -32,8 +35,9 @@ public class FileTransferer implements Runnable {
         try {
             BufferedReader in = new BufferedReader( new InputStreamReader(link.getInputStream()));
             inMessage  = in.readLine();
-            filename = inMessage;
-            File myFile = new File(filename);
+            filename = inMessage;           
+            String strDir = properties.getProperty("directorydownloads");           
+            File myFile = new File(strDir + "/" + filename);
             byte[] mybytearray = new byte[(int) myFile.length()];
             FileInputStream fis = new FileInputStream(myFile);
             BufferedInputStream bis = new BufferedInputStream(fis);

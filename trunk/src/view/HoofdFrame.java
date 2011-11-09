@@ -12,6 +12,8 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import p2p.DomeinController;
 import p2p.FileTableModel;
@@ -24,16 +26,32 @@ import p2p.UserListModel;
 public class HoofdFrame extends JFrame implements ActionListener {
     
     private DomeinController dc;
+    private FileTableModel model;
 
     /** Creates new form HoofdFrame */
-    public HoofdFrame(DomeinController dc) {
+    public HoofdFrame(final DomeinController dc) {
         
         this.dc = dc;
+        model = new FileTableModel(dc);
         initComponents();
         setTableModel();
         setListModel();
         toggleLog.setSelected(true);
         toggleLog.addActionListener(this);
+        jTable1.addMouseListener(new MouseAdapter() 
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                if (e.getClickCount() == 2){
+                    int row=jTable1.rowAtPoint(e.getPoint());
+                    int col=jTable1.columnAtPoint(e.getPoint());
+                    if (col == 0)
+                    System.out.println(" Value in the cell clicked :"+ " " +jTable1.getValueAt(row,col).toString());
+                     dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
+                }
+            }
+        });
     }
 
     /** This method is called from within the constructor to
@@ -251,7 +269,7 @@ public class HoofdFrame extends JFrame implements ActionListener {
     // End of variables declaration//GEN-END:variables
 
         private void setTableModel() {
-        jTable1.setModel(new FileTableModel(dc));
+        jTable1.setModel(model);
     }
 
     private void setListModel() {
@@ -263,13 +281,13 @@ public class HoofdFrame extends JFrame implements ActionListener {
         if (toggleLog.isSelected())
         {
             dc.signin();
-            toggleLog.setText("Log uit");
+            toggleLog.setText("Sharing");
         }
         
         if (!(toggleLog.isSelected()))
         {
             dc.signout();
-            toggleLog.setText("Log in");
+            toggleLog.setText("Not sharing");
         }
             
         
