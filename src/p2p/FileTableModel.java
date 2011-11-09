@@ -6,7 +6,10 @@ package p2p;
 
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.Icon;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellRenderer;
+import sun.swing.MenuItemLayoutHelper.ColumnAlignment;
 
 /**
  *
@@ -14,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class FileTableModel extends AbstractTableModel implements Observer {
     
-    private final String[] COLUMNAMES = {"File name", "File size (MB)"};
+    private final String[] COLUMNAMES = {"", "File name", "File size (MB)"};
     private DomeinController dc;
 
     public FileTableModel(DomeinController dc) {
@@ -42,8 +45,9 @@ public class FileTableModel extends AbstractTableModel implements Observer {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex)
         {
-            case 0 : return dc.getFileName(rowIndex);
-            case 1 : return dc.getFileSize(rowIndex);  
+            case 0 : return dc.getFileIcon(rowIndex);
+            case 1 : return dc.getFileName(rowIndex);
+            case 2 : return dc.getFileSize(rowIndex);  
         }
         return null;
     }
@@ -58,5 +62,18 @@ public class FileTableModel extends AbstractTableModel implements Observer {
     {
         return dc.getFileIp(index);
     }
+    
+
+    @Override
+    public Class getColumnClass(int columnIndex) {
+        Object o = getValueAt(0, columnIndex);
+        if (o == null) {
+            return Object.class;
+        } else {
+            return o.getClass();
+        }
+    }
+    
+    
     
 }

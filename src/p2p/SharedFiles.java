@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.filechooser.FileSystemView;
 
 public class SharedFiles {
 
@@ -69,7 +71,9 @@ public class SharedFiles {
         } else {
             for (int i = 0; i < children.length; i++) {
                 if (!children[i].isDirectory()) {
-                    TsjakkaFile tsjakkaFile = new TsjakkaFile(children[i].getName(), children[i].length(), ip);
+                    FileSystemView view = FileSystemView.getFileSystemView();      
+                    Icon icon = view.getSystemIcon(children[i]);
+                    TsjakkaFile tsjakkaFile = new TsjakkaFile(children[i].getName(), children[i].length(), ip, icon);
                     sharedTsjakkaList.add(tsjakkaFile);
                 } else {
                     findShared(children[i].getPath());
