@@ -132,7 +132,7 @@ public class DomeinController extends Observable {
             }
         }
         String[] extensions = {"txt"};
-        filterList(Arrays.asList(extensions));
+        sharedFilesList = filterList(Arrays.asList(extensions));
         return sharedFilesList;
     }
 
