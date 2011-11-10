@@ -16,7 +16,7 @@ public class TsjakkaFile implements Serializable {
     private String filename;
     private double fileSize;
     private String ip;
-    private Icon icon;
+    //private Icon icon;
 
     public TsjakkaFile(String filename, double fileSize, String ip) {
         this.filename = filename;
@@ -24,12 +24,12 @@ public class TsjakkaFile implements Serializable {
         this.ip = ip;
     }
     
-        public TsjakkaFile(String filename, double fileSize, String ip, Icon icon) {
-        this.filename = filename;
-        this.fileSize = fileSize;
-        this.ip = ip;
-        this.icon = icon;
-    }
+//        public TsjakkaFile(String filename, double fileSize, String ip, Icon icon) {
+//        this.filename = filename;
+//        this.fileSize = fileSize;
+//        this.ip = ip;
+//        this.icon = icon;
+//    }
 
     public TsjakkaFile(String filename, double fileSize) {
         this.filename = filename;
@@ -60,9 +60,9 @@ public class TsjakkaFile implements Serializable {
     }
     
 
-    public Icon getIcon() {
-        return this.icon;
-    }
+//    public Icon getIcon() {
+//        return this.icon;
+//    }
 
     @Override
     public String toString() {
