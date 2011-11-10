@@ -59,6 +59,7 @@ public class DomeinController extends Observable {
         }
         if (!ownIp.equals(inIpString)) {
             this.userMap.put(inIp, inPcname);
+            userList.add(inPcname);
             setChanged();
             notifyObservers();
         }
@@ -99,10 +100,6 @@ public class DomeinController extends Observable {
     }
 
     public String getUserNameList(int index) {
-        for (Map.Entry<InetAddress, String> anEntry : userMap.entrySet()) {
-            String pcname = anEntry.getValue();
-            userList.add(pcname);
-        }
         return userList.get(index);
     }
 
