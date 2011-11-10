@@ -14,7 +14,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.JFrame;
+import p2p.Broadcaster;
 import p2p.DomeinController;
 import p2p.FileTableModel;
 import p2p.UserListModel;
@@ -23,7 +28,7 @@ import p2p.UserListModel;
  *
  * @author Jimmy
  */
-public class HoofdFrame extends JFrame implements ActionListener {
+public class HoofdFrame extends JFrame implements ActionListener, WindowListener {
     
     private DomeinController dc;
     private FileTableModel model;
@@ -33,7 +38,7 @@ public class HoofdFrame extends JFrame implements ActionListener {
         
         this.dc = dc;
         model = new FileTableModel(dc);
-        
+        this.addWindowListener(this);
         initComponents();
         setTableModel();
         setListModel();
@@ -303,6 +308,36 @@ public class HoofdFrame extends JFrame implements ActionListener {
             
         
             
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+        executor.execute(new Broadcaster(false));
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
     }
 
 }
