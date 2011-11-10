@@ -230,8 +230,13 @@ public class DomeinController extends Observable {
         }
     }
     
-    public String getDirectory(String filename, String ip) {        
-        List<TsjakkaFile> list = sharedTsjakkaMap.get(ip);
+    public String getDirectory(String filename, String ip) {
+        List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
+        try {
+            list = sharedTsjakkaMap.get(InetAddress.getByName(ip));
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for (TsjakkaFile file : list) {
             if (file.getFilename().equals(filename))
                 return file.getDirectory();
