@@ -39,7 +39,8 @@ public class FileTransferer implements Runnable {
             BufferedReader in = new BufferedReader( new InputStreamReader(link.getInputStream()));
             inMessage  = in.readLine();
             filename = inMessage;           
-//            String strDir = properties.getProperty("directoryshared");           
+//            String strDir = properties.getProperty("directoryshared");
+            System.out.println(filename);
             File myFile = new File(filename);
             byte[] mybytearray = new byte[(int) myFile.length()];
             FileInputStream fis = new FileInputStream(myFile);
