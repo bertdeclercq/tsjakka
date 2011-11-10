@@ -47,7 +47,7 @@ public class HoofdFrame extends JFrame implements ActionListener {
                 if (e.getClickCount() == 2){
                     int row=jTable1.rowAtPoint(e.getPoint());
                     int col=jTable1.columnAtPoint(e.getPoint());
-                    if (col == 1)
+                    if (col == 0)
                      dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
                 }
             }
