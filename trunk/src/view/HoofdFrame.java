@@ -84,9 +84,9 @@ public class HoofdFrame extends JFrame implements ActionListener {
         setBackground(new java.awt.Color(153, 153, 153));
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
 
-        jPanel1.setBackground(new java.awt.Color(255, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(204, 0, 0));
 
-        leftPanel.setBackground(new java.awt.Color(255, 0, 0));
+        leftPanel.setBackground(new java.awt.Color(204, 0, 0));
         leftPanel.setPreferredSize(new java.awt.Dimension(174, 495));
 
         welcomeLabel.setFont(new java.awt.Font("Tahoma", 0, 14));
@@ -95,8 +95,8 @@ public class HoofdFrame extends JFrame implements ActionListener {
         availableLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         availableLabel.setText("available users:");
 
-        userList.setBackground(new java.awt.Color(153, 0, 0));
-        userList.setForeground(new java.awt.Color(255, 255, 255));
+        userList.setBackground(new java.awt.Color(0, 0, 0));
+        userList.setForeground(new java.awt.Color(0, 255, 0));
         jScrollPane2.setViewportView(userList);
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
@@ -123,7 +123,7 @@ public class HoofdFrame extends JFrame implements ActionListener {
                 .addGap(29, 29, 29))
         );
 
-        topPanel.setBackground(new java.awt.Color(255, 0, 0));
+        topPanel.setBackground(new java.awt.Color(204, 0, 0));
 
         toggleLog.setText("Sharing");
 
@@ -152,7 +152,9 @@ public class HoofdFrame extends JFrame implements ActionListener {
 
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
+        jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
         jTextArea1.setColumns(20);
+        jTextArea1.setForeground(new java.awt.Color(102, 255, 0));
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
 
@@ -167,7 +169,6 @@ public class HoofdFrame extends JFrame implements ActionListener {
             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
         );
 
-        jTable1.setBackground(new java.awt.Color(153, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
