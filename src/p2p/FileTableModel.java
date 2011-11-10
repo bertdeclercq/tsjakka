@@ -6,10 +6,7 @@ package p2p;
 
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.Icon;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableCellRenderer;
-import sun.swing.MenuItemLayoutHelper.ColumnAlignment;
 
 /**
  *
@@ -47,7 +44,7 @@ public class FileTableModel extends AbstractTableModel implements Observer {
         {
             case 0 : return dc.getFileIcon(rowIndex);
             case 1 : return dc.getFileName(rowIndex);
-            case 2 : return Double.toString(dc.getFileSize(rowIndex));  
+            case 2 : return Double.toString(dc.getFileSizeInMB(rowIndex));  
         }
         return null;
     }
