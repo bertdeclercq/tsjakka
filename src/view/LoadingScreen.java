@@ -10,19 +10,25 @@
  */
 package view;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import p2p.DomeinController;
 
 /**
  *
  * @author Jimmy
  */
-public class LoadingScreen extends javax.swing.JFrame {
+public class LoadingScreen extends javax.swing.JFrame implements WindowListener {
     
     DomeinController dc;
 
     /** Creates new form loadingscreen */
     public LoadingScreen() {
         initComponents();
+        this.addWindowListener(this);
+            
+        Thread t = new Timer();
+            t.start();
     }
 
     LoadingScreen(DomeinController domeinController) {
@@ -95,4 +101,48 @@ public class LoadingScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        StartupGui.runHoofdFrame();
+        this.setVisible(false);
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
+    
+    class Timer extends Thread{
+           int time = 10;
+           public void run(){
+         while(time-- > 0){
+               try{
+                 sleep(250);                     
+               }catch(InterruptedException e){}
+             }
+            LoadingScreen.this.processWindowEvent(
+                 new WindowEvent(
+                       LoadingScreen.this, WindowEvent.WINDOW_CLOSED));
+           }
+    }
 }
