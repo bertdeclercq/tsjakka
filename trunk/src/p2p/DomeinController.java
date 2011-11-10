@@ -144,9 +144,9 @@ public class DomeinController extends Observable {
         return this.getSharedTsjakkaFilesList().get(index).getIp();
     }
     
-    public Icon getFileIcon(int index) {
-        return this.getSharedTsjakkaFilesList().get(index).getIcon();
-    }
+//    public Icon getFileIcon(int index) {
+//        return this.getSharedTsjakkaFilesList().get(index).getIcon();
+//    }
 
     public void sendDownloadRequest(String filename, String ip) {
         Socket link = null;
