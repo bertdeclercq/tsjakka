@@ -89,20 +89,23 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         setBackground(new java.awt.Color(153, 153, 153));
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
 
-        jPanel1.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 102));
 
-        leftPanel.setBackground(new java.awt.Color(204, 0, 0));
+        leftPanel.setBackground(new java.awt.Color(0, 0, 102));
         leftPanel.setPreferredSize(new java.awt.Dimension(174, 495));
 
+        welcomeLabel.setBackground(new java.awt.Color(204, 204, 255));
         welcomeLabel.setFont(new java.awt.Font("Stencil", 0, 16)); // NOI18N
+        welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
         welcomeLabel.setText("Welcome " + dc.getUsername());
 
         availableLabel.setFont(new java.awt.Font("Stencil", 0, 12)); // NOI18N
+        availableLabel.setForeground(new java.awt.Color(255, 255, 255));
         availableLabel.setText("available users:");
 
         userList.setBackground(new java.awt.Color(0, 0, 0));
         userList.setFont(new java.awt.Font("Stencil", 0, 12)); // NOI18N
-        userList.setForeground(new java.awt.Color(0, 255, 0));
+        userList.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(userList);
 
         javax.swing.GroupLayout leftPanelLayout = new javax.swing.GroupLayout(leftPanel);
@@ -129,7 +132,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
                 .addGap(29, 29, 29))
         );
 
-        topPanel.setBackground(new java.awt.Color(204, 0, 0));
+        topPanel.setBackground(new java.awt.Color(0, 0, 102));
 
         toggleLog.setFont(new java.awt.Font("Stencil", 0, 11)); // NOI18N
         toggleLog.setText("Sharing");
@@ -243,7 +246,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(downloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(downloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -257,7 +260,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
