@@ -18,6 +18,10 @@ public class TsjakkaFile implements Serializable {
     private String directory;
     private String ip;
     //private Icon icon;
+    
+    public TsjakkaFile(String filename) {
+        this.filename = filename;
+    }
 
     public TsjakkaFile(String filename, double fileSize, String directory, String ip) {
         this.filename = filename;
@@ -74,8 +78,6 @@ public class TsjakkaFile implements Serializable {
     public String getDirectory() {
         return directory;
     }
-    
-    
     
     
 }

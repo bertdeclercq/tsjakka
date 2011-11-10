@@ -21,29 +21,28 @@ public class SharedFiles {
     private static Properties properties;
     private static String ip;
 
-    private SharedFiles() {        
+    private SharedFiles() {
         sharedTsjakkaList = new ArrayList<TsjakkaFile>();
         properties = new Properties();
         updateSharedList();
     }
-    
+
     public static synchronized SharedFiles getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new SharedFiles();
+        }
         return instance;
     }
-
 
     public List<TsjakkaFile> getSharedTsjakkaList() {
         updateSharedList();
         return sharedTsjakkaList;
     }
-    
-    
-    
+
     public static void updateSharedList() {
-        if (!sharedTsjakkaList.isEmpty())
+        if (!sharedTsjakkaList.isEmpty()) {
             sharedTsjakkaList.clear();
+        }
         try {
             FileInputStream in = new FileInputStream(CONFIG_FILE);
             properties.load(in);
@@ -56,8 +55,9 @@ public class SharedFiles {
 
     private static void findShared(String strDir) {
         File dir = new File(strDir);
-        if (!dir.exists())
+        if (!dir.exists()) {
             dir.mkdirs();
+        }
         FilenameFilter filter = new FilenameFilter() {
 
             @Override
@@ -81,7 +81,7 @@ public class SharedFiles {
             }
         }
     }
-    
+
     public void changeDirectory(String dir) {
         properties.setProperty("directoryshared", dir);
         try {
@@ -97,8 +97,4 @@ public class SharedFiles {
     public void setIp(String ip) {
         this.ip = ip;
     }
-
-
-    
-    
 }
