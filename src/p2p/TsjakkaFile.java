@@ -5,7 +5,6 @@
 package p2p;
 
 import java.io.Serializable;
-import javax.swing.Icon;
 
 /**
  *
