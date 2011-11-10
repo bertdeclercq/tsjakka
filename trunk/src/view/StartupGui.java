@@ -7,6 +7,7 @@ package view;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.Timer;
+import javax.swing.JFrame;
 import p2p.DomeinController;
 
 /**
@@ -47,23 +48,29 @@ public class StartupGui {
       
         
         
-//        loadScreen = new LoadingScreen();
-//        loadScreen.setVisible(true);
-//        loadScreen.setLocationRelativeTo(null);
-//        loadScreen.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
-//        loadScreen.removeNotify();
-//        loadScreen.setUndecorated(true);
-//        loadScreen.addNotify();
+        loadScreen = new LoadingScreen();
+        loadScreen.setVisible(true);
+        loadScreen.setLocationRelativeTo(null);
+        loadScreen.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
+        loadScreen.removeNotify();
+        loadScreen.setUndecorated(true);
+        loadScreen.addNotify();
+       
         
         
         
         
         
         
+    
+        
+    }   
+    
+    public static void runHoofdFrame()
+    {
         hoofdFrame = new HoofdFrame(new DomeinController());
         hoofdFrame.setVisible(true);
         hoofdFrame.setLocationRelativeTo(null);
         hoofdFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
-        
-    }   
+    }
 }
