@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 
 /**
  *
@@ -144,7 +144,7 @@ public class DomeinController extends Observable {
         return this.getSharedTsjakkaFilesList().get(index).getIp();
     }
     
-    public ImageIcon getFileIcon(int index) {
+    public Icon getFileIcon(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getIcon();
     }
 
