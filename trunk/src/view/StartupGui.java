@@ -6,6 +6,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.util.Timer;
 import p2p.DomeinController;
 
 /**
@@ -15,6 +16,9 @@ import p2p.DomeinController;
 public class StartupGui {
     
     private static HoofdFrame hoofdFrame;
+    private static LoadingScreen loadScreen;
+    
+    
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -41,6 +45,19 @@ public class StartupGui {
         }
         //</editor-fold>
       
+        
+        
+//        loadScreen = new LoadingScreen();
+//        loadScreen.setVisible(true);
+//        loadScreen.setLocationRelativeTo(null);
+//        loadScreen.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
+//        loadScreen.removeNotify();
+//        loadScreen.setUndecorated(true);
+//        loadScreen.addNotify();
+        
+        
+        
+        
         
         
         hoofdFrame = new HoofdFrame(new DomeinController());
