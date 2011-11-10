@@ -24,6 +24,7 @@ public class FileTableModel extends AbstractTableModel implements Observer {
     
     
     
+    @Override
     public String getColumnName(int kolom){
         return COLUMNAMES[kolom];
     }
@@ -69,8 +70,5 @@ public class FileTableModel extends AbstractTableModel implements Observer {
         } else {
             return o.getClass();
         }
-    }
-    
-    
-    
+    }    
 }

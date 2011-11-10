@@ -15,12 +15,14 @@ public class TsjakkaFile implements Serializable {
     
     private String filename;
     private double fileSize;
+    private String directory;
     private String ip;
     //private Icon icon;
 
-    public TsjakkaFile(String filename, double fileSize, String ip) {
+    public TsjakkaFile(String filename, double fileSize, String directory, String ip) {
         this.filename = filename;
         this.fileSize = fileSize;
+        this.directory = directory;
         this.ip = ip;
     }
     
@@ -67,6 +69,10 @@ public class TsjakkaFile implements Serializable {
     @Override
     public String toString() {
         return "File : " + this.filename + " with : " + this.getFileSizeInMegaByte() + "MB";
+    }
+    
+    public String getDirectory() {
+        return directory;
     }
     
     

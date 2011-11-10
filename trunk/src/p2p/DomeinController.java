@@ -163,7 +163,8 @@ public class DomeinController extends Observable {
             InetAddress host = InetAddress.getByName(ip);
             link = new Socket(host, 1238);
             PrintWriter out = new PrintWriter(link.getOutputStream(), true);
-            out.println(filename);
+            // 
+            out.println(getDirectory(filename, ip));
 
             FileInputStream in = new FileInputStream(CONFIG_FILE);
             properties.load(in);
@@ -227,6 +228,15 @@ public class DomeinController extends Observable {
         finally {
         return username;
         }
+    }
+    
+    public String getDirectory(String filename, String ip) {        
+        List<TsjakkaFile> list = sharedTsjakkaMap.get(ip);
+        for (TsjakkaFile file : list) {
+            if (file.getFilename().equals(filename))
+                return file.getDirectory();
+        }
+        return null;
     }
 
 
