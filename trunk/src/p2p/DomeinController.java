@@ -8,6 +8,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -129,6 +131,8 @@ public class DomeinController extends Observable {
 
             }
         }
+        String[] extensions = {"txt"};
+        filterList(Arrays.asList(extensions));
         return sharedFilesList;
     }
 
@@ -244,5 +248,35 @@ public class DomeinController extends Observable {
         return null;
     }
 
+    // filter
+    public List<TsjakkaFile> filterList(List<String> extensions) {
+        List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
+        for (TsjakkaFile tsjakkaFile : sharedFilesList) {
+            File file = new File(tsjakkaFile.getFilename());
+            file.list(new FileListFilter(extensions));
+            if (file != null)
+                list.add(new TsjakkaFile(file.getName()));
+        }
+        return list;
+    }
 
+    class FileListFilter implements FilenameFilter {
+
+        private List<String> extensions;
+
+        public FileListFilter(List<String> extensions) {
+            this.extensions = extensions;
+        }
+
+        @Override
+        public boolean accept(File directory, String filename) {
+            boolean fileOK = true;
+
+            if (extensions != null) {
+                for (String type : extensions)
+                    fileOK &= filename.endsWith('.' + type);
+            }
+            return fileOK;
+        }
+    }
 }
