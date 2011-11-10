@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  */
 public class BroadcastListener implements Runnable {
 
+    private static final long serialVersionUID = 1;
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
     private String inPcname,ownIp;
