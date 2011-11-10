@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -76,19 +76,20 @@ public class DomeinController extends Observable {
     }
 
     public void addToSharedTsjakkaMap(InetAddress inIp, ArrayList<TsjakkaFile> sharedList) {
-        String ownIp = "";
-        String inIpString = "";
-        try {
-            inIpString = inIp.getHostAddress();
-            ownIp = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("Own files : " + sharedList);
-        if (!ownIp.equals(inIpString)) {
+//        String ownIp = "";
+//        String inIpString = "";
+//        try {
+//            inIpString = inIp.getHostAddress();
+//            ownIp = InetAddress.getLocalHost().getHostAddress();
+//        } catch (UnknownHostException ex) {
+//            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        System.out.println("Own files : " + sharedList);
+//        if (!ownIp.equals(inIpString)) {
         this.sharedTsjakkaMap.put(inIp, sharedList);
         setChanged();
-        notifyObservers();}
+        notifyObservers();
+//    }
     }
 
     public void removeSharedTsjakkaList(InetAddress ip) {
@@ -134,7 +135,7 @@ public class DomeinController extends Observable {
 
     }
 
-    public double getFileSize(int index) {
+    public double getFileSizeInMB(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
     }
     
@@ -143,7 +144,7 @@ public class DomeinController extends Observable {
         return this.getSharedTsjakkaFilesList().get(index).getIp();
     }
     
-    public Icon getFileIcon(int index) {
+    public ImageIcon getFileIcon(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getIcon();
     }
 
@@ -171,7 +172,7 @@ public class DomeinController extends Observable {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-            FileOutputStream fos = new FileOutputStream(strDir + "/" + "source-copy.txt");
+            FileOutputStream fos = new FileOutputStream(strDir + "/" + filename);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
             bytesRead = is.read(mybytearray, 0, mybytearray.length);
             current = bytesRead;
