@@ -25,7 +25,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
 
 /**
  *
@@ -77,20 +76,20 @@ public class DomeinController extends Observable {
     }
 
     public void addToSharedTsjakkaMap(InetAddress inIp, ArrayList<TsjakkaFile> sharedList) {
-//        String ownIp = "";
-//        String inIpString = "";
-//        try {
-//            inIpString = inIp.getHostAddress();
-//            ownIp = InetAddress.getLocalHost().getHostAddress();
-//        } catch (UnknownHostException ex) {
-//            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        System.out.println("Own files : " + sharedList);
-//        if (!ownIp.equals(inIpString)) {
+        String ownIp = "";
+        String inIpString = "";
+        try {
+            inIpString = inIp.getHostAddress();
+            ownIp = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Own files : " + sharedList);
+        if (!ownIp.equals(inIpString)) {
         this.sharedTsjakkaMap.put(inIp, sharedList);
         setChanged();
         notifyObservers();
-//    }
+    }
     }
 
     public void removeSharedTsjakkaList(InetAddress ip) {
@@ -184,7 +183,11 @@ public class DomeinController extends Observable {
             bos.close();
         } catch (IOException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
+        } catch (ArrayIndexOutOfBoundsException aex)
+        {
+            System.out.println("Mongool download es geen leeg bestand, wtf!");
+        }
+        finally {
             try {
                 link.close();
             } catch (IOException ex) {
