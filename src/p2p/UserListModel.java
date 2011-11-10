@@ -28,7 +28,7 @@ public class UserListModel extends AbstractListModel implements Observer {
 
     @Override
     public Object getElementAt(int index) {
-       return dc.getUserNameList(index);
+       return dc.getUserNameUser(index);
         
     }
 

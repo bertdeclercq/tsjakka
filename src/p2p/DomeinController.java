@@ -58,7 +58,6 @@ public class DomeinController extends Observable {
         }
         if (!ownIp.equals(inIpString)) {
             this.userMap.put(inIp, inPcname);
-            userList.add(inPcname);
             setChanged();
             notifyObservers();
         }
@@ -84,7 +83,6 @@ public class DomeinController extends Observable {
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("Own files : " + sharedList);
         if (!ownIp.equals(inIpString)) {
         this.sharedTsjakkaMap.put(inIp, sharedList);
         setChanged();
@@ -98,8 +96,20 @@ public class DomeinController extends Observable {
         notifyObservers();
     }
 
-    public String getUserNameList(int index) {
-        return userList.get(index);
+    public String getUserNameUser(int index) {
+        return getUserNameList().get(index);
+    }
+    
+    public List<String> getUserNameList()
+    {
+        Collection<String> coll = userMap.values();
+        userList.clear();
+        
+        for (String content : coll)
+        {
+            userList.add(content);
+        }
+        return userList;
     }
 
     public int getUserMapSize() {
