@@ -41,6 +41,7 @@ public class DomeinController extends Observable {
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
     private List<String> userList = new ArrayList<String>();
     private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
+    private StatusMessage statusMessage = new StatusMessage(this);
     ExecutorService executor = Executors.newFixedThreadPool(4);
 
     public DomeinController() {
@@ -220,6 +221,16 @@ public class DomeinController extends Observable {
 
     public void signin() {
         onOffBroadcaster.setFlag(true);
+    }
+    
+    public void addStatusMessage(String status){
+        statusMessage.setStatus(status);
+        setChanged();
+        notifyObservers();
+    }
+    
+    public String getStatusMessage(){
+       return statusMessage.getStatus();
     }
 
     public String getUsername() {

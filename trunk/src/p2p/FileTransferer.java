@@ -24,6 +24,7 @@ public class FileTransferer implements Runnable {
     private String filename;
     private Properties properties = new Properties();
     private String CONFIG_FILE = "config";
+    
 
     public FileTransferer(Socket link) {
         this.link = link;
@@ -48,6 +49,7 @@ public class FileTransferer implements Runnable {
             bis.read(mybytearray, 0, mybytearray.length);
             OutputStream os = link.getOutputStream();
             System.out.println("Sending...");
+            StatusMessage.setStatus("Sending file");
             os.write(mybytearray, 0, mybytearray.length);
             os.flush();
         } catch (IOException e) {
