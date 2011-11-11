@@ -22,6 +22,7 @@ import javax.swing.JFrame;
 import p2p.Broadcaster;
 import p2p.DomeinController;
 import p2p.FileTableModel;
+import p2p.StatusMessage;
 import p2p.UserListModel;
 
 /**
@@ -42,6 +43,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         initComponents();
         setTableModel();
         setListModel();
+        
         toggleLog.setSelected(true);
         toggleLog.addActionListener(this);
         jTable1.addMouseListener(new MouseAdapter() 
@@ -95,11 +97,11 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         leftPanel.setPreferredSize(new java.awt.Dimension(174, 495));
 
         welcomeLabel.setBackground(new java.awt.Color(204, 204, 255));
-        welcomeLabel.setFont(new java.awt.Font("Stencil", 0, 16)); // NOI18N
+        welcomeLabel.setFont(new java.awt.Font("Stencil", 0, 16));
         welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
         welcomeLabel.setText("Welcome " + dc.getUsername());
 
-        availableLabel.setFont(new java.awt.Font("Stencil", 0, 12)); // NOI18N
+        availableLabel.setFont(new java.awt.Font("Stencil", 0, 12));
         availableLabel.setForeground(new java.awt.Color(255, 255, 255));
         availableLabel.setText("available users:");
 
@@ -134,7 +136,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
 
         topPanel.setBackground(new java.awt.Color(0, 0, 102));
 
-        toggleLog.setFont(new java.awt.Font("Stencil", 0, 11)); // NOI18N
+        toggleLog.setFont(new java.awt.Font("Stencil", 0, 11));
         toggleLog.setText("Sharing");
 
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/logoKleiner.png"))); // NOI18N
@@ -163,7 +165,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
         jTextArea1.setColumns(20);
         jTextArea1.setForeground(new java.awt.Color(102, 255, 0));
-        jTextArea1.setRows(5);
+        jTextArea1.setRows(4);
         jScrollPane3.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout statusPaneLayout = new javax.swing.GroupLayout(statusPane);
@@ -174,10 +176,10 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         );
         statusPaneLayout.setVerticalGroup(
             statusPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
         );
 
-        jTable1.setFont(new java.awt.Font("Stencil", 0, 11)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Stencil", 0, 11));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -211,7 +213,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
         jTable1.getColumnModel().getColumn(2).setMaxWidth(150);
 
-        downloadButton.setFont(new java.awt.Font("Stencil", 0, 11)); // NOI18N
+        downloadButton.setFont(new java.awt.Font("Stencil", 0, 11));
         downloadButton.setText("Download");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -247,7 +249,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(downloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(statusPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -294,6 +296,11 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     private void setListModel() {
         userList.setModel(new UserListModel(dc));
     }
+    
+    private void setStatusMessage(){
+        if(dc.getStatusMessage()!=null)
+        jTextArea1.append("\n"+ dc.getStatusMessage());
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -301,12 +308,16 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         {
             dc.signin();
             toggleLog.setText("Sharing");
+            StatusMessage.setStatus("You are sharing files.");
+            setStatusMessage();
         }
         
         if (!(toggleLog.isSelected()))
         {
             dc.signout();
             toggleLog.setText("Not sharing");
+            StatusMessage.setStatus("You are no longer sharing files.");
+            setStatusMessage();
         }
             
         
