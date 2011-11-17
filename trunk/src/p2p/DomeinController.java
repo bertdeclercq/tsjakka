@@ -270,11 +270,12 @@ public class DomeinController extends Observable {
                 }
             }
         }
+        setChanged();
+        notifyObservers();
         return list;
     }
     
     public void addToFilterList(String extension) {
-        filterList.clear();
         filterList.add(extension);
     }
     
