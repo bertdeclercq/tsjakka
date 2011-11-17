@@ -34,6 +34,7 @@ public class FileTransferer implements Runnable {
     public void run() {
         String inMessage;
         try {
+            int count;
             FileInputStream infile = new FileInputStream(CONFIG_FILE);
             properties.load(infile);
             infile.close();
@@ -41,16 +42,16 @@ public class FileTransferer implements Runnable {
             inMessage  = in.readLine();
             filename = inMessage;           
 //            String strDir = properties.getProperty("directoryshared");
-            System.out.println(filename);
             File myFile = new File(filename);
-            byte[] mybytearray = new byte[(int) myFile.length()];
+            byte[] mybytearray = new byte[8192];
             FileInputStream fis = new FileInputStream(myFile);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            bis.read(mybytearray, 0, mybytearray.length);
+//            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
+//            bis.read(mybytearray, 0, mybytearray.length);
             OutputStream os = link.getOutputStream();
             System.out.println("Sending...");
-            StatusMessage.setStatus("Sending file");
-            os.write(mybytearray, 0, mybytearray.length);
+            while((count = fis.read(mybytearray)) > 0){
+                os.write(mybytearray, 0, count);
+            }
             os.flush();
         } catch (IOException e) {
             e.printStackTrace();
