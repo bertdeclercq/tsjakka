@@ -78,5 +78,8 @@ public class TsjakkaFile implements Serializable {
         return directory;
     }
     
-    
+    public String getExtension() {
+        int dotpos = filename.lastIndexOf(".");
+        return filename.substring(dotpos + 1);
+    }
 }

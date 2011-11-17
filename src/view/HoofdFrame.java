@@ -12,6 +12,8 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
@@ -29,7 +31,7 @@ import p2p.UserListModel;
  *
  * @author Jimmy
  */
-public class HoofdFrame extends JFrame implements ActionListener, WindowListener {
+public class HoofdFrame extends JFrame implements ActionListener, WindowListener, KeyListener {
 
     private DomeinController dc;
     private FileTableModel model;
@@ -44,6 +46,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         setTableModel();
         setListModel();
 
+        filterTextField.addKeyListener(this);
         toggleLog.setSelected(true);
         toggleLog.addActionListener(this);
         downloadButton.addActionListener(this);
@@ -86,6 +89,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         downloadButton = new javax.swing.JButton();
+        filterTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tsjakka!");
@@ -107,7 +111,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         availableLabel.setText("available users:");
 
         userList.setBackground(new java.awt.Color(0, 0, 0));
-        userList.setFont(new java.awt.Font("Stencil", 0, 12)); // NOI18N
+        userList.setFont(new java.awt.Font("Stencil", 0, 12));
         userList.setForeground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setViewportView(userList);
 
@@ -230,7 +234,8 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(filterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(211, 211, 211)
                                 .addComponent(downloadButton))))
@@ -246,7 +251,9 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
                     .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(filterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(downloadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -274,6 +281,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel availableLabel;
     private javax.swing.JButton downloadButton;
+    private javax.swing.JTextField filterTextField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -360,5 +368,21 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
 
     @Override
     public void windowDeactivated(WindowEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyChar() == e.VK_ENTER) {
+            System.out.println("ENTER PRESSED");
+            dc.addToFilterList(filterTextField.getText());
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }

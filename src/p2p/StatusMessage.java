@@ -33,7 +33,7 @@ public class StatusMessage implements Observer {
     @Override
     public void update(Observable o, Object arg) {
        // tga werken, ma nie oe dat moet
-                System.out.println("updateMethod in statusMessage freakt!");
+//                System.out.println("updateMethod in statusMessage freakt!");
         
     }
 }
