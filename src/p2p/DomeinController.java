@@ -132,6 +132,9 @@ public class DomeinController extends Observable {
                 }
             }
         }
+        if (!filterList.isEmpty()) {
+            return filterList();
+        }
         return sharedFilesList;
     }
 
@@ -258,7 +261,7 @@ public class DomeinController extends Observable {
     }
 
     // filter
-    public List<TsjakkaFile> FilterList() {
+    public List<TsjakkaFile> filterList() {
         List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
         for (String extension : filterList) {
             for (TsjakkaFile tsjakkaFile : sharedFilesList) {
@@ -273,10 +276,9 @@ public class DomeinController extends Observable {
     public void addToFilterList(String extension) {
         filterList.clear();
         filterList.add(extension);
-        sharedFilesList = FilterList();
     }
     
-    public List<String> getFilterList() {
-        return filterList;
+    public void emptyList() {
+        filterList.clear();
     }
 }
