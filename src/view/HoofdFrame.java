@@ -169,6 +169,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
 
         jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
         jTextArea1.setColumns(20);
+        jTextArea1.setEditable(false);
         jTextArea1.setForeground(new java.awt.Color(102, 255, 0));
         jTextArea1.setRows(4);
         jScrollPane3.setViewportView(jTextArea1);
