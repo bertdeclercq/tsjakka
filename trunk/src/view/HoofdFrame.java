@@ -377,10 +377,15 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyChar() == e.VK_ENTER) {
-            if (filterTextField.getText().trim().equals(""))
+            if (filterTextField.getText().trim().equals("")) {
                 dc.emptyList();
-            else
+                StatusMessage.setStatus("Filter: none");
+                setStatusMessage();
+            } else {
                 dc.addToFilterList(filterTextField.getText());
+                StatusMessage.setStatus("Filter: " + dc.getFilterList());
+                setStatusMessage();
+            }
             filterTextField.setText("");
         }
     }
