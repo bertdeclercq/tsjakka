@@ -41,6 +41,7 @@ public class DomeinController extends Observable {
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
     private List<String> userList = new ArrayList<String>();
     private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
+    private List<String> filterList = new ArrayList<String>();
     private StatusMessage statusMessage = new StatusMessage(this);
     ExecutorService executor = Executors.newFixedThreadPool(4);
 
@@ -86,11 +87,11 @@ public class DomeinController extends Observable {
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (!ownIp.equals(inIpString)) {
+       // if (!ownIp.equals(inIpString)) {
         this.sharedTsjakkaMap.put(inIp, sharedList);
         setChanged();
         notifyObservers();
-    }
+   // }
     }
 
     public void removeSharedTsjakkaList(InetAddress ip) {
@@ -129,11 +130,8 @@ public class DomeinController extends Observable {
                 if (!sharedFilesList.contains(file)) {
                     sharedFilesList.add(file);
                 }
-
             }
         }
-        String[] extensions = {"txt"};
-        sharedFilesList = filterList(Arrays.asList(extensions));
         return sharedFilesList;
     }
 
@@ -260,34 +258,25 @@ public class DomeinController extends Observable {
     }
 
     // filter
-    public List<TsjakkaFile> filterList(List<String> extensions) {
+    public List<TsjakkaFile> FilterList() {
         List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
-        for (TsjakkaFile tsjakkaFile : sharedFilesList) {
-            File file = new File(tsjakkaFile.getFilename());
-            file.list(new FileListFilter(extensions));
-            if (file != null)
-                list.add(new TsjakkaFile(file.getName()));
+        for (String extension : filterList) {
+            for (TsjakkaFile tsjakkaFile : sharedFilesList) {
+                if (tsjakkaFile.getExtension().equals(extension)) {
+                    list.add(tsjakkaFile);
+                }
+            }
         }
         return list;
     }
-
-    class FileListFilter implements FilenameFilter {
-
-        private List<String> extensions;
-
-        public FileListFilter(List<String> extensions) {
-            this.extensions = extensions;
-        }
-
-        @Override
-        public boolean accept(File directory, String filename) {
-            boolean fileOK = true;
-
-            if (extensions != null) {
-                for (String type : extensions)
-                    fileOK &= filename.endsWith('.' + type);
-            }
-            return fileOK;
-        }
+    
+    public void addToFilterList(String extension) {
+        filterList.clear();
+        filterList.add(extension);
+        sharedFilesList = FilterList();
+    }
+    
+    public List<String> getFilterList() {
+        return filterList;
     }
 }
