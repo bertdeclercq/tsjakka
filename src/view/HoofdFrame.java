@@ -221,6 +221,9 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         downloadButton.setFont(new java.awt.Font("Stencil", 0, 11));
         downloadButton.setText("Download");
 
+        filterTextField.setToolTipText("");
+        filterTextField.setName(""); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
