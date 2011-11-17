@@ -381,6 +381,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
                 dc.emptyList();
             else
                 dc.addToFilterList(filterTextField.getText());
+            filterTextField.setText("");
         }
     }
 
