@@ -194,6 +194,7 @@ public class DomeinController extends Observable {
                 if (bytesRead >= 0) {
                     current += bytesRead;
                 }
+                
             } while (bytesRead > -1);
             bos.write(mybytearray, 0, current);
             bos.flush();
