@@ -283,4 +283,8 @@ public class DomeinController extends Observable {
     public void emptyList() {
         filterList.clear();
     }
+    
+    public List<String> getFilterList() {
+        return filterList;
+    }
 }
