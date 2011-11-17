@@ -8,7 +8,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -16,7 +15,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -158,9 +156,6 @@ public class DomeinController extends Observable {
 //    }
     public void sendDownloadRequest(String filename, String ip) {
         Socket link = null;
-        int filesize = 8192;
-        int bytesRead;
-        int current = 0;
         try {
             InetAddress host = InetAddress.getByName(ip);
             link = new Socket(host, 1238);
@@ -180,28 +175,23 @@ public class DomeinController extends Observable {
             }
             
             // inlezen van binnenkomend bestand
-            byte[] mybytearray = new byte[filesize];
             InputStream is = link.getInputStream();
             FileOutputStream fos = new FileOutputStream(strDir + "/" + filename);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
-            current = 0;
-            bytesRead = is.read(mybytearray, current, mybytearray.length);
-            do {             
-                if (bytesRead > 0) {
-                    bos.write(mybytearray, current, mybytearray.length);
-                    current += bytesRead;
-                    System.out.println("current na optelling:" + current);
-                }
-                bytesRead = is.read(mybytearray, current, mybytearray.length);
-                System.out.println("stukske gekregen!!" + bytesRead + " " + current);
-            } while (bytesRead != -1);
-            System.out.println(" gekregen gedaan");
+            
+            int length;
+            byte[] buffer = new byte[65536];
+            while((length = is.read(buffer)) != -1)
+            {
+                bos.write(buffer, 0, length);
+            }
             bos.flush();
+            StatusMessage.setStatus("Bestand ontvangen!");
             bos.close();
         } catch (IOException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ArrayIndexOutOfBoundsException aex) {
-            System.out.println("Mongool download es geen leeg bestand, wtf!");
+            StatusMessage.setStatus("Mongool, download es geen leeg bestand!");
             aex.printStackTrace();
         } finally {
             try {

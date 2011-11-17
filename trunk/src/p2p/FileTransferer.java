@@ -41,16 +41,12 @@ public class FileTransferer implements Runnable {
             BufferedReader in = new BufferedReader( new InputStreamReader(link.getInputStream()));
             inMessage  = in.readLine();
             filename = inMessage;           
-//            String strDir = properties.getProperty("directoryshared");
             File myFile = new File(filename);
-            byte[] mybytearray = new byte[8192];
+            byte[] mybytearray = new byte[65536];
             FileInputStream fis = new FileInputStream(myFile);
-//            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
-//            bis.read(mybytearray, 0, mybytearray.length);
             OutputStream os = link.getOutputStream();
-            
+            StatusMessage.setStatus("Someone is stealing the following file : " + filename);
             while((count = fis.read(mybytearray)) > 0){
-                System.out.println("Sending...");
                 os.write(mybytearray, 0, count);
             }
             os.flush();

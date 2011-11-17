@@ -337,6 +337,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
             if (col == 0) {
                 dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
             }
+            setStatusMessage();
         }
 
 
