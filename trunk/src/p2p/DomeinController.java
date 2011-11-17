@@ -87,11 +87,11 @@ public class DomeinController extends Observable {
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       // if (!ownIp.equals(inIpString)) {
+        // if (!ownIp.equals(inIpString)) {
         this.sharedTsjakkaMap.put(inIp, sharedList);
         setChanged();
         notifyObservers();
-   // }
+        // }
     }
 
     public void removeSharedTsjakkaList(InetAddress ip) {
@@ -103,14 +103,12 @@ public class DomeinController extends Observable {
     public String getUserNameUser(int index) {
         return getUserNameList().get(index);
     }
-    
-    public List<String> getUserNameList()
-    {
+
+    public List<String> getUserNameList() {
         Collection<String> coll = userMap.values();
         userList.clear();
-        
-        for (String content : coll)
-        {
+
+        for (String content : coll) {
             userList.add(content);
         }
         return userList;
@@ -150,62 +148,62 @@ public class DomeinController extends Observable {
     public double getFileSizeInMB(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
     }
-    
-    public String getFileIp(int index)
-    {
+
+    public String getFileIp(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getIp();
     }
-    
+
 //    public Icon getFileIcon(int index) {
 //        return this.getSharedTsjakkaFilesList().get(index).getIcon();
 //    }
-
     public void sendDownloadRequest(String filename, String ip) {
         Socket link = null;
-        int filesize = 6022386;
+        int filesize = 8192;
         int bytesRead;
         int current = 0;
         try {
             InetAddress host = InetAddress.getByName(ip);
             link = new Socket(host, 1238);
             PrintWriter out = new PrintWriter(link.getOutputStream(), true);
-            // 
+
+            //download request versturen met naam van het bestand en ip.
             out.println(getDirectory(filename, ip));
 
+            //config file inlezen
             FileInputStream in = new FileInputStream(CONFIG_FILE);
             properties.load(in);
             in.close();
-
-
-            byte[] mybytearray = new byte[filesize];
-            InputStream is = link.getInputStream();
-
             String strDir = properties.getProperty("directorydownloads");
             File dir = new File(strDir);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
+            
+            // inlezen van binnenkomend bestand
+            byte[] mybytearray = new byte[filesize];
+            InputStream is = link.getInputStream();
             FileOutputStream fos = new FileOutputStream(strDir + "/" + filename);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
-            bytesRead = is.read(mybytearray, 0, mybytearray.length);
-            current = bytesRead;
-            do {
-                bytesRead = is.read(mybytearray, current, (mybytearray.length - current));
-                if (bytesRead >= 0) {
+            current = 0;
+            bytesRead = is.read(mybytearray, current, mybytearray.length);
+            do {             
+                if (bytesRead > 0) {
+                    bos.write(mybytearray, current, mybytearray.length);
                     current += bytesRead;
+                    System.out.println("current na optelling:" + current);
                 }
-                
-            } while (bytesRead > -1);
-            bos.write(mybytearray, 0, current);
+                bytesRead = is.read(mybytearray, current, mybytearray.length);
+                System.out.println("stukske gekregen!!" + bytesRead + " " + current);
+            } while (bytesRead != -1);
+            System.out.println(" gekregen gedaan");
             bos.flush();
             bos.close();
         } catch (IOException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ArrayIndexOutOfBoundsException aex)
-        {
+        } catch (ArrayIndexOutOfBoundsException aex) {
             System.out.println("Mongool download es geen leeg bestand, wtf!");
-        }
-        finally {
+            aex.printStackTrace();
+        } finally {
             try {
                 link.close();
             } catch (IOException ex) {
@@ -224,15 +222,15 @@ public class DomeinController extends Observable {
     public void signin() {
         onOffBroadcaster.setFlag(true);
     }
-    
-    public void addStatusMessage(String status){
+
+    public void addStatusMessage(String status) {
         statusMessage.setStatus(status);
         setChanged();
         notifyObservers();
     }
-    
-    public String getStatusMessage(){
-       return statusMessage.getStatus();
+
+    public String getStatusMessage() {
+        return statusMessage.getStatus();
     }
 
     public String getUsername() {
@@ -241,12 +239,11 @@ public class DomeinController extends Observable {
             username = InetAddress.getLocalHost().getHostName().toString();
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally {
-        return username;
+        } finally {
+            return username;
         }
     }
-    
+
     public String getDirectory(String filename, String ip) {
         List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
         try {
@@ -255,8 +252,9 @@ public class DomeinController extends Observable {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (TsjakkaFile file : list) {
-            if (file.getFilename().equals(filename))
+            if (file.getFilename().equals(filename)) {
                 return file.getDirectory();
+            }
         }
         return null;
     }
@@ -275,11 +273,11 @@ public class DomeinController extends Observable {
         notifyObservers();
         return list;
     }
-    
+
     public void addToFilterList(String extension) {
         filterList.add(extension);
     }
-    
+
     public void emptyList() {
         filterList.clear();
     }

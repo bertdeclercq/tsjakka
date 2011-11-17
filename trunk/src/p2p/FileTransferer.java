@@ -48,8 +48,9 @@ public class FileTransferer implements Runnable {
 //            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
 //            bis.read(mybytearray, 0, mybytearray.length);
             OutputStream os = link.getOutputStream();
-            System.out.println("Sending...");
+            
             while((count = fis.read(mybytearray)) > 0){
+                System.out.println("Sending...");
                 os.write(mybytearray, 0, count);
             }
             os.flush();
