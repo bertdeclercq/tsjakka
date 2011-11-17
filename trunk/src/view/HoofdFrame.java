@@ -30,32 +30,33 @@ import p2p.UserListModel;
  * @author Jimmy
  */
 public class HoofdFrame extends JFrame implements ActionListener, WindowListener {
-    
+
     private DomeinController dc;
     private FileTableModel model;
 
     /** Creates new form HoofdFrame */
     public HoofdFrame(final DomeinController dc) {
-        
+
         this.dc = dc;
         model = new FileTableModel(dc);
         this.addWindowListener(this);
         initComponents();
         setTableModel();
         setListModel();
-        
+
         toggleLog.setSelected(true);
         toggleLog.addActionListener(this);
-        jTable1.addMouseListener(new MouseAdapter() 
-        {
+        downloadButton.addActionListener(this);
+        jTable1.addMouseListener(new MouseAdapter() {
+
             @Override
-            public void mouseClicked(MouseEvent e)
-            {
-                if (e.getClickCount() == 2){
-                    int row=jTable1.rowAtPoint(e.getPoint());
-                    int col=jTable1.columnAtPoint(e.getPoint());
-                    if (col == 0)
-                     dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int row = jTable1.rowAtPoint(e.getPoint());
+                    int col = jTable1.columnAtPoint(e.getPoint());
+                    if (col == 0) {
+                        dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
+                    }
                 }
             }
         });
@@ -267,7 +268,6 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     /**
      * @param args the command line arguments
      */
@@ -289,39 +289,47 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     private javax.swing.JLabel welcomeLabel;
     // End of variables declaration//GEN-END:variables
 
-        private void setTableModel() {
+    private void setTableModel() {
         jTable1.setModel(model);
     }
 
     private void setListModel() {
         userList.setModel(new UserListModel(dc));
     }
-    
-    private void setStatusMessage(){
-        if(dc.getStatusMessage()!=null)
-        jTextArea1.append("\n"+ dc.getStatusMessage());
+
+    private void setStatusMessage() {
+        if (dc.getStatusMessage() != null) {
+            jTextArea1.append("\n" + dc.getStatusMessage());
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (toggleLog.isSelected())
-        {
-            dc.signin();
-            toggleLog.setText("Sharing");
-            StatusMessage.setStatus("You are sharing files.");
-            setStatusMessage();
+        if (e.getSource() == toggleLog) {
+            if (toggleLog.isSelected()) {
+                dc.signin();
+                toggleLog.setText("Sharing");
+                StatusMessage.setStatus("You are sharing files.");
+                setStatusMessage();
+            }
+
+            if (!(toggleLog.isSelected())) {
+                dc.signout();
+                toggleLog.setText("Not sharing");
+                StatusMessage.setStatus("You are no longer sharing files.");
+                setStatusMessage();
+            }
         }
-        
-        if (!(toggleLog.isSelected()))
-        {
-            dc.signout();
-            toggleLog.setText("Not sharing");
-            StatusMessage.setStatus("You are no longer sharing files.");
-            setStatusMessage();
+        if (e.getSource() == downloadButton) {
+            int row = jTable1.getSelectedRow();
+            int col = jTable1.getSelectedColumn();
+            if (col == 0) {
+                dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
+            }
         }
-            
-        
-            
+
+
+
     }
 
     @Override
@@ -353,5 +361,4 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     @Override
     public void windowDeactivated(WindowEvent e) {
     }
-
 }
