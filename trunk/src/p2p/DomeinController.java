@@ -41,7 +41,7 @@ public class DomeinController extends Observable {
     private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
     private List<String> filterList = new ArrayList<String>();
     private StatusMessage statusMessage = new StatusMessage(this);
-    ExecutorService executor = Executors.newFixedThreadPool(4);
+    ExecutorService executor = Executors.newCachedThreadPool();
 
     public DomeinController() {
         executor.execute(onOffBroadcaster);
@@ -155,54 +155,7 @@ public class DomeinController extends Observable {
 //        return this.getSharedTsjakkaFilesList().get(index).getIcon();
 //    }
     public void sendDownloadRequest(String filename, String ip) {
-        Socket link = null;
-        try {
-            InetAddress host = InetAddress.getByName(ip);
-            link = new Socket(host, 1238);
-            PrintWriter out = new PrintWriter(link.getOutputStream(), true);
-
-            //download request versturen met naam van het bestand en ip.
-            out.println(getDirectory(filename, ip));
-
-            //config file inlezen
-            FileInputStream in = new FileInputStream(CONFIG_FILE);
-            properties.load(in);
-            in.close();
-            String strDir = properties.getProperty("directorydownloads");
-            File dir = new File(strDir);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            
-            // inlezen van binnenkomend bestand
-            InputStream is = link.getInputStream();
-            FileOutputStream fos = new FileOutputStream(strDir + "/" + filename);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-            
-            int length;
-            byte[] buffer = new byte[65536];
-            while((length = is.read(buffer)) != -1)
-            {
-                bos.write(buffer, 0, length);
-            }
-            bos.flush();
-            StatusMessage.setStatus("Bestand ontvangen!");
-            bos.close();
-        } catch (IOException ex) {
-            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ArrayIndexOutOfBoundsException aex) {
-            StatusMessage.setStatus("Mongool, download es geen leeg bestand!");
-            aex.printStackTrace();
-        } finally {
-            try {
-                link.close();
-            } catch (IOException ex) {
-                Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-
-
+        executor.execute(new DownloadRequester(filename, ip, this));
     }
 
     public void signout() {
@@ -271,7 +224,7 @@ public class DomeinController extends Observable {
     public void emptyList() {
         filterList.clear();
     }
-    
+
     public List<String> getFilterList() {
         return filterList;
     }
