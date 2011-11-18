@@ -1,0 +1,90 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package p2p;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author Jimmy
+ */
+public class DownloadRequester implements Runnable {
+
+    private String filename;
+    private String ip;
+    private Properties properties = new Properties();
+    private DomeinController dc;
+    private String CONFIG_FILE = "config";
+
+    public DownloadRequester(String filename, String ip, DomeinController dc) {
+        this.filename = filename;
+        this.ip = ip;
+        this.dc = dc;
+    }
+
+    @Override
+    public void run() {
+
+        Socket link = null;
+        try {
+            InetAddress host = InetAddress.getByName(ip);
+            link = new Socket(host, 1238);
+            PrintWriter out = new PrintWriter(link.getOutputStream(), true);
+
+            //download request versturen met naam van het bestand en ip.
+            out.println(dc.getDirectory(filename, ip));
+
+            //config file inlezen
+            FileInputStream in = new FileInputStream(CONFIG_FILE);
+            properties.load(in);
+            in.close();
+            String strDir = properties.getProperty("directorydownloads");
+            File dir = new File(strDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            // inlezen van binnenkomend bestand
+            InputStream is = link.getInputStream();
+            FileOutputStream fos = new FileOutputStream(strDir + "/" + filename);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+
+            int length;
+            byte[] buffer = new byte[65536];
+            while ((length = is.read(buffer)) != -1) {
+                bos.write(buffer, 0, length);
+            }
+            bos.flush();
+            StatusMessage.setStatus("Bestand ontvangen!");
+            bos.close();
+        } catch (IOException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ArrayIndexOutOfBoundsException aex) {
+            StatusMessage.setStatus("Mongool, download es geen leeg bestand!");
+            aex.printStackTrace();
+        } finally {
+            try {
+                link.close();
+            } catch (IOException ex) {
+                Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+
+
+    }
+    
+}
