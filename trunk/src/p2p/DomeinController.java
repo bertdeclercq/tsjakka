@@ -79,10 +79,39 @@ public class DomeinController extends Observable {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
         // if (!ownIp.equals(inIpString)) {
-        this.sharedTsjakkaMap.put(inIp, sharedList);
-        setChanged();
-        notifyObservers();
+//        if (!sharedTsjakkaMap.containsKey(inIp)) {
+        if (sharedTsjakkaMap.get(inIp) == null) {
+            System.out.println(sharedTsjakkaMap.get(inIp));
+            this.sharedTsjakkaMap.put(inIp, sharedList);
+            setChanged();
+            notifyObservers();
+        } else {
+            if (!listChanged(sharedTsjakkaMap.get(inIp), sharedList)) {
+                System.out.println("test");
+                this.sharedTsjakkaMap.put(inIp, sharedList);
+                setChanged();
+                notifyObservers();
+            }
+        }
+//        }
         // }
+    }
+
+    public boolean listChanged(ArrayList<TsjakkaFile> oldList, ArrayList<TsjakkaFile> sharedList) {
+        for (TsjakkaFile fileNew : sharedList) {
+            if (!oldList.contains(fileNew)) {
+                System.out.println("oude lijst: " + oldList.contains(fileNew));
+                return true;
+            } else {
+                for (TsjakkaFile fileOld : oldList) {
+                    if (!sharedList.contains(fileOld)) {
+                        System.out.println("nieuwe lijst: " + sharedList.contains(fileOld));
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public void removeSharedTsjakkaList(InetAddress ip) {

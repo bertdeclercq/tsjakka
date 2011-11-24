@@ -90,6 +90,9 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         jTable1 = new javax.swing.JTable();
         downloadButton = new javax.swing.JButton();
         filterTextField = new javax.swing.JTextField();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tsjakka!");
@@ -266,6 +269,14 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
                 .addContainerGap())
         );
 
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -286,6 +297,9 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     private javax.swing.JLabel availableLabel;
     private javax.swing.JButton downloadButton;
     private javax.swing.JTextField filterTextField;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
