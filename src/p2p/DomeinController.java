@@ -13,10 +13,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Properties;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -41,11 +42,15 @@ public class DomeinController extends Observable {
         executor.execute(new BroadcastListener(this));
     }
 
-    public void addToUserMap(InetAddress inIp, String inPcname) throws UnknownHostException {
+    public void addToUserMap(InetAddress inIp, String inPcname) {
         String ownIp = "";
         String inIpString = "";
+        try {
             inIpString = inIp.getHostAddress();
             ownIp = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (!ownIp.equals(inIpString)) {
             this.userMap.put(inIp, inPcname);
             setChanged();
@@ -64,12 +69,15 @@ public class DomeinController extends Observable {
         return this.userMap;
     }
 
-    public void addToSharedTsjakkaMap(InetAddress inIp, ArrayList<TsjakkaFile> sharedList) throws UnknownHostException {
+    public void addToSharedTsjakkaMap(InetAddress inIp, ArrayList<TsjakkaFile> sharedList) {
         String ownIp = "";
         String inIpString = "";
-        inIpString = inIp.getHostAddress();
-        ownIp = InetAddress.getLocalHost().getHostAddress();
-       
+        try {
+            inIpString = inIp.getHostAddress();
+            ownIp = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // if (!ownIp.equals(inIpString)) {
         this.sharedTsjakkaMap.put(inIp, sharedList);
         setChanged();
@@ -139,10 +147,8 @@ public class DomeinController extends Observable {
 //    public Icon getFileIcon(int index) {
 //        return this.getSharedTsjakkaFilesList().get(index).getIcon();
 //    }
-    public String sendDownloadRequest(String filename, String ip) throws InterruptedException, ExecutionException {
+    public void sendDownloadRequest(String filename, String ip) {
         Future<String> future = executor.submit(new DownloadRequester(filename, ip, this));
-        return future.get();
-        
     }
 
     public void signout() {
@@ -163,18 +169,24 @@ public class DomeinController extends Observable {
         return statusMessage.getStatus();
     }
 
-    public String getUsername() throws UnknownHostException 
-    {
+    public String getUsername() {
         String username = "Tsjakka";
-        username = InetAddress.getLocalHost().getHostName().toString();
-        return username;
-
+        try {
+            username = InetAddress.getLocalHost().getHostName().toString();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            return username;
+        }
     }
 
-    public String getDirectory(String filename, String ip) throws UnknownHostException {
+    public String getDirectory(String filename, String ip) {
         List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
-
+        try {
             list = sharedTsjakkaMap.get(InetAddress.getByName(ip));
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for (TsjakkaFile file : list) {
             if (file.getFilename().equals(filename)) {
                 return file.getDirectory();
