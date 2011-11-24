@@ -6,7 +6,6 @@ package p2p;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +16,7 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import persistency.Config;
 
 /**
  *
@@ -26,9 +26,7 @@ public class DownloadRequester implements Callable {
 
     private String filename;
     private String ip;
-    private Properties properties = new Properties();
     private DomeinController dc;
-    private String CONFIG_FILE = "config";
 
     public DownloadRequester(String filename, String ip, DomeinController dc) {
         this.filename = filename;
@@ -48,11 +46,7 @@ public class DownloadRequester implements Callable {
             //download request versturen met naam van het bestand en ip.
             out.println(dc.getDirectory(filename, ip));
 
-            //config file inlezen
-            FileInputStream in = new FileInputStream(CONFIG_FILE);
-            properties.load(in);
-            in.close();
-            String strDir = properties.getProperty("directorydownloads");
+            String strDir = Config.getInstance().get("directorydownloads");
             File dir = new File(strDir);
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -100,11 +94,7 @@ public class DownloadRequester implements Callable {
             //download request versturen met naam van het bestand en ip.
             out.println(dc.getDirectory(filename, ip));
 
-            //config file inlezen
-            FileInputStream in = new FileInputStream(CONFIG_FILE);
-            properties.load(in);
-            in.close();
-            String strDir = properties.getProperty("directorydownloads");
+            String strDir = Config.getInstance().get("directorydownloads");
             File dir = new File(strDir);
             if (!dir.exists()) {
                 dir.mkdirs();
