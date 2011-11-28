@@ -52,11 +52,21 @@ public class DomeinController extends Observable {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (!ownIp.equals(inIpString)) {
-            this.userMap.put(inIp, inPcname);
-            setChanged();
-            notifyObservers();
+            if (newUser(inIp, inPcname)) {
+                this.userMap.put(inIp, inPcname);
+                setChanged();
+                notifyObservers();
+            }
         }
+    }
 
+    private boolean newUser(InetAddress inIp, String inPcname) {
+        if (userMap.containsKey(inIp)) {
+            if (userMap.get(inIp).equals(inPcname)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void removeUser(InetAddress inIp) {
@@ -78,35 +88,32 @@ public class DomeinController extends Observable {
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // if (!ownIp.equals(inIpString)) {
-//        if (!sharedTsjakkaMap.containsKey(inIp)) {
-        if (sharedTsjakkaMap.get(inIp) == null) {
-            System.out.println(sharedTsjakkaMap.get(inIp));
-            this.sharedTsjakkaMap.put(inIp, sharedList);
-            setChanged();
-            notifyObservers();
-        } else {
-            if (!listChanged(sharedTsjakkaMap.get(inIp), sharedList)) {
-                System.out.println("test");
+        if (!ownIp.equals(inIpString)) {
+            if (sharedTsjakkaMap.get(inIp) == null) {
                 this.sharedTsjakkaMap.put(inIp, sharedList);
                 setChanged();
                 notifyObservers();
+            } else {
+                if (listChanged(sharedTsjakkaMap.get(inIp), sharedList)) {
+                    this.sharedTsjakkaMap.put(inIp, sharedList);
+                    setChanged();
+                    notifyObservers();
+                }
             }
         }
-//        }
-        // }
     }
 
-    public boolean listChanged(ArrayList<TsjakkaFile> oldList, ArrayList<TsjakkaFile> sharedList) {
-        for (TsjakkaFile fileNew : sharedList) {
-            if (!oldList.contains(fileNew)) {
-                System.out.println("oude lijst: " + oldList.contains(fileNew));
-                return true;
-            } else {
-                for (TsjakkaFile fileOld : oldList) {
-                    if (!sharedList.contains(fileOld)) {
-                        System.out.println("nieuwe lijst: " + sharedList.contains(fileOld));
-                        return true;
+    private boolean listChanged(ArrayList<TsjakkaFile> oldList, ArrayList<TsjakkaFile> newList) {
+        if (oldList.size() != newList.size()) {
+            return true;
+        } else {
+            while (!(!oldList.isEmpty() && !newList.isEmpty())) {
+                for (TsjakkaFile fileNew : newList) {
+                    for (TsjakkaFile fileOld : oldList) {
+                        if (fileNew.getFilename().equals(fileOld.getFilename()) && fileNew.getFileSize() == fileOld.getFileSize()) {
+                            newList.remove(fileNew);
+                            oldList.remove(fileOld);
+                        }
                     }
                 }
             }
@@ -202,6 +209,8 @@ public class DomeinController extends Observable {
         String username = "Tsjakka";
         try {
             username = InetAddress.getLocalHost().getHostName().toString();
+
+
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -213,6 +222,8 @@ public class DomeinController extends Observable {
         List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
         try {
             list = sharedTsjakkaMap.get(InetAddress.getByName(ip));
+
+
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -234,8 +245,6 @@ public class DomeinController extends Observable {
                 }
             }
         }
-        setChanged();
-        notifyObservers();
         return list;
     }
 
