@@ -58,8 +58,8 @@ public class SharedFiles {
                 if (!children[i].isDirectory()) {
 //                    FileSystemView view = FileSystemView.getFileSystemView();      
 //                    Icon icon = view.getSystemIcon(children[i]);
-                    TsjakkaFile tsjakkaFile = new TsjakkaFile(children[i].getName(), children[i].length(), children[i].getPath(), ip/*, icon*/);
-                    sharedTsjakkaList.add(tsjakkaFile);
+//                    TsjakkaFile tsjakkaFile = new TsjakkaFile(children[i].getName(), children[i].length(), children[i].getPath(), ip/*, icon*/);
+                    sharedTsjakkaList.add(new TsjakkaFile(children[i], ip));
                 } else {
                     findShared(children[i].getPath());
                 }
