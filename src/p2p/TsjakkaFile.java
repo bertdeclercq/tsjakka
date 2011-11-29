@@ -97,7 +97,7 @@ public class TsjakkaFile implements Serializable {
 
     public String getExtension() {
         int dotpos = filename.lastIndexOf(".");
-        return filename.substring(dotpos + 1);
+        return filename.substring(dotpos + 1).toLowerCase();
     }
     
     public int compareTo(TsjakkaFile tjsakkaFile) {

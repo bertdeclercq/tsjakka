@@ -20,6 +20,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import p2p.Broadcaster;
 import p2p.DomeinController;
@@ -74,7 +75,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel = new javax.swing.JPanel();
         leftPanel = new javax.swing.JPanel();
         welcomeLabel = new javax.swing.JLabel();
         availableLabel = new javax.swing.JLabel();
@@ -90,16 +91,18 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         jTable1 = new javax.swing.JTable();
         downloadButton = new javax.swing.JButton();
         filterTextField = new javax.swing.JTextField();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuBar = new javax.swing.JMenuBar();
+        jMenuFile = new javax.swing.JMenu();
+        jMenuItemFolder = new javax.swing.JMenuItem();
+        jMenuHelp = new javax.swing.JMenu();
+        jMenuItemAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Tsjakka!");
         setBackground(new java.awt.Color(153, 153, 153));
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 102));
+        jPanel.setBackground(new java.awt.Color(0, 0, 102));
 
         leftPanel.setBackground(new java.awt.Color(0, 0, 102));
         leftPanel.setPreferredSize(new java.awt.Dimension(174, 495));
@@ -228,35 +231,35 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
         filterTextField.setToolTipText("");
         filterTextField.setName(""); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanelLayout);
+        jPanelLayout.setHorizontalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLayout.createSequentialGroup()
                         .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(filterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanelLayout.createSequentialGroup()
                                 .addGap(211, 211, 211)
                                 .addComponent(downloadButton))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanelLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(statusPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelLayout.setVerticalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(leftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanelLayout.createSequentialGroup()
                         .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filterTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,38 +272,66 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
                 .addContainerGap())
         );
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        jMenuFile.setText("File");
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuItemFolder.setText("Change share folder");
+        jMenuItemFolder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFolderActionPerformed(evt);
+            }
+        });
+        jMenuFile.add(jMenuItemFolder);
 
-        setJMenuBar(jMenuBar1);
+        jMenuBar.add(jMenuFile);
+
+        jMenuHelp.setText("Help");
+
+        jMenuItemAbout.setText("About");
+        jMenuHelp.add(jMenuItemAbout);
+
+        jMenuBar.add(jMenuHelp);
+
+        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    /**
-     * @param args the command line arguments
-     */
+
+    private void jMenuItemFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFolderActionPerformed
+        final JFileChooser fc = new JFileChooser();
+//        fc.showOpenDialog(jPanel);
+        fc.setCurrentDirectory(dc.getSharedDirectory());
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setAcceptAllFileFilterUsed(false);
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            dc.changeSharedDir(fc.getSelectedFile().toString());
+        } else {
+            System.out.println("No Selection");
+        }
+    }//GEN-LAST:event_jMenuItemFolderActionPerformed
+/**
+ * @param args the command line arguments
+ */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel availableLabel;
     private javax.swing.JButton downloadButton;
     private javax.swing.JTextField filterTextField;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenu jMenuFile;
+    private javax.swing.JMenu jMenuHelp;
+    private javax.swing.JMenuItem jMenuItemAbout;
+    private javax.swing.JMenuItem jMenuItemFolder;
+    private javax.swing.JPanel jPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -330,7 +361,7 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e) {
         if (e.getSource() == toggleLog) {
             if (toggleLog.isSelected()) {
                 dc.signin();
@@ -360,41 +391,41 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     }
 
     @Override
-    public void windowOpened(WindowEvent e) {
+        public void windowOpened(WindowEvent e) {
     }
 
     @Override
-    public void windowClosing(WindowEvent e) {
+        public void windowClosing(WindowEvent e) {
         ExecutorService executor = Executors.newFixedThreadPool(1);
         executor.execute(new Broadcaster(false));
     }
 
     @Override
-    public void windowClosed(WindowEvent e) {
+        public void windowClosed(WindowEvent e) {
     }
 
     @Override
-    public void windowIconified(WindowEvent e) {
+        public void windowIconified(WindowEvent e) {
     }
 
     @Override
-    public void windowDeiconified(WindowEvent e) {
+        public void windowDeiconified(WindowEvent e) {
     }
 
     @Override
-    public void windowActivated(WindowEvent e) {
+        public void windowActivated(WindowEvent e) {
     }
 
     @Override
-    public void windowDeactivated(WindowEvent e) {
+        public void windowDeactivated(WindowEvent e) {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
+        public void keyTyped(KeyEvent e) {
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+        public void keyPressed(KeyEvent e) {
         if (e.getKeyChar() == e.VK_ENTER) {
             if (filterTextField.getText().trim().equals("")) {
                 dc.emptyList();
@@ -410,6 +441,6 @@ public class HoofdFrame extends JFrame implements ActionListener, WindowListener
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
+        public void keyReleased(KeyEvent e) {
     }
 }
