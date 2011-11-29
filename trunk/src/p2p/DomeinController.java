@@ -4,6 +4,7 @@
  */
 package p2p;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import persistency.Config;
 
 /**
  *
@@ -88,7 +90,7 @@ public class DomeinController extends Observable {
         } catch (UnknownHostException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (!ownIp.equals(inIpString)) {
+//        if (!ownIp.equals(inIpString)) {
             if (sharedTsjakkaMap.get(inIp) == null) {
                 this.sharedTsjakkaMap.put(inIp, sharedList);
                 setChanged();
@@ -100,7 +102,7 @@ public class DomeinController extends Observable {
                     notifyObservers();
                 }
             }
-        }
+//        }
     }
 
     private boolean listChanged(ArrayList<TsjakkaFile> oldList, ArrayList<TsjakkaFile> newList) {
@@ -249,14 +251,26 @@ public class DomeinController extends Observable {
     }
 
     public void addToFilterList(String extension) {
-        filterList.add(extension);
+        filterList.add(extension.trim().toLowerCase());
+        setChanged();
+        notifyObservers();
     }
 
     public void emptyList() {
         filterList.clear();
+        setChanged();
+        notifyObservers();
     }
 
     public List<String> getFilterList() {
         return filterList;
+    }
+    
+    public File getSharedDirectory() {
+        return new File(Config.getInstance().get("directoryshared"));
+    }
+    
+    public void changeSharedDir(String dir) {
+        SharedFiles.getInstance().changeDirectory(dir);
     }
 }
