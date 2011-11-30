@@ -15,15 +15,14 @@ import p2p.DomeinController;
  * @author Jimmy
  */
 public class StartupGui {
-    
-    private static HoofdFrame hoofdFrame;
+
+    // private static HoofdFrame hoofdFrame;
+    private static MainFrame mainFrame;
     private static LoadingScreen loadScreen;
-    
-    
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -45,9 +44,9 @@ public class StartupGui {
             java.util.logging.Logger.getLogger(HoofdFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-      
-        
-        
+
+
+
         loadScreen = new LoadingScreen();
         loadScreen.setVisible(true);
         loadScreen.setLocationRelativeTo(null);
@@ -55,22 +54,28 @@ public class StartupGui {
         loadScreen.removeNotify();
         loadScreen.setUndecorated(true);
         loadScreen.addNotify();
-       
-        
-        
-        
-        
-        
-        
-    
-        
-    }   
-    
-    public static void runHoofdFrame()
-    {
-        hoofdFrame = new HoofdFrame(new DomeinController());
-        hoofdFrame.setVisible(true);
-        hoofdFrame.setLocationRelativeTo(null);
-        hoofdFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
+
+
+
+
+
+
+
+
+
+    }
+
+    public static void runHoofdFrame() {
+
+        // hoofdFrame = new HoofdFrame(new DomeinController());
+        // hoofdFrame.setVisible(true);
+        // hoofdFrame.setLocationRelativeTo(null);
+        // hoofdFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
+
+        mainFrame = new MainFrame(new DomeinController());
+        mainFrame.setVisible(true);
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
+
     }
 }
