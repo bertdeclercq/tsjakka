@@ -26,6 +26,28 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
 
     private DomeinController dc;
     private FileTableModel model;
+    
+    private javax.swing.JLabel availableLabel;
+    private javax.swing.JButton downloadButton;
+    private javax.swing.JTextField filterTextField;
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenu jMenuFile;
+    private javax.swing.JMenu jMenuHelp;
+    private javax.swing.JMenuItem jMenuItemAbout;
+    private javax.swing.JMenuItem jMenuItemFolder;
+    private javax.swing.JPanel jPanel;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JPanel leftPanel;
+    private javax.swing.JLabel logoLabel;
+    private javax.swing.JPanel statusPane;
+    private javax.swing.JToggleButton toggleLog;
+    private javax.swing.JPanel topPanel;
+    private javax.swing.JList userList;
+    private javax.swing.JLabel welcomeLabel;
 
     /** Creates new form HoofdFrame */
     public MainFrame(final DomeinController dc) {
@@ -235,27 +257,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
             System.out.println("No Selection");
         }
     }
-    private javax.swing.JLabel availableLabel;
-    private javax.swing.JButton downloadButton;
-    private javax.swing.JTextField filterTextField;
-    private javax.swing.JMenuBar jMenuBar;
-    private javax.swing.JMenu jMenuFile;
-    private javax.swing.JMenu jMenuHelp;
-    private javax.swing.JMenuItem jMenuItemAbout;
-    private javax.swing.JMenuItem jMenuItemFolder;
-    private javax.swing.JPanel jPanel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JPanel leftPanel;
-    private javax.swing.JLabel logoLabel;
-    private javax.swing.JPanel statusPane;
-    private javax.swing.JToggleButton toggleLog;
-    private javax.swing.JPanel topPanel;
-    private javax.swing.JList userList;
-    private javax.swing.JLabel welcomeLabel;
+    
 
     private void setTableModel() {
         jTable1.setModel(model);
