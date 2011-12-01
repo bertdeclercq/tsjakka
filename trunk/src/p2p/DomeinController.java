@@ -176,7 +176,7 @@ public class DomeinController extends Observable {
 //        return this.getSharedTsjakkaFilesList().get(index).getIcon();
 //    }
     public void sendDownloadRequest(String filename, String ip) {
-        executor.execute(new DownloadRequester(filename, ip, this));
+        Future<String> future = executor.submit(new DownloadRequester(filename, ip, this));
     }
 
     public void signout() {
