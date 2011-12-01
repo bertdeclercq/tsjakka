@@ -23,7 +23,7 @@ public class BroadcastListener implements Runnable {
     private static final long serialVersionUID = 1;
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
-    private String inPcname,ownIp;
+    private String inPcname;
     private InetAddress multiGroup, inIpaddress;
     private DomeinController dc;
 
@@ -38,7 +38,6 @@ public class BroadcastListener implements Runnable {
         try {
             multiGroup = InetAddress.getByName("230.0.0.1");
             multiSocket = new MulticastSocket(4446);
-            ownIp = InetAddress.getLocalHost().getHostAddress().toString();
             Message message = null;
             multiSocket.joinGroup(multiGroup);
             do {              
