@@ -17,8 +17,6 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import persistency.Config;
 
 /**
@@ -44,15 +42,11 @@ public class DomeinController extends Observable {
         executor.execute(new BroadcastListener(this));
     }
 
-    public void addToUserMap(InetAddress inIp, String inPcname) {
+    public void addToUserMap(InetAddress inIp, String inPcname) throws UnknownHostException {
         String ownIp = "";
         String inIpString = "";
-        try {
             inIpString = inIp.getHostAddress();
             ownIp = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         if (!ownIp.equals(inIpString)) {
             if (newUser(inIp, inPcname)) {
                 this.userMap.put(inIp, inPcname);
@@ -81,15 +75,11 @@ public class DomeinController extends Observable {
         return this.userMap;
     }
 
-    public void addToSharedTsjakkaMap(InetAddress inIp, ArrayList<TsjakkaFile> sharedList) {
+    public void addToSharedTsjakkaMap(InetAddress inIp, ArrayList<TsjakkaFile> sharedList) throws UnknownHostException {
         String ownIp = "";
         String inIpString = "";
-        try {
             inIpString = inIp.getHostAddress();
             ownIp = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 //        if (!ownIp.equals(inIpString)) {
             if (sharedTsjakkaMap.get(inIp) == null) {
                 this.sharedTsjakkaMap.put(inIp, sharedList);
@@ -207,28 +197,17 @@ public class DomeinController extends Observable {
         return statusMessage.getStatus();
     }
 
-    public String getUsername() {
+    public String getUsername() throws UnknownHostException {
         String username = "Tsjakka";
-        try {
             username = InetAddress.getLocalHost().getHostName().toString();
 
-
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
             return username;
-        }
     }
 
-    public String getDirectory(String filename, String ip) {
+    public String getDirectory(String filename, String ip) throws UnknownHostException {
         List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
-        try {
             list = sharedTsjakkaMap.get(InetAddress.getByName(ip));
 
-
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         for (TsjakkaFile file : list) {
             if (file.getFilename().equals(filename)) {
                 return file.getDirectory();
