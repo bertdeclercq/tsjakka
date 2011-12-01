@@ -51,14 +51,11 @@ public class SharedFiles {
             }
         };
         File[] children = dir.listFiles(filter);
-        if (children == null) {
-            System.out.println("foute map");
-        } else {
+        if (children != null) {
             for (int i = 0; i < children.length; i++) {
                 if (!children[i].isDirectory()) {
 //                    FileSystemView view = FileSystemView.getFileSystemView();      
 //                    Icon icon = view.getSystemIcon(children[i]);
-//                    TsjakkaFile tsjakkaFile = new TsjakkaFile(children[i].getName(), children[i].length(), children[i].getPath(), ip/*, icon*/);
                     sharedTsjakkaList.add(new TsjakkaFile(children[i], ip));
                 } else {
                     findShared(children[i].getPath());

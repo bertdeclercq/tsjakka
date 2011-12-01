@@ -7,16 +7,24 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The Config class gives the capability to read and write key/value pairs from and to a config file.
+ */
 public class Config {
 
     private final static String CONFIG_FILE = "config";
     private static Config instance;
     private static Properties properties;
-
+    
     private Config() {
         properties = new Properties();
     }
 
+    /**
+     * Gets an instance from this class.
+     * 
+     * @return an instance from this class
+     */
     public static synchronized Config getInstance() {
         if (instance == null) {
             instance = new Config();
@@ -24,6 +32,11 @@ public class Config {
         return instance;
     }
     
+    /**
+     * 
+     * @param key
+     * @return 
+     */
     public String get(String key) {
         readConfig();
         return properties.getProperty(key);
