@@ -22,7 +22,7 @@ import persistency.Config;
  *
  * @author Jimmy
  */
-public class DownloadRequester implements Runnable {
+public class DownloadRequester implements Callable {
 
     private String filename;
     private String ip;
