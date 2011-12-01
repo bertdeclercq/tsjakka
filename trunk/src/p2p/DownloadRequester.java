@@ -22,7 +22,7 @@ import persistency.Config;
  *
  * @author Jimmy
  */
-public class DownloadRequester implements Callable {
+public class DownloadRequester implements Runnable {
 
     private String filename;
     private String ip;
@@ -82,7 +82,7 @@ public class DownloadRequester implements Callable {
 
     }
 
-    @Override
+//    @Override
     public String call() throws Exception {
         String test = null;
         Socket link = null;
