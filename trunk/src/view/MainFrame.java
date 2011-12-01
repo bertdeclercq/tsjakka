@@ -8,8 +8,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.net.UnknownHostException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import p2p.Broadcaster;
@@ -116,7 +119,11 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         welcomeLabel.setBackground(new java.awt.Color(204, 204, 255));
         welcomeLabel.setFont(new java.awt.Font("Stencil", 0, 16));
         welcomeLabel.setForeground(new java.awt.Color(255, 255, 255));
-        welcomeLabel.setText("Welcome " + dc.getUsername());
+        try {
+            welcomeLabel.setText("Welcome " + dc.getUsername());
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         availableLabel.setFont(new java.awt.Font("Stencil", 0, 12));
         availableLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -203,7 +210,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         downloadButton.setFont(new java.awt.Font("Stencil", 0, 11));
         downloadButton.setText("Download");
 
-        filterTextField.setToolTipText("");
+        filterTextField.setToolTipText("Enter your extension filter here.");
         filterTextField.setName(""); // NOI18N
 
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
