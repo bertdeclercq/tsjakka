@@ -33,15 +33,23 @@ public class Config {
     }
     
     /**
+     * Searches for the value with the specified key in the config file.
      * 
-     * @param key
-     * @return 
+     * @param key the config key
+     * 
+     * @return the value from the config file with the specified key value
      */
     public String get(String key) {
         readConfig();
         return properties.getProperty(key);
     }
     
+    /**
+     * Stores the specified key/value pair in the config file.
+     * 
+     * @param key the config key
+     * @param value the config value
+     */
     public void set(String key, String value) {
         properties.setProperty(key, value);
         writeConfig();
