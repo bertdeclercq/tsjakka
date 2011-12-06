@@ -12,28 +12,28 @@ import java.util.Observer;
  *
  * @author Jimmy
  */
-public class StatusMessage implements Observer {
+public class StatusMessage extends Observable {
 
+    private static DomeinController dc;
     private static String status;
-    private DomeinController dc;
-
-    public StatusMessage(DomeinController dc) {
+    
+    public StatusMessage(DomeinController dc){
         this.dc = dc;
-        dc.addObserver(this);
     }
 
-    public static void setStatus(String status) {
-        StatusMessage.status = status;
-    }
-
-    public static String getStatus() {
+    public String getStatus() {
         return status;
     }
 
+    public void addStatus(String newStatus) {
+        this.status = newStatus;
+        setChanged();
+        notifyObservers(status);
+    }
     @Override
-    public void update(Observable o, Object arg) {
-       // tga werken, ma nie oe dat moet
-//                System.out.println("updateMethod in statusMessage freakt!");
-        
+    public void addObserver(Observer observer)
+    {
+        super.addObserver(observer);
+        observer.update(this, getStatus());
     }
 }

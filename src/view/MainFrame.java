@@ -29,6 +29,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
 
     private DomeinController dc;
     private FileTableModel model;
+    private StatusMessage statmes = new StatusMessage(dc);
 
     /** Creates new form HoofdFrame */
     public MainFrame(final DomeinController dc) {
@@ -74,6 +75,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         statusPane = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        statusArea = new StatusTextArea(statmes);
+        
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         downloadButton = new javax.swing.JButton();
@@ -137,12 +140,12 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
 
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
-        jTextArea1.setColumns(20);
-        jTextArea1.setEditable(false);
-        jTextArea1.setForeground(new java.awt.Color(102, 255, 0));
-        jTextArea1.setRows(4);
-        jScrollPane3.setViewportView(jTextArea1);
+        statusArea.setBackground(new java.awt.Color(0, 0, 0));
+        statusArea.setColumns(20);
+        statusArea.setEditable(false);
+        statusArea.setForeground(new java.awt.Color(102, 255, 0));
+        statusArea.setRows(4);
+        jScrollPane3.setViewportView(statusArea);
 
         javax.swing.GroupLayout statusPaneLayout = new javax.swing.GroupLayout(statusPane);
         statusPane.setLayout(statusPaneLayout);
@@ -256,6 +259,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
+    private StatusTextArea statusArea;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JPanel statusPane;
@@ -272,11 +276,6 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         userList.setModel(new UserListModel(dc));
     }
 
-    private void setStatusMessage() {
-        if (dc.getStatusMessage() != null) {
-            jTextArea1.append("\n" + dc.getStatusMessage());
-        }
-    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -284,15 +283,15 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
             if (toggleLog.isSelected()) {
                 dc.signin();
                 toggleLog.setText("Sharing");
-                StatusMessage.setStatus("You are sharing files.");
-                setStatusMessage();
+                dc.addStatusToArea("You are sharing files.");
+                
             }
 
             if (!(toggleLog.isSelected())) {
                 dc.signout();
                 toggleLog.setText("Not sharing");
-                StatusMessage.setStatus("You are no longer sharing files.");
-                setStatusMessage();
+                dc.addStatusToArea("You are no longer sharing files.");
+                
             }
         }
         if (e.getSource() == downloadButton) {
@@ -301,7 +300,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
             if (col == 0) {
                 dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
             }
-            setStatusMessage();
+            
         }
 
 
@@ -347,12 +346,12 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         if (e.getKeyChar() == e.VK_ENTER) {
             if (filterTextField.getText().trim().equals("")) {
                 dc.emptyList();
-                StatusMessage.setStatus("Filter: none");
-                setStatusMessage();
+                dc.addStatusToArea("Filter: none");
+                
             } else {
                 dc.addToFilterList(filterTextField.getText());
-                StatusMessage.setStatus("Filter: " + dc.getFilterList());
-                setStatusMessage();
+                dc.addStatusToArea("Filter: " + dc.getFilterList());
+               
             }
             filterTextField.setText("");
         }

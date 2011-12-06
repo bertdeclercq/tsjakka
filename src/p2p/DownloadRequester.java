@@ -63,12 +63,12 @@ public class DownloadRequester implements Callable {
                 bos.write(buffer, 0, length);
             }
             bos.flush();
-            StatusMessage.setStatus("Bestand ontvangen!");
+            dc.addStatusToArea("Bestand ontvangen!");
             bos.close();
         } catch (IOException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ArrayIndexOutOfBoundsException aex) {
-            StatusMessage.setStatus("Mongool, download es geen leeg bestand!");
+            dc.addStatusToArea("Mongool, download es geen leeg bestand!");
             aex.printStackTrace();
         } finally {
             try {
