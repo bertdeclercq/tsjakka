@@ -187,16 +187,6 @@ public class DomeinController extends Observable {
         onOffBroadcaster.setFlag(true);
     }
 
-    public void addStatusMessage(String status) {
-        statusMessage.setStatus(status);
-        setChanged();
-        notifyObservers();
-    }
-
-    public String getStatusMessage() {
-        return statusMessage.getStatus();
-    }
-
     public String getUsername() throws UnknownHostException {
         String username = "Tsjakka";
             username = InetAddress.getLocalHost().getHostName().toString();
@@ -251,5 +241,9 @@ public class DomeinController extends Observable {
     
     public void changeSharedDir(String dir) {
         SharedFiles.getInstance().changeDirectory(dir);
+    }
+    
+    public void addStatusToArea(String stat) {
+        statusMessage.addStatus(stat);
     }
 }

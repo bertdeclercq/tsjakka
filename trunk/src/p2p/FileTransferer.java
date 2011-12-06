@@ -45,7 +45,9 @@ public class FileTransferer implements Runnable {
             byte[] mybytearray = new byte[65536];
             FileInputStream fis = new FileInputStream(myFile);
             OutputStream os = link.getOutputStream();
-            StatusMessage.setStatus("Someone is stealing the following file : " + filename);
+            
+         //   StatusMessage.setStatus("Someone is stealing the following file : " + filename);
+          
             while((count = fis.read(mybytearray)) > 0){
                 os.write(mybytearray, 0, count);
             }
