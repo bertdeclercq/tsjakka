@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package p2p;
 
 import java.io.ByteArrayOutputStream;
@@ -14,8 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Joachim
+ * The broadcaster class broadcasts every 3 seconds whether the user is online or not. When he is online a list of files he wants to share is broadcasted.
  */
 public class Broadcaster implements Runnable {
 
@@ -25,16 +20,26 @@ public class Broadcaster implements Runnable {
     private DatagramPacket multiPacket;
     private boolean flag = false;
 
+    /**
+     * Creates a broadcast whether the user is online or not specified by the flag.
+     * 
+     * @param flag specifies if the user wants to share files or not
+     */
     public Broadcaster(boolean flag) {
         this.flag = flag;
     }
 
+    /**
+     * Sets a boolean whether the user want to share files or not.
+     * 
+     * @param flag specifies if the user wants to share files or not
+     */
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
 
-    /* Elke 10 sec wordt een multicast packet gestuurd om te kijken
-     * wie er op de LAN zit
+    /**
+     * Every 3 seconds a message will be broadcasted whether the user is online or not. If the user is online, he will broadcast a list of the files he's sharing.
      */
     @Override
     public void run() {
@@ -56,13 +61,11 @@ public class Broadcaster implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(Broadcaster.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
-    public void sendOnlineMessage() throws IOException {
+    private void sendOnlineMessage() throws IOException {
         Message message;
         byte[] buf = new byte[65535];
-
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
         ObjectOutputStream o_out = new ObjectOutputStream(b_out);
         message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedList());
@@ -74,10 +77,9 @@ public class Broadcaster implements Runnable {
 
     }
 
-    public void sendSignoutMessage() throws IOException {
+    private void sendSignoutMessage() throws IOException {
         Message message;
         byte[] buf = new byte[65535];
-
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
         ObjectOutputStream o_out = new ObjectOutputStream(b_out);
         message = new Message("<signout>", ownIp.getHostAddress().toString());
