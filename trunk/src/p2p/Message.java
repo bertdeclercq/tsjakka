@@ -1,57 +1,41 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package p2p;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Gebruiker
- */
 public class Message implements Serializable {
-    
+
     private static final long serialVersionUID = 1;
     private String tag, typeObject;
     private Object content;
     private String ownAddress, hostName;
     private boolean onlineMessage = false, signOutMessage = false;
+    private static String ONLINE = "<online>", SIGNOUT = "<signout>";
     
-    private static String ONLINE = "<online>",
-                          SIGNOUT = "<signout>";
-
-    public Message(String tag, String ownAddress, String hostName, Object content) {
+    /**
+     * 
+     * 
+     * @param tag
+     * @param ownAddress 
+     */
+    public Message(String tag, String ownAddress) {
         this.tag = tag;
         this.ownAddress = ownAddress;
+    }
+    
+    public Message(String tag, String ownAddress, String hostName, Object content) {
+        this(tag, ownAddress);
         this.hostName = hostName;
         this.content = content;
         typeObject = content.getClass().getName();
     }
-    
-    public Message() {
-        
-    }
 
-    public Message(String tag, String ownAddress) {
-        this.tag = tag;
-        this.ownAddress = ownAddress;
-
-    }
-    
-    public Message(String tag, Object content)
-    {
-        this.tag = tag;
-        this.content = content;
-        this.typeObject = content.getClass().getName(); 
-    }
-            
-    public void checkStatusTag()
-    {
-        if(tag.equalsIgnoreCase(ONLINE))
+    public void checkStatusTag() {
+        if (tag.equalsIgnoreCase(ONLINE)) {
             setOnlineMessage(true);
-        if(tag.equalsIgnoreCase(SIGNOUT))
+        }
+        if (tag.equalsIgnoreCase(SIGNOUT)) {
             setSignOutMessage(true);
+        }
     }
 
     public boolean isOnlineMessage() {
@@ -75,10 +59,11 @@ public class Message implements Serializable {
     }
 
     public void setTag(String tag) {
-        if (tag.startsWith("<") && tag.endsWith(">"))
+        if (tag.startsWith("<") && tag.endsWith(">")) {
             this.tag = tag;
-        else
+        } else {
             throw new IllegalArgumentException("Tag is not in the right format!");
+        }
     }
 
     public String getTypeObject() {
@@ -108,11 +93,4 @@ public class Message implements Serializable {
     public void setOwnAddress(String ownAddress) {
         this.ownAddress = ownAddress;
     }
-    
-     
-    
-    
-    
-    
-    
 }

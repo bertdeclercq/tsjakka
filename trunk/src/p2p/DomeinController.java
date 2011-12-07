@@ -7,6 +7,7 @@ package p2p;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -166,8 +167,10 @@ public class DomeinController extends Observable {
 
     }
 
-    public double getFileSizeInMB(int index) {
-        return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
+    public String getFileSizeInMB(int index) {
+//        return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
+        DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte());
     }
 
     public String getFileIp(int index) {

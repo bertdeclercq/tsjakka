@@ -4,21 +4,26 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
-//import javax.swing.Icon;
-//import javax.swing.filechooser.FileSystemView;
 import persistency.Config;
 
+/**
+ * The SharedFiles class creates a list of all files in the directory you want to share. It also provides options to return this list or update it.
+ */
 public class SharedFiles {
-    
+
     private static SharedFiles instance;
-    private static List<TsjakkaFile> sharedTsjakkaList;
-    private static String ip;
+    private static List<TsjakkaFile> sharedList;
 
     private SharedFiles() {
-        sharedTsjakkaList = new ArrayList<TsjakkaFile>();
+        sharedList = new ArrayList<TsjakkaFile>();
         updateSharedList();
     }
 
+    /**
+     * Gets an instance from this class.
+     * 
+     * @return an instance from this class
+     */
     public static synchronized SharedFiles getInstance() {
         if (instance == null) {
             instance = new SharedFiles();
@@ -26,14 +31,22 @@ public class SharedFiles {
         return instance;
     }
 
-    public List<TsjakkaFile> getSharedTsjakkaList() {
+    /**
+     * Returns a list of tsjakkafiles that are in the shared folder.
+     * 
+     * @return a list of tsjakkafiles that are shared
+     */
+    public List<TsjakkaFile> getSharedList() {
         updateSharedList();
-        return sharedTsjakkaList;
+        return sharedList;
     }
 
+    /**
+     * Updates the list of shared files so that it contains the latest files.
+     */
     public static void updateSharedList() {
-        if (!sharedTsjakkaList.isEmpty()) {
-            sharedTsjakkaList.clear();
+        if (!sharedList.isEmpty()) {
+            sharedList.clear();
         }
         findShared(Config.getInstance().get("directoryshared"));
     }
@@ -54,17 +67,11 @@ public class SharedFiles {
         if (children != null) {
             for (int i = 0; i < children.length; i++) {
                 if (!children[i].isDirectory()) {
-//                    FileSystemView view = FileSystemView.getFileSystemView();      
-//                    Icon icon = view.getSystemIcon(children[i]);
-                    sharedTsjakkaList.add(new TsjakkaFile(children[i], ip));
+                    sharedList.add(new TsjakkaFile(children[i].toString()));
                 } else {
                     findShared(children[i].getPath());
                 }
             }
         }
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
     }
 }

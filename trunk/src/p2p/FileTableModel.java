@@ -45,7 +45,7 @@ public class FileTableModel extends AbstractTableModel implements Observer {
         {
             //case 0 : return dc.getFileIcon(rowIndex);
             case 0 : return dc.getFileName(rowIndex);
-            case 1 : return Double.toString(dc.getFileSizeInMB(rowIndex));  
+            case 1 : return dc.getFileSizeInMB(rowIndex);
         }
         return null;
     }

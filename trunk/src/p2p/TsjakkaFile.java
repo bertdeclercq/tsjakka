@@ -7,60 +7,106 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TsjakkaFile implements Serializable {
+/**
+ * A TsjakkaFile is a file located at a specific computer at a specific location. This class provides the capabilities to create a TsjakkaFile object and get the different parameters from it.
+ */
+public class TsjakkaFile extends File implements Serializable {
 
-    private String filename;
-    private long fileSize;
-    private String directory;
+    private File file;
     private String ip;
 
-    public TsjakkaFile(File file, String ip) {
-        this.filename = file.getName();
-        this.fileSize = file.length();
-        this.directory = file.getPath();
-        this.ip = ip;
-    }
-    
-    public String getFilename() {
-        return filename;
+    /**
+     * Creates a TsjakkaFile located at specified path.
+     * 
+     * @param path the file of which you want to make a TsjakkaFile
+     */
+    public TsjakkaFile(String path) {
+        super(path);
+        try {
+            this.ip = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException ex) {
+            //TODO exception here
+            Logger.getLogger(TsjakkaFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public long getFileSize() {
-        return fileSize;
+    /**
+     * Return the name of this TsjakkaFile.
+     * 
+     * @return the name
+     */
+    public String getFilename() {
+        return super.getName();
     }
     
+    /**
+     * return the extension of this TsjakkaFile.
+     * 
+     * @return the extension
+     */
+    public String getExtension() {
+        int dotpos = getFilename().lastIndexOf(".");
+        return getFilename().substring(dotpos + 1).toLowerCase();
+    }    
+
+    /**
+     * return the directory of where this TsjakkaFile is located.
+     * 
+     * @return the directory
+     */
     public String getDirectory() {
-        return directory;
+        return super.getPath();
     }
     
+    /**
+     * return the size in bytes of this TsjakkaFile.
+     * 
+     * @return the size in bytes
+     */
+    public long getFileSize() {
+        return super.length();
+    }
+
+    /**
+     * return the size in megabytes of this TsjakkaFile.
+     * 
+     * @return the size in megabytes
+     */
+    public double getFileSizeInMegaByte() {
+        return (double)getFileSize() / (1024 * 1024);
+    }
+    
+    /**
+     * return the ip address of the computer on which it is located.
+     * @return 
+     */
     public String getIp() {
         return ip;
     }
 
-    public double getFileSizeInMegaByte() {
-        double inbetweenresult = (fileSize / 1048576) * 100;
-        inbetweenresult = Math.round(inbetweenresult);
-        inbetweenresult = inbetweenresult / 100;
-        return inbetweenresult;
-//        return (double)fileSize / (1024 * 1024);
-    }
-
+    /**
+     * Returns a string representation of this TsjakkaFile. The string representation consists of the filename, followed by the size in megabytes enclosed in square brackets ("[ ]").
+     * 
+     * @return a string representation of this TsjakkaFile 
+     */
     @Override
     public String toString() {
-        return "File: " + getFilename() + " | Size: " + getFileSizeInMegaByte() + " MB";
+        return getFilename() + " [" + getFileSizeInMegaByte() + " MB]";
     }
 
-    public String getExtension() {
-        int dotpos = filename.lastIndexOf(".");
-        return filename.substring(dotpos + 1).toLowerCase();
-    }
-
-    public static String generateMD5(File file) {
+    /**
+     * Calculates the MD5 hash of this TsjakkaFile and returns it as a string.
+     * 
+     * @return the MD5 hash
+     */
+    public String generateMD5() {
         MessageDigest digest = null;
         InputStream is = null;
         String output = "";
