@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
  */
  class StatusTextArea extends AbstractTextArea {
 
-    
+    private String toAppend = new String("");
 
     public StatusTextArea(Observable subject) {
         super(subject);
@@ -21,7 +21,9 @@ import javax.swing.JTextArea;
 
     @Override
     protected void updateStatus() {
-        this.append(String.format("%s\n", getStatus()));
+        toAppend = String.format("\n%s", getStatus());
+        this.append(toAppend);
+        this.setCaretPosition(this.getCaretPosition()+toAppend.length());
     }
     
 }
