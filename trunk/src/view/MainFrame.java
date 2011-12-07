@@ -29,7 +29,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
 
     private DomeinController dc;
     private FileTableModel model;
-    private StatusMessage statmes = new StatusMessage(dc);
+    private StatusMessage statmes = new StatusMessage();
 
     /** Creates new form HoofdFrame */
     public MainFrame(final DomeinController dc) {
@@ -351,6 +351,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
             } else {
                 dc.addToFilterList(filterTextField.getText());
                 dc.addStatusToArea("Filter: " + dc.getFilterList());
+                System.out.println("AddtoStatusArea");
                
             }
             filterTextField.setText("");
