@@ -21,9 +21,7 @@ import javax.swing.JTextArea;
 
     @Override
     protected void updateStatus() {
-        System.out.println("calling updateStatus");
         this.append(String.format("%s\n", getStatus()));
-        System.out.println("printing status: " + getStatus());
     }
     
 }

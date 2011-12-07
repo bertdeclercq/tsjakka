@@ -32,7 +32,6 @@ public abstract class AbstractTextArea extends JTextArea implements Observer {
     
     @Override
     public void update(Observable o, Object arg){
-        System.out.println("arg= " + arg);
         this.status = (String) arg ;
         updateStatus();
     }
