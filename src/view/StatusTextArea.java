@@ -23,7 +23,12 @@ import javax.swing.JTextArea;
     protected void updateStatus() {
         toAppend = String.format("\n%s", getStatus());
         this.append(toAppend);
+        try{
         this.setCaretPosition(this.getCaretPosition()+toAppend.length());
+        }
+        catch(IllegalArgumentException ex){
+            //do nothing
+        }
     }
     
 }
