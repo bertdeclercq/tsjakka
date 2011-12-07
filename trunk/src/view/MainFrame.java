@@ -144,8 +144,9 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         statusArea.setColumns(20);
         statusArea.setEditable(false);
         statusArea.setForeground(new java.awt.Color(102, 255, 0));
-        statusArea.setRows(4);
+       // statusArea.setRows(4);
         jScrollPane3.setViewportView(statusArea);
+      
 
         javax.swing.GroupLayout statusPaneLayout = new javax.swing.GroupLayout(statusPane);
         statusPane.setLayout(statusPaneLayout);
