@@ -239,8 +239,16 @@ public class DomeinController extends Observable {
         return new File(Config.getInstance().get("directoryshared"));
     }
     
+    public File getDownloadsDirectory() {
+        return new File(Config.getInstance().get("directorydownloads"));
+    }
+    
     public void changeSharedDir(String dir) {
         SharedFiles.getInstance().changeDirectory(dir);
+    }
+    
+    public void changeDownloadsDir(String dir) {
+        Config.getInstance().set("directorydownloads", dir);
     }
     
     public void addStatusToArea(String stat) {

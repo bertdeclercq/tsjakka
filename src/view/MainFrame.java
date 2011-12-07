@@ -84,6 +84,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemFolder = new javax.swing.JMenuItem();
+        jMenuItemDownloads = new javax.swing.JMenuItem();
         jMenuHelp = new javax.swing.JMenu();
         jMenuItemAbout = new javax.swing.JMenuItem();
 
@@ -211,6 +212,15 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
             }
         });
         jMenuFile.add(jMenuItemFolder);
+        
+        jMenuItemDownloads.setText("Change download folder");
+        jMenuItemDownloads.addActionListener(new java.awt.event.ActionListener() {
+
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDownloadsActionPerformed(evt);
+            }
+        });
+        jMenuFile.add(jMenuItemDownloads);
 
         jMenuBar.add(jMenuFile);
 
@@ -235,7 +245,6 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
 
     private void jMenuItemFolderActionPerformed(java.awt.event.ActionEvent evt) {
         final JFileChooser fc = new JFileChooser();
-//        fc.showOpenDialog(jPanel);
         fc.setCurrentDirectory(dc.getSharedDirectory());
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fc.setAcceptAllFileFilterUsed(false);
@@ -245,6 +254,19 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
             System.out.println("No Selection");
         }
     }
+    
+    private void jMenuItemDownloadsActionPerformed(java.awt.event.ActionEvent evt) {
+        final JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(dc.getDownloadsDirectory());
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setAcceptAllFileFilterUsed(false);
+        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            dc.changeDownloadsDir(fc.getSelectedFile().toString());
+        } else {
+            System.out.println("No Selection");
+        }
+    }
+    
     private javax.swing.JLabel availableLabel;
     private javax.swing.JButton downloadButton;
     private javax.swing.JTextField filterTextField;
@@ -253,6 +275,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
     private javax.swing.JMenu jMenuHelp;
     private javax.swing.JMenuItem jMenuItemAbout;
     private javax.swing.JMenuItem jMenuItemFolder;
+    private javax.swing.JMenuItem jMenuItemDownloads;
     private javax.swing.JPanel jPanel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
