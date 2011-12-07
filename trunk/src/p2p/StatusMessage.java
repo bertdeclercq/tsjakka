@@ -16,20 +16,25 @@ public class StatusMessage extends Observable {
 
     private String status;
     
-    public StatusMessage(){
-        status = "Alles is in orde";
+    
+    public StatusMessage(String stat){
+        status = stat;
+        statusChanged();
     }
 
     public String getStatus() {
         return status;
     }
+    
+    
+    
+   
 
     public void addStatus(String newStatus) {
         System.out.println("Add status in StatusMessage");
         System.out.println(newStatus + " olé");
-        this.status = newStatus;
-        setChanged();
-        notifyObservers(status);
+        status = newStatus;
+        statusChanged();
     }
     @Override
     public void addObserver(Observer observer)
@@ -37,4 +42,11 @@ public class StatusMessage extends Observable {
         super.addObserver(observer);
         observer.update(this, getStatus());
     }
+    
+    public void statusChanged(){
+        System.out.println("calling statuschanged");
+        setChanged();
+        notifyObservers(status);
+    }
+    
 }

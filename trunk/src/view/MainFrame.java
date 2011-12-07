@@ -29,7 +29,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
 
     private DomeinController dc;
     private FileTableModel model;
-    private StatusMessage statmes = new StatusMessage();
+    
 
     /** Creates new form HoofdFrame */
     public MainFrame(final DomeinController dc) {
@@ -75,8 +75,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         statusPane = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        statusArea = new StatusTextArea(statmes);
-        
+        statusArea = new StatusTextArea(dc.getStatusMessage());
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         downloadButton = new javax.swing.JButton();

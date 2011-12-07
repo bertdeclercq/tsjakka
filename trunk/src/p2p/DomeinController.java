@@ -33,7 +33,7 @@ public class DomeinController extends Observable {
     private List<String> userList = new ArrayList<String>();
     private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
     private List<String> filterList = new ArrayList<String>();
-    private StatusMessage statusMessage = new StatusMessage();
+    private static StatusMessage statusMessage = new StatusMessage("Welcome!");
     ExecutorService executor = Executors.newCachedThreadPool();
     private Filter filter = new Filter();
 
@@ -253,8 +253,17 @@ public class DomeinController extends Observable {
         Config.getInstance().set("directorydownloads", dir);
     }
     
-    public void addStatusToArea(String stat) {
+    public static void addStatusToArea(String stat) {
+        System.out.println("stat in domeincontroller=" + stat);
+        
         statusMessage.addStatus(stat);
-        System.out.println("In domeincontroller");
+        //statusMessage.addStatus(stat);
+        System.out.println("statmes created in domeincontroller");
     }
+
+    public StatusMessage getStatusMessage() {
+        return statusMessage;
+    }
+    
+    
 }
