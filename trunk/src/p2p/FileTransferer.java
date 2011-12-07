@@ -56,6 +56,7 @@ public class FileTransferer implements Runnable {
                 os.write(mybytearray, 0, count);
             }
             os.flush();
+            DomeinController.addStatusToArea(filename + " was succesfully transfered to other user");
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
