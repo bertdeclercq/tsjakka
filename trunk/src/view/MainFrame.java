@@ -141,12 +141,9 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         statusArea.setBackground(new java.awt.Color(0, 0, 0));
-        statusArea.setColumns(20);
         statusArea.setEditable(false);
         statusArea.setForeground(new java.awt.Color(102, 255, 0));
-       // statusArea.setRows(4);
         jScrollPane3.setViewportView(statusArea);
-      
 
         javax.swing.GroupLayout statusPaneLayout = new javax.swing.GroupLayout(statusPane);
         statusPane.setLayout(statusPaneLayout);
