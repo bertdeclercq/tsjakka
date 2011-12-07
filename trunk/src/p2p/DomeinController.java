@@ -5,6 +5,8 @@
 package p2p;
 
 import java.io.File;
+import java.io.IOError;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -35,12 +37,27 @@ public class DomeinController extends Observable {
     private List<String> filterList = new ArrayList<String>();
     private static StatusMessage statusMessage = new StatusMessage("Welcome!");
     ExecutorService executor = Executors.newCachedThreadPool();
+    ExecutorService fexecutor = Executors.newFixedThreadPool(3);
     private Filter filter = new Filter();
 
     public DomeinController() {
-        executor.execute(onOffBroadcaster);
-        executor.execute(new FileTransferListener());
-        executor.execute(new BroadcastListener(this));
+        try{
+        fexecutor.execute(onOffBroadcaster);
+        }catch(IOError ex){
+            addStatusToArea("Fatale fout opgetreden in broadcaster! Herstart programma aub.");
+        }
+        
+        try{
+        fexecutor.execute(new FileTransferListener());
+        }catch (IOError ex){
+            addStatusToArea("Fout tijdens het downloaden van een bestand!");
+        }
+        
+        try{
+        fexecutor.execute(new BroadcastListener(this));
+        }catch (IOError ex){
+            addStatusToArea("Fatale fout opgetreden in broadcastListener! Herstart programma aub.");
+        }
     }
 
     public void addToUserMap(InetAddress inIp, String inPcname) throws UnknownHostException {
@@ -178,7 +195,11 @@ public class DomeinController extends Observable {
 //        return this.getSharedTsjakkaFilesList().get(index).getIcon();
 //    }
     public void sendDownloadRequest(String filename, String ip) {
+        try{
         Future<String> future = executor.submit(new DownloadRequester(filename, ip, this));
+        }catch (IOError ex){
+            addStatusToArea("Downloaden van bestand" + filename + "mislukt");
+        }
     }
 
     public void signout() {
