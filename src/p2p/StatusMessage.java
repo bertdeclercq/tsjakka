@@ -14,11 +14,10 @@ import java.util.Observer;
  */
 public class StatusMessage extends Observable {
 
-    private static DomeinController dc;
-    private static String status;
+    private String status;
     
-    public StatusMessage(DomeinController dc){
-        this.dc = dc;
+    public StatusMessage(){
+        status = "Alles is in orde";
     }
 
     public String getStatus() {
@@ -26,6 +25,8 @@ public class StatusMessage extends Observable {
     }
 
     public void addStatus(String newStatus) {
+        System.out.println("Add status in StatusMessage");
+        System.out.println(newStatus + " olé");
         this.status = newStatus;
         setChanged();
         notifyObservers(status);
