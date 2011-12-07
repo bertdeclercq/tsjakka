@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package p2p;
 
 import java.io.ByteArrayInputStream;
@@ -15,24 +11,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Joachim
+ * The BroadcastListener class listens for broadcast and analyzes them. It then forwards info from the message to DomeinController.
  */
 public class BroadcastListener implements Runnable {
 
-    private static final long serialVersionUID = 1;
     private MulticastSocket multiSocket;
     private DatagramPacket multiPacket;
     private String inPcname;
     private InetAddress multiGroup, inIpaddress;
     private DomeinController dc;
 
+    /**
+     * Creates a listener with data it gets from DomeinController.
+     * 
+     * @param dc an instance from DomeinController
+     */
     public BroadcastListener(DomeinController dc) {
         this.dc = dc;
     }
-    
-    
 
+    /**
+     * Listens for a broadcast messages and analyze them.
+     */
     @Override
     public void run() {
         try {
@@ -40,37 +40,31 @@ public class BroadcastListener implements Runnable {
             multiSocket = new MulticastSocket(4446);
             Message message = null;
             multiSocket.joinGroup(multiGroup);
-            do {              
+            do {
                 byte[] buffer = new byte[65535];
                 ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
                 multiPacket = new DatagramPacket(buffer, buffer.length);
                 multiSocket.receive(multiPacket);
                 ObjectInputStream ois = new ObjectInputStream(bais);
-                
+
                 try {
                     Object o = ois.readObject();
                     multiPacket.setLength(buffer.length);
                     bais.reset();
-                    message = (Message) o;
+                    message = (Message)o;
                     message.checkStatusTag();
                     inIpaddress = InetAddress.getByName(message.getOwnAddress());
-                    if (message.isOnlineMessage())
-                    {
-                        
+                    if (message.isOnlineMessage()) {
                         inPcname = message.getHostName();
                         dc.addToUserMap(inIpaddress, inPcname);
                         dc.addToSharedTsjakkaMap(inIpaddress, (ArrayList<TsjakkaFile>) message.getContent());
-                        
                     }
-                    if (message.isSignOutMessage())
-                    {
-                        
+                    if (message.isSignOutMessage()) {
                         dc.removeUser(inIpaddress);
                         dc.removeSharedTsjakkaList(inIpaddress);
                     }
                     ois.close();
                     bais.close();
-                    
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(BroadcastListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
