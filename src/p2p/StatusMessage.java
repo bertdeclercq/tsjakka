@@ -31,8 +31,6 @@ public class StatusMessage extends Observable {
    
 
     public void addStatus(String newStatus) {
-        System.out.println("Add status in StatusMessage");
-        System.out.println(newStatus + " olé");
         status = newStatus;
         statusChanged();
     }
@@ -44,7 +42,6 @@ public class StatusMessage extends Observable {
     }
     
     public void statusChanged(){
-        System.out.println("calling statuschanged");
         setChanged();
         notifyObservers(status);
     }
