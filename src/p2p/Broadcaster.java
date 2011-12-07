@@ -28,11 +28,11 @@ public class Broadcaster implements Runnable {
     public Broadcaster(boolean flag) {
         this.flag = flag;
     }
-    
-    public void setFlag(boolean flag){
+
+    public void setFlag(boolean flag) {
         this.flag = flag;
-    } 
-    
+    }
+
     /* Elke 10 sec wordt een multicast packet gestuurd om te kijken
      * wie er op de LAN zit
      */
@@ -44,10 +44,11 @@ public class Broadcaster implements Runnable {
             ownIp = InetAddress.getLocalHost();
             multiSocket.joinGroup(multiGroup);
             do {
-                if (flag)
+                if (flag) {
                     sendOnlineMessage();
-                else
+                } else {
                     sendSignoutMessage();
+                }
                 Thread.sleep(3000);
             } while (true);
         } catch (InterruptedException ex) {
@@ -55,33 +56,30 @@ public class Broadcaster implements Runnable {
         } catch (IOException ex) {
             Logger.getLogger(Broadcaster.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
-    public void sendOnlineMessage() throws IOException
-    {
+
+    public void sendOnlineMessage() throws IOException {
         Message message;
         byte[] buf = new byte[65535];
-        
+
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
-        ObjectOutputStream o_out = new ObjectOutputStream(b_out);  
-        SharedFiles.getInstance().setIp(ownIp.getHostAddress());
-        message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedTsjakkaList());           
+        ObjectOutputStream o_out = new ObjectOutputStream(b_out);
+        message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedList());
         o_out.writeObject(message);
         buf = b_out.toByteArray();
         multiPacket = new DatagramPacket(buf, buf.length, multiGroup, 4446);
         multiSocket.send(multiPacket);
         b_out.close();
-                
+
     }
-    
-    public void sendSignoutMessage() throws IOException
-    {
+
+    public void sendSignoutMessage() throws IOException {
         Message message;
         byte[] buf = new byte[65535];
-        
+
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
-        ObjectOutputStream o_out = new ObjectOutputStream(b_out);             
+        ObjectOutputStream o_out = new ObjectOutputStream(b_out);
         message = new Message("<signout>", ownIp.getHostAddress().toString());
         o_out.writeObject(message);
         buf = b_out.toByteArray();
