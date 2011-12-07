@@ -174,10 +174,12 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
                 false, false, false
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit[columnIndex];
             }
@@ -192,8 +194,7 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         downloadButton.setFont(new java.awt.Font("Stencil", 0, 11));
         downloadButton.setText("Download");
 
-        filterTextField.setToolTipText("Enter your extension filter here.");
-        filterTextField.setName(""); // NOI18N
+        filterTextField.setToolTipText("Enter your filter here.");
 
         javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
         jPanel.setLayout(jPanelLayout);
@@ -250,8 +251,6 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         fc.setAcceptAllFileFilterUsed(false);
         if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             dc.changeSharedDir(fc.getSelectedFile().toString());
-        } else {
-            System.out.println("No Selection");
         }
     }
     
@@ -262,8 +261,6 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         fc.setAcceptAllFileFilterUsed(false);
         if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             dc.changeDownloadsDir(fc.getSelectedFile().toString());
-        } else {
-            System.out.println("No Selection");
         }
     }
     
@@ -322,12 +319,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
             int col = jTable1.getSelectedColumn();
             if (col == 0) {
                 dc.sendDownloadRequest(jTable1.getValueAt(row, col).toString(), model.getIp(row));
-            }
-            
+            }            
         }
-
-
-
     }
 
     @Override
@@ -369,13 +362,11 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener,
         if (e.getKeyChar() == e.VK_ENTER) {
             if (filterTextField.getText().trim().equals("")) {
                 dc.emptyList();
-                dc.addStatusToArea("Filter: none");
-                
+                dc.addStatusToArea("Filter: none");                
             } else {
                 dc.addToFilterList(filterTextField.getText());
                 dc.addStatusToArea("Filter: " + dc.getFilterList());
-                System.out.println("AddtoStatusArea");
-               
+                System.out.println("AddtoStatusArea");               
             }
             filterTextField.setText("");
         }

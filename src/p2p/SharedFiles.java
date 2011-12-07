@@ -64,11 +64,6 @@ public class SharedFiles {
         }
     }
 
-    public void changeDirectory(String dir) {
-        Config.getInstance().set("directoryshared", dir);
-        updateSharedList();
-    }
-
     public void setIp(String ip) {
         this.ip = ip;
     }
