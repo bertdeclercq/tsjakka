@@ -35,6 +35,7 @@ public class DomeinController extends Observable {
     private List<String> filterList = new ArrayList<String>();
     private StatusMessage statusMessage = new StatusMessage();
     ExecutorService executor = Executors.newCachedThreadPool();
+    private Filter filter = new Filter();
 
     public DomeinController() {
         executor.execute(onOffBroadcaster);
@@ -149,9 +150,10 @@ public class DomeinController extends Observable {
                 }
             }
         }
-        if (!filterList.isEmpty()) {
-            return filterList();
+        if (!filter.isEmpty()) {
+            return filter.filter(sharedFilesList);
         }
+//        sharedFilesList = filter.filter(sharedFilesList);
         return sharedFilesList;
     }
 
@@ -207,32 +209,32 @@ public class DomeinController extends Observable {
     }
 
     // filter
-    public List<TsjakkaFile> filterList() {
-        List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
-        for (String extension : filterList) {
-            for (TsjakkaFile tsjakkaFile : sharedFilesList) {
-                if (tsjakkaFile.getExtension().equals(extension)) {
-                    list.add(tsjakkaFile);
-                }
-            }
-        }
-        return list;
-    }
+//    public List<TsjakkaFile> filterList() {
+//        List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
+//        for (String extension : filterList) {
+//            for (TsjakkaFile tsjakkaFile : sharedFilesList) {
+//                if (tsjakkaFile.getExtension().equals(extension)) {
+//                    list.add(tsjakkaFile);
+//                }
+//            }
+//        }
+//        return list;
+//    }
 
-    public void addToFilterList(String extension) {
-        filterList.add(extension.trim().toLowerCase());
+    public void addToFilterList(String filter) {
+        this.filter.add(filter);
         setChanged();
         notifyObservers();
     }
 
     public void emptyList() {
-        filterList.clear();
+        filter.clear();
         setChanged();
         notifyObservers();
     }
 
     public List<String> getFilterList() {
-        return filterList;
+        return filter.get();
     }
     
     public File getSharedDirectory() {
@@ -244,7 +246,7 @@ public class DomeinController extends Observable {
     }
     
     public void changeSharedDir(String dir) {
-        SharedFiles.getInstance().changeDirectory(dir);
+        Config.getInstance().set("directoryshared", dir);
     }
     
     public void changeDownloadsDir(String dir) {

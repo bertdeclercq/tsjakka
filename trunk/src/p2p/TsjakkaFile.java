@@ -12,62 +12,32 @@ import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Jimmy
- */
 public class TsjakkaFile implements Serializable {
 
     private String filename;
-    private double fileSize;
+    private long fileSize;
     private String directory;
     private String ip;
-    private File file;
-    private String md5;
-    //private Icon icon;
 
     public TsjakkaFile(File file, String ip) {
-        this.file = file;
         this.filename = file.getName();
         this.fileSize = file.length();
         this.directory = file.getPath();
         this.ip = ip;
-//        this.md5 = generateMD5(file);
     }
-
-    public TsjakkaFile(String filename) {
-        this.filename = filename;
-    }
-
-    public TsjakkaFile(String filename, double fileSize, String directory, String ip) {
-        this.filename = filename;
-        this.fileSize = fileSize;
-        this.directory = directory;
-        this.ip = ip;
-    }
-
-//        public TsjakkaFile(String filename, double fileSize, String ip, Icon icon) {
-//        this.filename = filename;
-//        this.fileSize = fileSize;
-//        this.ip = ip;
-//        this.icon = icon;
-//    }
-    public TsjakkaFile(String filename, double fileSize) {
-        this.filename = filename;
-        this.fileSize = fileSize;
-    }
-
-    public TsjakkaFile() {
-    }
-
-    public double getFileSize() {
-        return fileSize;
-    }
-
+    
     public String getFilename() {
         return filename;
     }
 
+    public long getFileSize() {
+        return fileSize;
+    }
+    
+    public String getDirectory() {
+        return directory;
+    }
+    
     public String getIp() {
         return ip;
     }
@@ -77,31 +47,17 @@ public class TsjakkaFile implements Serializable {
         inbetweenresult = Math.round(inbetweenresult);
         inbetweenresult = inbetweenresult / 100;
         return inbetweenresult;
+//        return (double)fileSize / (1024 * 1024);
     }
 
-//    public Icon getIcon() {
-//        return this.icon;
-//    }
     @Override
     public String toString() {
-        return "File: " + this.filename + " | Size: " + this.getFileSizeInMegaByte() + " MB";
-    }
-
-    public String getDirectory() {
-        return directory;
-    }
-    
-    public File getFile() {
-        return file;
+        return "File: " + getFilename() + " | Size: " + getFileSizeInMegaByte() + " MB";
     }
 
     public String getExtension() {
         int dotpos = filename.lastIndexOf(".");
         return filename.substring(dotpos + 1).toLowerCase();
-    }
-    
-    public int compareTo(TsjakkaFile tjsakkaFile) {
-        return this.file.compareTo(tjsakkaFile.getFile());
     }
 
     public static String generateMD5(File file) {
