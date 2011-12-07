@@ -11,19 +11,18 @@ import javax.swing.JTextArea;
  *
  * @author Jimmy
  */
-public class StatusTextArea extends AbstractTextArea {
+ class StatusTextArea extends AbstractTextArea {
 
     
 
     public StatusTextArea(Observable subject) {
         super(subject);
-
-        updateStatus();
     }
 
     @Override
     protected void updateStatus() {
-        this.append(getStatus() + "testing");
+        System.out.println("calling updateStatus");
+        this.append(String.format("%s\n", getStatus()));
         System.out.println("printing status: " + getStatus());
     }
     

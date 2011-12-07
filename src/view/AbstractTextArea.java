@@ -19,6 +19,7 @@ public abstract class AbstractTextArea extends JTextArea implements Observer {
     
     public AbstractTextArea(Observable subject){
         this.subject = subject;
+        subject.addObserver(this);
         
             
     }
@@ -31,7 +32,7 @@ public abstract class AbstractTextArea extends JTextArea implements Observer {
     
     @Override
     public void update(Observable o, Object arg){
-        System.out.println(arg);
+        System.out.println("arg= " + arg);
         this.status = (String) arg ;
         updateStatus();
     }

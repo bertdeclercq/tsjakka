@@ -25,9 +25,12 @@ public class FileTransferer implements Runnable {
     private Properties properties = new Properties();
     private String CONFIG_FILE = "config";
     
+    
 
     public FileTransferer(Socket link) {
         this.link = link;
+        
+        
     }
 
     @Override
@@ -47,6 +50,7 @@ public class FileTransferer implements Runnable {
             OutputStream os = link.getOutputStream();
             
          //   StatusMessage.setStatus("Someone is stealing the following file : " + filename);
+          DomeinController.addStatusToArea("someone is leaching: " + filename);
           
             while((count = fis.read(mybytearray)) > 0){
                 os.write(mybytearray, 0, count);
@@ -63,4 +67,6 @@ public class FileTransferer implements Runnable {
             }
         }
     }
+    
+    
 }
