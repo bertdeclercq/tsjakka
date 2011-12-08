@@ -13,7 +13,7 @@ public class SharedFiles {
 
     private static SharedFiles instance;
     private static List<TsjakkaFile> sharedList;
-    private static String ip;
+//    private static String ip;
 
     private SharedFiles() {
         sharedList = new ArrayList<TsjakkaFile>();
@@ -68,7 +68,7 @@ public class SharedFiles {
         if (children != null) {
             for (int i = 0; i < children.length; i++) {
                 if (!children[i].isDirectory()) {
-                    sharedList.add(new TsjakkaFile(children[i], ip));
+                    sharedList.add(new TsjakkaFile(children[i]));
                 } else {
                     findShared(children[i].getPath());
                 }
@@ -76,7 +76,7 @@ public class SharedFiles {
         }
     }
     
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
+//    public void setIp(String ip) {
+//        this.ip = ip;
+//    }
 }
