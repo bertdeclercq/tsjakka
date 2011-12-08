@@ -249,8 +249,8 @@ public class DomeinController extends Observable {
      * @param index
      * @return double returns the size of the tsjakkafile
      */
-    public double getFileSize(int index) {
-        return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
+    public String getFileSize(int index) {
+        return this.getSharedTsjakkaFilesList().get(index).getFileSize();
     }
 
     /**
