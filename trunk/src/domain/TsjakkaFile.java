@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  */
 public class TsjakkaFile implements Serializable {
 
-//    private String filename;
-//    private double fileSize;
-//    private String directory;
+    private String filename;
+    private double fileSize;
+    private String directory;
     private File file;
     private String ip;
 
@@ -31,9 +31,9 @@ public class TsjakkaFile implements Serializable {
      * @param path the file of which you want to make a TsjakkaFile
      */
     public TsjakkaFile(File file) {
-//        this.filename = file.getName();
-//        this.fileSize = file.length();
-//        this.directory = file.getPath();
+        this.filename = file.getName();
+        this.fileSize = file.length();
+        this.directory = file.getPath();
         this.file = file;
         try {
             this.ip = InetAddress.getLocalHost().getHostName();
@@ -49,7 +49,7 @@ public class TsjakkaFile implements Serializable {
      * @return the name
      */
     public String getFilename() {
-        return file.getName();
+        return filename;
     }
     
     /**
@@ -68,7 +68,7 @@ public class TsjakkaFile implements Serializable {
      * @return the directory
      */
     public String getDirectory() {
-        return file.getPath();
+        return directory;
     }
     
     /**
@@ -77,7 +77,7 @@ public class TsjakkaFile implements Serializable {
      * @return the size in bytes
      */
     public double getFileSizeInByte() {
-        return file.length();
+        return fileSize;
     }
     
 //    public double getFileSizeInKiloByte() {
