@@ -13,6 +13,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utility.Config;
 
+/**
+ * This class will send a request to a user to download one of his files
+ * Afterwards it will also receive the file
+ */
 
 public class DownloadRequester implements Callable {
 
@@ -37,7 +41,6 @@ public class DownloadRequester implements Callable {
      * Sends a downloadrequest to a user asking for a file
      * Receives the file it has requested 
      * 
-     * @return
      * @throws Exception 
      */
     @Override
@@ -70,20 +73,17 @@ public class DownloadRequester implements Callable {
                 bos.write(buffer, 0, length);
             }
             bos.flush();
-            DomeinController.addStatusToArea("Bestand ontvangen!");
+            DomeinController.addStatusToArea("File received!");
             bos.close();
         } catch (IOException ex) {
-            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-            DomeinController.addStatusToArea("failed to download file");
+            DomeinController.addStatusToArea("Failed to download file");
         } catch (ArrayIndexOutOfBoundsException aex) {
-            DomeinController.addStatusToArea("Mongool, download es geen leeg bestand!");
-            aex.printStackTrace();
+            DomeinController.addStatusToArea("You downloaded an empty file!");
         } finally {
             try {
                 link.close();
             } catch (IOException ex) {
-                Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-                DomeinController.addStatusToArea("error during closing connection");
+                DomeinController.addStatusToArea("Error during closing connection!");
             }
             return test;
         }

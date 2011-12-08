@@ -12,6 +12,11 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The FiletransferListener Class will continually listen for DownloadRequester
+ * connections. Once it gets a connection it will start a new Filetransfer-Thread
+ * to handle the request
+ */
 
 public class FileTransferListener implements Runnable {
 
