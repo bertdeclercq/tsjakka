@@ -50,7 +50,7 @@ public class StartupGui {
         loadScreen = new LoadingScreen();
         loadScreen.setVisible(true);
         loadScreen.setLocationRelativeTo(null);
-        loadScreen.setIconImage(Toolkit.getDefaultToolkit().getImage("/view/network-share-icon.png"));
+        loadScreen.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
         loadScreen.removeNotify();
         loadScreen.setUndecorated(true);
         loadScreen.addNotify();
@@ -71,7 +71,7 @@ public class StartupGui {
         mainFrame = new MainFrame(new DomeinController());
         mainFrame.setVisible(true);
         mainFrame.setLocationRelativeTo(null);
-        mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("/view/network-share-icon.png"));
+        mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("network-share-icon.png"));
 
     }
 }
