@@ -26,9 +26,8 @@ public class TsjakkaFile implements Serializable {
     private String ip;
 
     /**
-     * Creates a TsjakkaFile located at specified path.
-     * 
-     * @param path the file of which you want to make a TsjakkaFile
+     * Initializes a newly created TsjakkaFile object. 
+     * @param file The file that's being transformed into a TsjakkaFile
      */
     public TsjakkaFile(File file) {
         this.file = file;
@@ -122,8 +121,8 @@ public class TsjakkaFile implements Serializable {
     }
     
     /**
-     * return the ip address of the computer on which it is located.
-     * @return 
+     * return the ip address of the computer on which it is located
+     * @return the ip of the computer where the file is located
      */
     public String getIp() {
         return ip;
