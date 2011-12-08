@@ -31,10 +31,10 @@ public class TsjakkaFile implements Serializable {
      * @param path the file of which you want to make a TsjakkaFile
      */
     public TsjakkaFile(File file) {
+        this.file = file;
         this.filename = file.getName();
         this.fileSize = file.length();
         this.directory = file.getPath();
-        this.file = file;
         try {
             this.ip = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException ex) {
@@ -80,9 +80,9 @@ public class TsjakkaFile implements Serializable {
         return fileSize;
     }
     
-//    public double getFileSizeInKiloByte() {
-//        return (double)getFileSizeInByte() / 1024;
-//    }
+    public double getFileSizeInKiloByte() {
+        return (double)getFileSizeInByte() / 1024;
+    }
 
     /**
      * return the size in megabytes of this TsjakkaFile.
@@ -90,26 +90,26 @@ public class TsjakkaFile implements Serializable {
      * @return the size in megabytes
      */
     public double getFileSizeInMegaByte() {
-//        return (double)getFileSizeInKiloByte() / 1024;
-        double inbetweenresult = (getFileSizeInByte() / 1048576) * 100;
-        inbetweenresult = Math.round(inbetweenresult);
-        inbetweenresult = inbetweenresult / 100;
-        return inbetweenresult;
+        return (double)getFileSizeInKiloByte() / 1024;
+//        double inbetweenresult = (getFileSizeInByte() / 1048576) * 100;
+//        inbetweenresult = Math.round(inbetweenresult);
+//        inbetweenresult = inbetweenresult / 100;
+//        return inbetweenresult;
     }
     
     public double getFileSizeInGigaByte() {
         return (double)getFileSizeInMegaByte() / 1024;
     }
     
-//    public String getFileSize() {
-//        if (getFileSizeInKiloByte() < 1024) {
-//            return String.format("%.2f kB", (double)Math.round(getFileSizeInKiloByte() * 100) / 100);
-//        } else if (getFileSizeInMegaByte() < 1024) {
-//            return String.format("%.2f MB", (double)Math.round(getFileSizeInMegaByte() * 100) / 100);
-//        } else {
-//            return String.format("%.2f GB", (double)Math.round(getFileSizeInGigaByte() * 100) / 100);
-//        }
-//    }
+    public String getFileSize() {
+        if (getFileSizeInKiloByte() < 1024) {
+            return String.format("%.2f kB", (double)Math.round(getFileSizeInKiloByte() * 100) / 100);
+        } else if (getFileSizeInMegaByte() < 1024) {
+            return String.format("%.2f MB", (double)Math.round(getFileSizeInMegaByte() * 100) / 100);
+        } else {
+            return String.format("%.2f GB", (double)Math.round(getFileSizeInGigaByte() * 100) / 100);
+        }
+    }
     
     /**
      * return the ip address of the computer on which it is located.
