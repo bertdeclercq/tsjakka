@@ -26,50 +26,6 @@ public class DownloadRequester implements Callable {
         this.ip = ip;
         this.dc = dc;
     }
-//TODO mag dit weg!?
-//    public void run() {
-//
-//        Socket link = null;
-//        try {
-//            InetAddress host = InetAddress.getByName(ip);
-//            link = new Socket(host, 1238);
-//            PrintWriter out = new PrintWriter(link.getOutputStream(), true);
-//
-//            //download request versturen met naam van het bestand en ip.
-//            out.println(dc.getDirectory(filename, ip));
-//
-//            String strDir = Config.getInstance().get("directorydownloads");
-//            File dir = new File(strDir);
-//            if (!dir.exists()) {
-//                dir.mkdirs();
-//            }
-//
-//            // inlezen van binnenkomend bestand
-//            InputStream is = link.getInputStream();
-//            FileOutputStream fos = new FileOutputStream(strDir + "/" + filename);
-//            BufferedOutputStream bos = new BufferedOutputStream(fos);
-//
-//            int length;
-//            byte[] buffer = new byte[65536];
-//            while ((length = is.read(buffer)) != -1) {
-//                bos.write(buffer, 0, length);
-//            }
-//            bos.flush();
-//            dc.addStatusToArea("Bestand ontvangen!");
-//            bos.close();
-//        } catch (IOException ex) {
-//            Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ArrayIndexOutOfBoundsException aex) {
-//            dc.addStatusToArea("Mongool, download es geen leeg bestand!");
-//            aex.printStackTrace();
-//        } finally {
-//            try {
-//                link.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
 
     @Override
     public String call() throws Exception {
