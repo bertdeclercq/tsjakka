@@ -8,7 +8,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.util.Timer;
 import javax.swing.JFrame;
-import p2p.DomeinController;
+import domain.DomeinController;
 
 /**
  *

@@ -12,7 +12,7 @@ package view;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import p2p.DomeinController;
+import domain.DomeinController;
 
 /**
  *

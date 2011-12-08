@@ -15,11 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import p2p.Broadcaster;
-import p2p.DomeinController;
-import p2p.FileTableModel;
-import p2p.StatusMessage;
-import p2p.UserListModel;
+import domain.Broadcaster;
+import domain.DomeinController;
+import domain.FileTableModel;
+import domain.StatusMessage;
+import domain.UserListModel;
 
 /**
  *
