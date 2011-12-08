@@ -53,7 +53,7 @@ public class Message implements Serializable {
     }
 
     /**
-     * 
+     * Returns if the message is an online message.
      * @return True if the message is an online message, false if not
      */
     public boolean isOnlineMessage() {
@@ -69,7 +69,7 @@ public class Message implements Serializable {
     }
 
     /**
-     * 
+     * Returns if the message is an offline message.
      * @return True if the message is an offline message, false if not
      */
     public boolean isSignOutMessage() {
