@@ -76,7 +76,7 @@ public class TsjakkaFile implements Serializable {
      * 
      * @return the size in bytes
      */
-    public long getFileSizeInByte() {
+    public double getFileSizeInByte() {
         return file.length();
     }
     
@@ -91,7 +91,7 @@ public class TsjakkaFile implements Serializable {
      */
     public double getFileSizeInMegaByte() {
 //        return (double)getFileSizeInKiloByte() / 1024;
-        double inbetweenresult = (double)(getFileSizeInByte() / 1048576) * 100;
+        double inbetweenresult = (getFileSizeInByte() / 1048576) * 100;
         inbetweenresult = Math.round(inbetweenresult);
         inbetweenresult = inbetweenresult / 100;
         return inbetweenresult;
