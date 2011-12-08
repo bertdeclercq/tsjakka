@@ -70,8 +70,12 @@ public class TsjakkaFile extends File implements Serializable {
      * 
      * @return the size in bytes
      */
-    public long getFileSize() {
+    public long getFileSizeInByte() {
         return super.length();
+    }
+    
+    public double getFileSizeInKiloByte() {
+        return (double)getFileSizeInByte() / 1024;
     }
 
     /**
@@ -80,7 +84,21 @@ public class TsjakkaFile extends File implements Serializable {
      * @return the size in megabytes
      */
     public double getFileSizeInMegaByte() {
-        return (double)getFileSize() / (1024 * 1024);
+        return (double)getFileSizeInKiloByte() / 1024;
+    }
+    
+    public double getFileSizeInGigaByte() {
+        return (double)getFileSizeInMegaByte() / 1024;
+    }
+    
+    public String getFileSize() {
+        if (getFileSizeInKiloByte() < 1024) {
+            return String.format("%.2f kB", (double)Math.round(getFileSizeInKiloByte() * 100) / 100);
+        } else if (getFileSizeInMegaByte() < 1024) {
+            return String.format("%.2f MB", (double)Math.round(getFileSizeInMegaByte() * 100) / 100);
+        } else {
+            return String.format("%.2f GB", (double)Math.round(getFileSizeInGigaByte() * 100) / 100);
+        }
     }
     
     /**
