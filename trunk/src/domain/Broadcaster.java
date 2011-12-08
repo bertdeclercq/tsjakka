@@ -39,7 +39,7 @@ public class Broadcaster implements Runnable {
     }
 
     /**
-     * Every 3 seconds a message will be broadcasted whether the user is online or not. If the user is online, he will broadcast a list of the files he's sharing.
+     * Every second a message will be broadcasted whether the user is online or not. If the user is online, he will broadcast a list of the files he's sharing.
      */
     @Override
     public void run() {
@@ -68,7 +68,6 @@ public class Broadcaster implements Runnable {
         byte[] buf = new byte[65535];
         ByteArrayOutputStream b_out = new ByteArrayOutputStream();
         ObjectOutputStream o_out = new ObjectOutputStream(b_out);
-//        SharedFiles.getInstance().setIp(ownIp.getHostAddress());
         message = new Message("<online>", ownIp.getHostAddress().toString(), ownIp.getHostName(), SharedFiles.getInstance().getSharedList());
         o_out.writeObject(message);
         buf = b_out.toByteArray();
