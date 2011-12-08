@@ -49,12 +49,12 @@ public class DomeinController extends Observable {
     }
 
     /**
-     * 
+     * adds the user to the map.
+     * this map is then shown in the gui screen as a userlist
      * @param inIp
      * @param inPcname
      * @throws UnknownHostException 
-     * adds the user to the map.
-     * this map is then shown in the gui screen as a userlist
+     
      */
     public void addToUserMap(InetAddress inIp, String inPcname) throws UnknownHostException {
         String ownIp = "";
