@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
 import java.io.IOException;
@@ -17,7 +13,6 @@ import java.util.logging.Logger;
  * connections. Once it gets a connection it will start a new Filetransfer-Thread
  * to handle the request
  */
-
 public class FileTransferListener implements Runnable {
 
     private static ServerSocket servSocket;
@@ -41,8 +36,7 @@ public class FileTransferListener implements Runnable {
             try {
                 link = servSocket.accept();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                DomeinController.addStatusToArea("Verbinding mislukt.");
             }
             threadExecutor.execute(new FileTransferer(link));
         } while (true);

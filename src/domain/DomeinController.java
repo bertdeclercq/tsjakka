@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package domain;
 
 import java.io.File;
@@ -20,8 +16,7 @@ import java.util.concurrent.Future;
 import utility.Config;
 
 /**
- *
- * @author Cédric
+ * The DomeinController class is the connection between the domain and the gui.
  */
 public class DomeinController extends Observable {
 
@@ -30,31 +25,27 @@ public class DomeinController extends Observable {
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
     private List<String> userList = new ArrayList<String>();
     private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
-    private List<String> filterList = new ArrayList<String>();
     private static StatusMessage statusMessage = new StatusMessage("Welcome!");
-    ExecutorService executor = Executors.newCachedThreadPool();
-    ExecutorService fexecutor = Executors.newFixedThreadPool(3);
+    private ExecutorService executor = Executors.newCachedThreadPool();
+    private ExecutorService fexecutor = Executors.newFixedThreadPool(3);
     private Filter filter = new Filter();
 
     /**
-     * initialize a newly created DomeinController object with stat
-     * starts the threads who are needed the whole time so the
-     * application will update
+     * Initialize a newly created DomeinController object which starts the threads who are needed the whole time so the application will update.
      */
     public DomeinController() {
-        
         fexecutor.execute(onOffBroadcaster);
         fexecutor.execute(new FileTransferListener());
         fexecutor.execute(new BroadcastListener(this));
     }
 
     /**
-     * adds the user to the map.
-     * this map is then shown in the gui screen as a userlist
-     * @param inIp
-     * @param inPcname
-     * @throws UnknownHostException 
-     
+     * Adds the user to the map. This map is then shown in the gui screen as a userlist.
+     * 
+     * @param inIp the ip address
+     * @param inPcname the name of the computer
+     * 
+     * @throws UnknownHostException an exception
      */
     public void addToUserMap(InetAddress inIp, String inPcname) throws UnknownHostException {
         String ownIp = "";
@@ -69,15 +60,7 @@ public class DomeinController extends Observable {
             }
         }
     }
-
-    /**
-     * 
-     * @param inIp
-     * @param inPcname
-     * @return boolean
-     * checks whether the user is a new user in the list or not
-     * 
-     */
+    
     private boolean newUser(InetAddress inIp, String inPcname) {
         if (userMap.containsKey(inIp)) {
             if (userMap.get(inIp).equals(inPcname)) {
@@ -88,10 +71,9 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Removes the user from the usermap and lets the observers know it has changed.
      * 
-     * @param inIp 
-     * removes the user from the usermap and lets the observers know
-     * it has changed
+     * @param inIp the ip address
      */
     public void removeUser(InetAddress inIp) {
         this.userMap.remove(inIp);
@@ -100,6 +82,7 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Returns a map of users.
      * 
      * @return the usermap as a map 
      */
@@ -108,11 +91,12 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Adds the list of shared files to the sharedfilesList
      * 
-     * @param inIp
-     * @param sharedList
-     * @throws UnknownHostException 
-     * adds the list of shared files to the sharedfilesList
+     * @param inIp the ip address
+     * @param sharedList a list of shared files
+     * 
+     * @throws UnknownHostException an exception
      */
     public void addToSharedTsjakkaMap(InetAddress inIp, ArrayList<TsjakkaFile> sharedList) throws UnknownHostException {
         String ownIp = "";
@@ -133,15 +117,7 @@ public class DomeinController extends Observable {
             }
         }
     }
-
-    /**
-     * 
-     * @param oldList
-     * @param newList
-     * @return boolean
-     * checks if the fileslist has changed or not
-     * to see if there are new or updated files.
-     */
+    
     private boolean listChanged(ArrayList<TsjakkaFile> oldList, ArrayList<TsjakkaFile> newList) {
         if (oldList.size() != newList.size()) {
             return true;
@@ -161,9 +137,9 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Removes a users files from the filelist.
      * 
-     * @param ip 
-     * removes a users files from the filelist.
+     * @param ip the ip address
      */
     public void removeSharedTsjakkaList(InetAddress ip) {
         this.sharedTsjakkaMap.remove(ip);
@@ -172,8 +148,10 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Return the username as a string.
      * 
-     * @param index
+     * @param index the location
+     * 
      * @return the username as a string
      */
     public String getUserNameUser(int index) {
@@ -181,9 +159,9 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Returns a list of strings with the name of all the users.
      * 
-     * @return a list of strings 
-     * these strings are all the online users.
+     * @return a list of strings
      */
     public List<String> getUserNameList() {
         Collection<String> coll = userMap.values();
@@ -196,17 +174,18 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Returns the number of users online.
      * 
-     * @return the size of the map which contains the users.
-     * show how many users are online.
+     * @return the number of users online
      */
     public int getUserMapSize() {
         return userMap.size();
     }
 
     /**
+     * Returns a list of tsjakkafiles that are being shared by the users.
      * 
-     * @return list of tjakkafiles. the list of files that are being shared by the users.
+     * @return list of tjakkafiles
      */
     public List<TsjakkaFile> getSharedTsjakkaFilesList() {
         Collection<ArrayList<TsjakkaFile>> coll = sharedTsjakkaMap.values();
@@ -227,8 +206,9 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Returns the number of tiles being shared.
      * 
-     * @return integer the size of the map which contains the files
+     * @return the number of files being shared
      */
     public int getSharedTsjakkaMapSize() {
         return getSharedTsjakkaFilesList().size();
@@ -236,8 +216,10 @@ public class DomeinController extends Observable {
 
     /**
      * 
-     * @param index
-     * @return String the name of the tsjakkafile
+     * 
+     * @param index the location
+     * 
+     * @return the filename as a string
      */
     public String getFileName(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFilename();
