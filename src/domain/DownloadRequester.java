@@ -50,6 +50,7 @@ public class DownloadRequester implements Callable {
             PrintWriter out = new PrintWriter(link.getOutputStream(), true);
 
             //download request versturen met naam van het bestand en ip.
+            DomeinController.addStatusToArea("Download started");
             out.println(dc.getDirectory(pathname, ip));
 
             String strDir = Config.getInstance().get("directorydownloads");
@@ -73,6 +74,7 @@ public class DownloadRequester implements Callable {
             bos.close();
         } catch (IOException ex) {
             Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+            DomeinController.addStatusToArea("failed to download file");
         } catch (ArrayIndexOutOfBoundsException aex) {
             DomeinController.addStatusToArea("Mongool, download es geen leeg bestand!");
             aex.printStackTrace();
@@ -81,6 +83,7 @@ public class DownloadRequester implements Callable {
                 link.close();
             } catch (IOException ex) {
                 Logger.getLogger(DomeinController.class.getName()).log(Level.SEVERE, null, ex);
+                DomeinController.addStatusToArea("error during closing connection");
             }
             return test;
         }
