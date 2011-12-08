@@ -54,7 +54,7 @@ public class Broadcaster implements Runnable {
                 } else {
                     sendSignoutMessage();
                 }
-                Thread.sleep(3000);
+                Thread.sleep(1000);
             } while (true);
         } catch (InterruptedException ex) {
             Logger.getLogger(Broadcaster.class.getName()).log(Level.SEVERE, null, ex);
