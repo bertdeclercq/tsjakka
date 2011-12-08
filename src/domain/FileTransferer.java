@@ -10,6 +10,10 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Properties;
 
+/**
+ * The Filetransferer Class will send a file to the user that send a downloadrequest
+ * 
+ */
 public class FileTransferer implements Runnable {
 
     private Socket link;
