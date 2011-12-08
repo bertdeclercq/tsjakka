@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package domain;
 
 import java.io.BufferedReader;
@@ -13,10 +10,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Properties;
 
-/**
- *
- * @author Joachim
- */
 public class FileTransferer implements Runnable {
 
     private Socket link;
@@ -25,13 +18,19 @@ public class FileTransferer implements Runnable {
     private String CONFIG_FILE = "config";
     
     
-
+    /**
+     * Initializes a newly created FileTransferer object
+     * 
+     * @param link the socket which has an active connection and has been passed by the FileTransferListener
+     */
     public FileTransferer(Socket link) {
-        this.link = link;
-        
-        
+        this.link = link;  
     }
 
+    /**
+     * Sends a file that has been requested by a DownloadRequester-thread
+     * 
+     */
     @Override
     public void run() {
         String inMessage;

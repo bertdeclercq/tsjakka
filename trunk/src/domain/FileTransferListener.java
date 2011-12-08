@@ -12,15 +12,17 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Joachim
- */
+
 public class FileTransferListener implements Runnable {
 
     private static ServerSocket servSocket;
     private static final int PORT = 1238;
 
+    /**
+     * Listens for connections made by the DownloadRequester-threads
+     * Starts for each of these connection an individual thread to handle them
+     * 
+     */
     @Override
     public void run() {
         ExecutorService threadExecutor = Executors.newCachedThreadPool();

@@ -13,23 +13,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utility.Config;
 
+
 public class DownloadRequester implements Callable {
 
-    private String filename;
+    private String pathname;
     private String ip;
     private DomeinController dc;
 
-    public DownloadRequester(String filename, String ip, DomeinController dc) {
-        this.filename = filename;
+    /**
+     * Initializes a newly created DownloadRequester object
+     * 
+     * @param pathname The pathname which leads to the file that has to be downloaded 
+     * @param ip The ip address of the user you want to download from
+     * @param dc An instance of the domaincontroller
+     */
+    public DownloadRequester(String pathname, String ip, DomeinController dc) {
+        this.pathname = pathname;
         this.ip = ip;
         this.dc = dc;
     }
 
     /**
-     * 
+     * Sends a downloadrequest to a user asking for a file
+     * Receives the file it has requested 
      * 
      * @return
-     * 
      * @throws Exception 
      */
     @Override
@@ -42,7 +50,7 @@ public class DownloadRequester implements Callable {
             PrintWriter out = new PrintWriter(link.getOutputStream(), true);
 
             //download request versturen met naam van het bestand en ip.
-            out.println(dc.getDirectory(filename, ip));
+            out.println(dc.getDirectory(pathname, ip));
 
             String strDir = Config.getInstance().get("directorydownloads");
             File dir = new File(strDir);
@@ -52,7 +60,7 @@ public class DownloadRequester implements Callable {
 
             // inlezen van binnenkomend bestand
             InputStream is = link.getInputStream();
-            FileOutputStream fos = new FileOutputStream(strDir + "/" + filename);
+            FileOutputStream fos = new FileOutputStream(strDir + "/" + pathname);
             BufferedOutputStream bos = new BufferedOutputStream(fos);
 
             int length;
