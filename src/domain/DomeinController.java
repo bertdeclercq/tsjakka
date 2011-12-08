@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -37,26 +36,26 @@ public class DomeinController extends Observable {
     ExecutorService fexecutor = Executors.newFixedThreadPool(3);
     private Filter filter = new Filter();
 
+    /**
+     * initialize a newly created DomeinController object with stat
+     * starts the threads who are needed the whole time so the
+     * application will update
+     */
     public DomeinController() {
-        try{
+        
         fexecutor.execute(onOffBroadcaster);
-        }catch(IOError ex){
-            addStatusToArea("Fatale fout opgetreden in broadcaster! Herstart programma aub.");
-        }
-        
-        try{
         fexecutor.execute(new FileTransferListener());
-        }catch (IOError ex){
-            addStatusToArea("Fout tijdens het downloaden van een bestand!");
-        }
-        
-        try{
         fexecutor.execute(new BroadcastListener(this));
-        }catch (IOError ex){
-            addStatusToArea("Fatale fout opgetreden in broadcastListener! Herstart programma aub.");
-        }
     }
 
+    /**
+     * 
+     * @param inIp
+     * @param inPcname
+     * @throws UnknownHostException 
+     * adds the user to the map.
+     * this map is then shown in the gui screen as a userlist
+     */
     public void addToUserMap(InetAddress inIp, String inPcname) throws UnknownHostException {
         String ownIp = "";
         String inIpString = "";
@@ -71,6 +70,14 @@ public class DomeinController extends Observable {
         }
     }
 
+    /**
+     * 
+     * @param inIp
+     * @param inPcname
+     * @return boolean
+     * checks whether the user is a new user in the list or not
+     * 
+     */
     private boolean newUser(InetAddress inIp, String inPcname) {
         if (userMap.containsKey(inIp)) {
             if (userMap.get(inIp).equals(inPcname)) {
@@ -80,22 +87,39 @@ public class DomeinController extends Observable {
         return true;
     }
 
+    /**
+     * 
+     * @param inIp 
+     * removes the user from the usermap and lets the observers know
+     * it has changed
+     */
     public void removeUser(InetAddress inIp) {
         this.userMap.remove(inIp);
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * 
+     * @return the usermap as a map 
+     */
     public Map<InetAddress, String> getUserMap() {
         return this.userMap;
     }
 
+    /**
+     * 
+     * @param inIp
+     * @param sharedList
+     * @throws UnknownHostException 
+     * adds the list of shared files to the sharedfilesList
+     */
     public void addToSharedTsjakkaMap(InetAddress inIp, ArrayList<TsjakkaFile> sharedList) throws UnknownHostException {
         String ownIp = "";
         String inIpString = "";
             inIpString = inIp.getHostAddress();
             ownIp = InetAddress.getLocalHost().getHostAddress();
-//        if (!ownIp.equals(inIpString)) {
+        if (!ownIp.equals(inIpString)) {
             if (sharedTsjakkaMap.get(inIp) == null) {
                 this.sharedTsjakkaMap.put(inIp, sharedList);
                 setChanged();
@@ -107,9 +131,17 @@ public class DomeinController extends Observable {
                     notifyObservers();
                 }
             }
-//        }
+        }
     }
 
+    /**
+     * 
+     * @param oldList
+     * @param newList
+     * @return boolean
+     * checks if the fileslist has changed or not
+     * to see if there are new or updated files.
+     */
     private boolean listChanged(ArrayList<TsjakkaFile> oldList, ArrayList<TsjakkaFile> newList) {
         if (oldList.size() != newList.size()) {
             return true;
@@ -128,16 +160,31 @@ public class DomeinController extends Observable {
         return false;
     }
 
+    /**
+     * 
+     * @param ip 
+     * removes a users files from the filelist.
+     */
     public void removeSharedTsjakkaList(InetAddress ip) {
         this.sharedTsjakkaMap.remove(ip);
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * 
+     * @param index
+     * @return the username as a string
+     */
     public String getUserNameUser(int index) {
         return getUserNameList().get(index);
     }
 
+    /**
+     * 
+     * @return a list of strings 
+     * these strings are all the online users.
+     */
     public List<String> getUserNameList() {
         Collection<String> coll = userMap.values();
         userList.clear();
@@ -148,10 +195,19 @@ public class DomeinController extends Observable {
         return userList;
     }
 
+    /**
+     * 
+     * @return the size of the map which contains the users.
+     * show how many users are online.
+     */
     public int getUserMapSize() {
         return userMap.size();
     }
 
+    /**
+     * 
+     * @return list of tjakkafiles. the list of files that are being shared by the users.
+     */
     public List<TsjakkaFile> getSharedTsjakkaFilesList() {
         Collection<ArrayList<TsjakkaFile>> coll = sharedTsjakkaMap.values();
         sharedFilesList.clear();
@@ -167,31 +223,52 @@ public class DomeinController extends Observable {
         if (!filter.isEmpty()) {
             return filter.filter(sharedFilesList);
         }
-//        sharedFilesList = filter.filter(sharedFilesList);
         return sharedFilesList;
     }
 
+    /**
+     * 
+     * @return integer the size of the map which contains the files
+     */
     public int getSharedTsjakkaMapSize() {
         return getSharedTsjakkaFilesList().size();
     }
 
+    /**
+     * 
+     * @param index
+     * @return String the name of the tsjakkafile
+     */
     public String getFileName(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFilename();
 
     }
 
-    public double getFileSizeInMB(int index) {
-//        return this.getSharedTsjakkaFilesList().get(index).getFileSize();
+    /**
+     * 
+     * @param index
+     * @return double returns the size of the tsjakkafile
+     */
+    public double getFileSize(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
     }
 
+    /**
+     * 
+     * @param index
+     * @return String returns the ip of the file
+     */
     public String getFileIp(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getIp();
     }
 
-//    public Icon getFileIcon(int index) {
-//        return this.getSharedTsjakkaFilesList().get(index).getIcon();
-//    }
+    /**
+     * 
+     * @param filename
+     * @param ip 
+     * starts a new thread to download the requested file with the
+     * given name from the given ip
+     */
     public void sendDownloadRequest(String filename, String ip) {
         try{
         Future<String> future = executor.submit(new DownloadRequester(filename, ip, this));
@@ -200,14 +277,25 @@ public class DomeinController extends Observable {
         }
     }
 
+    /**
+     * logs off the user
+     */
     public void signout() {
         onOffBroadcaster.setFlag(false);
     }
 
+    /**
+     * signs the user in
+     */
     public void signin() {
         onOffBroadcaster.setFlag(true);
     }
 
+    /**
+     * 
+     * @return String the username for the welcome in the gui
+     * @throws UnknownHostException 
+     */
     public String getUsername() throws UnknownHostException {
         String username = "Tsjakka";
             username = InetAddress.getLocalHost().getHostName().toString();
@@ -215,6 +303,14 @@ public class DomeinController extends Observable {
             return username;
     }
 
+    /**
+     * 
+     * @param filename
+     * @param ip
+     * @return String the directory of the user in which the files are stored
+     * @throws UnknownHostException 
+     * 
+     */
     public String getDirectory(String filename, String ip) throws UnknownHostException {
         List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
             list = sharedTsjakkaMap.get(InetAddress.getByName(ip));
@@ -227,55 +323,77 @@ public class DomeinController extends Observable {
         return null;
     }
 
-    // filter
-//    public List<TsjakkaFile> filterList() {
-//        List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
-//        for (String extension : filterList) {
-//            for (TsjakkaFile tsjakkaFile : sharedFilesList) {
-//                if (tsjakkaFile.getExtension().equals(extension)) {
-//                    list.add(tsjakkaFile);
-//                }
-//            }
-//        }
-//        return list;
-//    }
-
+    /**
+     * adds a new filter to the tablefilter
+     * @param filter 
+     */
     public void addToFilterList(String filter) {
         this.filter.add(filter);
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * clears the filter list of the tablefilter
+     */
     public void emptyList() {
         filter.clear();
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * 
+     * @return the list of strings that the filter list contains
+     */
     public List<String> getFilterList() {
         return filter.get();
     }
     
+    /**
+     * 
+     * @return the file in which the shared files are stored
+     */
     public File getSharedDirectory() {
         return new File(Config.getInstance().get("directoryshared"));
     }
     
+    /**
+     * 
+     * @return the file in which the downloaded files are stored 
+     */
     public File getDownloadsDirectory() {
         return new File(Config.getInstance().get("directorydownloads"));
     }
     
+    /**
+     * changes the directory of the shared files
+     * @param dir 
+     */
     public void changeSharedDir(String dir) {
         Config.getInstance().set("directoryshared", dir);
     }
     
+    /**
+     * changes the directory of the downloaded files
+     * @param dir 
+     */
     public void changeDownloadsDir(String dir) {
         Config.getInstance().set("directorydownloads", dir);
     }
     
+    /**
+     * adds a new status to the statusMessage
+     * @param stat 
+     */
     public static void addStatusToArea(String stat) {        
         statusMessage.addStatus(stat);
     }
 
+    /**
+     * returns the current statusmessage
+     * @return 
+     */
     public StatusMessage getStatusMessage() {
         return statusMessage;
     }
