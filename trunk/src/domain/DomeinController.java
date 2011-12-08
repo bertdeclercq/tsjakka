@@ -28,8 +28,6 @@ public class DomeinController extends Observable {
 
     private Map<InetAddress, String> userMap = new HashMap<InetAddress, String>();
     private Map<InetAddress, ArrayList<TsjakkaFile>> sharedTsjakkaMap = new HashMap<InetAddress, ArrayList<TsjakkaFile>>();
-    private Properties properties = new Properties();
-    private String CONFIG_FILE = "config";
     private Broadcaster onOffBroadcaster = new Broadcaster(true);
     private List<String> userList = new ArrayList<String>();
     private List<TsjakkaFile> sharedFilesList = new ArrayList<TsjakkaFile>();
