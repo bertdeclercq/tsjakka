@@ -215,7 +215,7 @@ public class DomeinController extends Observable {
     }
 
     /**
-     * 
+     * Returns the filename as a string.
      * 
      * @param index the location
      * 
@@ -227,29 +227,33 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Returns the file size as a string.
      * 
-     * @param index
-     * @return double returns the size of the tsjakkafile
+     * @param index the location
+     * 
+     * @return the file size as a string
      */
     public String getFileSize(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getFileSize();
     }
 
     /**
+     * Returns the ip address.
      * 
-     * @param index
-     * @return String returns the ip of the file
+     * @param index the location
+     * 
+     * @return the ip
      */
     public String getFileIp(int index) {
         return this.getSharedTsjakkaFilesList().get(index).getIp();
     }
 
     /**
+     * Starts a new thread to download the requested file with the given name from the given ip.
      * 
-     * @param filename
-     * @param ip 
-     * starts a new thread to download the requested file with the
-     * given name from the given ip
+     * @param filename the name of the file
+     * 
+     * @param ip the ip address
      */
     public void sendDownloadRequest(String filename, String ip) {
         try{
@@ -260,23 +264,25 @@ public class DomeinController extends Observable {
     }
 
     /**
-     * logs off the user
+     * Logs the user off.
      */
     public void signout() {
         onOffBroadcaster.setFlag(false);
     }
 
     /**
-     * signs the user in
+     * Signs the user in.
      */
     public void signin() {
         onOffBroadcaster.setFlag(true);
     }
 
     /**
+     * Returns the username as a string.
      * 
-     * @return String the username for the welcome in the gui
-     * @throws UnknownHostException 
+     * @return the username as a string
+     * 
+     * @throws UnknownHostException an exception
      */
     public String getUsername() throws UnknownHostException {
         String username = "Tsjakka";
@@ -286,12 +292,14 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Returns the directory as a string.
      * 
-     * @param filename
-     * @param ip
-     * @return String the directory of the user in which the files are stored
-     * @throws UnknownHostException 
+     * @param filename the filename
+     * @param ip the ip address
      * 
+     * @return the directory as a string
+     * 
+     * @throws UnknownHostException an exception
      */
     public String getDirectory(String filename, String ip) throws UnknownHostException {
         List<TsjakkaFile> list = new ArrayList<TsjakkaFile>();
@@ -306,8 +314,9 @@ public class DomeinController extends Observable {
     }
 
     /**
-     * adds a new filter to the tablefilter
-     * @param filter 
+     * Adds a new filter to the tablefilter.
+     * 
+     * @param filter a string that you want to filter
      */
     public void addToFilterList(String filter) {
         this.filter.add(filter);
@@ -316,7 +325,7 @@ public class DomeinController extends Observable {
     }
 
     /**
-     * clears the filter list of the tablefilter
+     * Clears the filter list of the tablefilter.
      */
     public void emptyList() {
         filter.clear();
@@ -325,60 +334,65 @@ public class DomeinController extends Observable {
     }
 
     /**
+     * Returns a list of strings from all the filters in use.
      * 
-     * @return the list of strings that the filter list contains
+     * @return a list of strings containing the filter
      */
     public List<String> getFilterList() {
         return filter.get();
     }
     
     /**
+     * Returns the directory of the shared files as a file.
      * 
-     * @return the file in which the shared files are stored
+     * @return the directory where the shared files are saved
      */
     public File getSharedDirectory() {
         return new File(Config.getInstance().get("directoryshared"));
     }
     
     /**
+     * Returns the directory of the downloaded files as a file.
      * 
-     * @return the file in which the downloaded files are stored 
+     * @return the directory where the downloaded files are saved
      */
     public File getDownloadsDirectory() {
         return new File(Config.getInstance().get("directorydownloads"));
     }
     
     /**
-     * changes the directory of the shared files
-     * @param dir 
+     * Changes the directory of the shared files.
+     * 
+     * @param dir the location of the shared directory
      */
     public void changeSharedDir(String dir) {
         Config.getInstance().set("directoryshared", dir);
     }
     
     /**
-     * changes the directory of the downloaded files
-     * @param dir 
+     * Changes the directory of the downloaded files.
+     * 
+     * @param dir the location of the downloads directory
      */
     public void changeDownloadsDir(String dir) {
         Config.getInstance().set("directorydownloads", dir);
     }
     
     /**
-     * adds a new status to the statusMessage
-     * @param stat 
+     * Adds a new status to the statusMessage.
+     * 
+     * @param stat a status message
      */
     public static void addStatusToArea(String stat) {        
         statusMessage.addStatus(stat);
     }
 
     /**
-     * returns the current statusmessage
-     * @return 
+     * Returns the current statusmessage.
+     * 
+     * @return the status message
      */
     public StatusMessage getStatusMessage() {
         return statusMessage;
     }
-    
-    
 }
