@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 /**
  * A TsjakkaFile is a file located at a specific computer at a specific location. This class provides the capabilities to create a TsjakkaFile object and get the different parameters from it.
  */
-public class TsjakkaFile extends File implements Serializable {
+public class TsjakkaFile implements Serializable {
 
     private File file;
     private String ip;
@@ -28,7 +28,7 @@ public class TsjakkaFile extends File implements Serializable {
      * @param path the file of which you want to make a TsjakkaFile
      */
     public TsjakkaFile(String path) {
-        super(path);
+        this.file = new File(path);
         try {
             this.ip = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException ex) {
@@ -43,7 +43,7 @@ public class TsjakkaFile extends File implements Serializable {
      * @return the name
      */
     public String getFilename() {
-        return super.getName();
+        return file.getName();
     }
     
     /**
@@ -62,7 +62,7 @@ public class TsjakkaFile extends File implements Serializable {
      * @return the directory
      */
     public String getDirectory() {
-        return super.getPath();
+        return file.getPath();
     }
     
     /**
@@ -71,7 +71,7 @@ public class TsjakkaFile extends File implements Serializable {
      * @return the size in bytes
      */
     public long getFileSizeInByte() {
-        return super.length();
+        return file.length();
     }
     
     public double getFileSizeInKiloByte() {

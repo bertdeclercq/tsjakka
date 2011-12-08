@@ -1,5 +1,3 @@
-//TODO nog is naar kijken
-
 package domain;
 
 import java.io.BufferedOutputStream;
@@ -27,6 +25,13 @@ public class DownloadRequester implements Callable {
         this.dc = dc;
     }
 
+    /**
+     * 
+     * 
+     * @return
+     * 
+     * @throws Exception 
+     */
     @Override
     public String call() throws Exception {
         String test = null;
