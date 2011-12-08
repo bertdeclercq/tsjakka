@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
  */
  class StatusTextArea extends AbstractTextArea {
 
-    private String toAppend = new String("");
+    private String toAppend = "";
 
     public StatusTextArea(Observable subject) {
         super(subject);
