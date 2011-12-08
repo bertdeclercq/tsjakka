@@ -19,6 +19,9 @@ import java.util.logging.Logger;
  */
 public class TsjakkaFile implements Serializable {
 
+    private String filename;
+    private double fileSize;
+    private String directory;
     private File file;
     private String ip;
 
@@ -28,6 +31,9 @@ public class TsjakkaFile implements Serializable {
      * @param path the file of which you want to make a TsjakkaFile
      */
     public TsjakkaFile(File file, String ip) {
+        this.filename = file.getName();
+        this.fileSize = file.length();
+        this.directory = file.getPath();
         this.file = file;
 //        try {
 //            this.ip = InetAddress.getLocalHost().getHostName();
@@ -44,7 +50,7 @@ public class TsjakkaFile implements Serializable {
      * @return the name
      */
     public String getFilename() {
-        return file.getName();
+        return filename;
     }
     
     /**
@@ -63,7 +69,11 @@ public class TsjakkaFile implements Serializable {
      * @return the directory
      */
     public String getDirectory() {
-        return file.getPath();
+        return directory;
+    }
+    
+    public double getFileSize() {
+        return fileSize;
     }
     
     /**
@@ -71,13 +81,13 @@ public class TsjakkaFile implements Serializable {
      * 
      * @return the size in bytes
      */
-    public long getFileSizeInByte() {
-        return file.length();
-    }
+//    public long getFileSizeInByte() {
+//        return fileSize;
+//    }
     
-    public double getFileSizeInKiloByte() {
-        return (double)getFileSizeInByte() / 1024;
-    }
+//    public double getFileSizeInKiloByte() {
+//        return (double)getFileSizeInByte() / 1024;
+//    }
 
     /**
      * return the size in megabytes of this TsjakkaFile.
@@ -85,22 +95,26 @@ public class TsjakkaFile implements Serializable {
      * @return the size in megabytes
      */
     public double getFileSizeInMegaByte() {
-        return (double)getFileSizeInKiloByte() / 1024;
+//        return (double)getFileSizeInKiloByte() / 1024;
+        double inbetweenresult = (fileSize / 1048576) * 100;
+        inbetweenresult = Math.round(inbetweenresult);
+        inbetweenresult = inbetweenresult / 100;
+        return inbetweenresult;
     }
     
     public double getFileSizeInGigaByte() {
         return (double)getFileSizeInMegaByte() / 1024;
     }
     
-    public String getFileSize() {
-        if (getFileSizeInKiloByte() < 1024) {
-            return String.format("%.2f kB", (double)Math.round(getFileSizeInKiloByte() * 100) / 100);
-        } else if (getFileSizeInMegaByte() < 1024) {
-            return String.format("%.2f MB", (double)Math.round(getFileSizeInMegaByte() * 100) / 100);
-        } else {
-            return String.format("%.2f GB", (double)Math.round(getFileSizeInGigaByte() * 100) / 100);
-        }
-    }
+//    public String getFileSize() {
+//        if (getFileSizeInKiloByte() < 1024) {
+//            return String.format("%.2f kB", (double)Math.round(getFileSizeInKiloByte() * 100) / 100);
+//        } else if (getFileSizeInMegaByte() < 1024) {
+//            return String.format("%.2f MB", (double)Math.round(getFileSizeInMegaByte() * 100) / 100);
+//        } else {
+//            return String.format("%.2f GB", (double)Math.round(getFileSizeInGigaByte() * 100) / 100);
+//        }
+//    }
     
     /**
      * return the ip address of the computer on which it is located.

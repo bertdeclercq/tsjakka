@@ -180,7 +180,7 @@ public class DomeinController extends Observable {
 
     }
 
-    public double getFileSize(int index) {
+    public double getFileSizeInMB(int index) {
 //        return this.getSharedTsjakkaFilesList().get(index).getFileSize();
         return this.getSharedTsjakkaFilesList().get(index).getFileSizeInMegaByte();
     }

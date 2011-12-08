@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class FileTableModel extends AbstractTableModel implements Observer {
 
-    private final String COLUMNAMES[] = {"Filename", "File size"};
+    private final String COLUMNAMES[] = {"Filename", "File size (MB)"};
     private DomeinController dc;
 
     /**
@@ -68,7 +68,7 @@ public class FileTableModel extends AbstractTableModel implements Observer {
             case 0:
                 return dc.getFileName(rowIndex);
             case 1:
-                return Double.toString(dc.getFileSize(rowIndex));
+                return Double.toString(dc.getFileSizeInMB(rowIndex));
         }
         return null;
     }
