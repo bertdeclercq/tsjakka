@@ -111,9 +111,9 @@ public class TsjakkaFile implements Serializable {
      * @return a string of the file size
      */
     public String getFileSize() {
-        if (getFileSizeInKiloByte() < 1024) {
+        if (getFileSizeInKiloByte() < 1000) {
             return String.format("%.2f kB", (double)Math.round(getFileSizeInKiloByte() * 100) / 100);
-        } else if (getFileSizeInMegaByte() < 1024) {
+        } else if (getFileSizeInMegaByte() < 1000) {
             return String.format("%.2f MB", (double)Math.round(getFileSizeInMegaByte() * 100) / 100);
         } else {
             return String.format("%.2f GB", (double)Math.round(getFileSizeInGigaByte() * 100) / 100);
