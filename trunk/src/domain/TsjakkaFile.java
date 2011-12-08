@@ -30,18 +30,18 @@ public class TsjakkaFile implements Serializable {
      * 
      * @param path the file of which you want to make a TsjakkaFile
      */
-    public TsjakkaFile(File file, String ip) {
+    public TsjakkaFile(File file) {
         this.filename = file.getName();
         this.fileSize = file.length();
         this.directory = file.getPath();
         this.file = file;
-//        try {
-//            this.ip = InetAddress.getLocalHost().getHostName();
-//        } catch (UnknownHostException ex) {
-//            //TODO exception here
-//            Logger.getLogger(TsjakkaFile.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        this.ip = ip;
+        try {
+            this.ip = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException ex) {
+            //TODO exception here
+            Logger.getLogger(TsjakkaFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        this.ip = ip;
     }
 
     /**
