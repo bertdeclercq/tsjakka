@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class FileTableModel extends AbstractTableModel implements Observer {
 
-    private final String COLUMNAMES[] = {"Filename", "File size (MB)"};
+    private final String COLUMNAMES[] = {"Filename", "File size"};
     private DomeinController dc;
 
     /**
@@ -74,10 +74,7 @@ public class FileTableModel extends AbstractTableModel implements Observer {
     }
 
     /**
-     * TODO WTF!
-     * 
-     * @param o
-     * @param arg 
+     * Let's the gui know it needs to update.
      */
     @Override
     public void update(Observable o, Object arg) {

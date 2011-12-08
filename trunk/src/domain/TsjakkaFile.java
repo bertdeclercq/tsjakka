@@ -38,8 +38,6 @@ public class TsjakkaFile implements Serializable {
         try {
             this.ip = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException ex) {
-            //TODO exception here
-            Logger.getLogger(TsjakkaFile.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -53,7 +51,7 @@ public class TsjakkaFile implements Serializable {
     }
     
     /**
-     * return the extension of this TsjakkaFile.
+     * Return the extension of this TsjakkaFile.
      * 
      * @return the extension
      */
@@ -63,7 +61,7 @@ public class TsjakkaFile implements Serializable {
     }    
 
     /**
-     * return the directory of where this TsjakkaFile is located.
+     * Return the directory of where this TsjakkaFile is located.
      * 
      * @return the directory
      */
@@ -72,35 +70,47 @@ public class TsjakkaFile implements Serializable {
     }
     
     /**
-     * return the size in bytes of this TsjakkaFile.
+     * Returns the size in byte of this TsjakkaFile.
      * 
-     * @return the size in bytes
+     * @return the size in byte
      */
     public double getFileSizeInByte() {
         return fileSize;
     }
     
+    
+    /**
+     * Returns the size in kilobyte of this TsjakkaFile.
+     * 
+     * @return the size in kilobyte
+     */
     public double getFileSizeInKiloByte() {
         return (double)getFileSizeInByte() / 1024;
     }
 
     /**
-     * return the size in megabytes of this TsjakkaFile.
+     * Returns the size in megabyte of this TsjakkaFile.
      * 
-     * @return the size in megabytes
+     * @return the size in megabyte
      */
     public double getFileSizeInMegaByte() {
         return (double)getFileSizeInKiloByte() / 1024;
-//        double inbetweenresult = (getFileSizeInByte() / 1048576) * 100;
-//        inbetweenresult = Math.round(inbetweenresult);
-//        inbetweenresult = inbetweenresult / 100;
-//        return inbetweenresult;
     }
     
+    /**
+     * Returns the size in gigabyte of this TsjakkaFile.
+     * 
+     * @return the size in gigabyte
+     */
     public double getFileSizeInGigaByte() {
         return (double)getFileSizeInMegaByte() / 1024;
     }
     
+    /**
+     * Returns a string of the file size with the size unit appended.
+     * 
+     * @return a string of the file size
+     */
     public String getFileSize() {
         if (getFileSizeInKiloByte() < 1024) {
             return String.format("%.2f kB", (double)Math.round(getFileSizeInKiloByte() * 100) / 100);
