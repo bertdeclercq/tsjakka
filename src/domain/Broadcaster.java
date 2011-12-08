@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The broadcaster class broadcasts every 3 seconds whether the user is online or not. When he is online a list of files he wants to share is broadcasted.
+ * The broadcaster class broadcasts every second whether the user is online or not. When he is online a list of files he wants to share is broadcasted.
  */
 public class Broadcaster implements Runnable {
 
