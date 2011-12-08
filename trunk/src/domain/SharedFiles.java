@@ -13,7 +13,6 @@ public class SharedFiles {
 
     private static SharedFiles instance;
     private static List<TsjakkaFile> sharedList;
-//    private static String ip;
 
     private SharedFiles() {
         sharedList = new ArrayList<TsjakkaFile>();
@@ -75,8 +74,4 @@ public class SharedFiles {
             }
         }
     }
-    
-//    public void setIp(String ip) {
-//        this.ip = ip;
-//    }
 }

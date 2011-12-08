@@ -19,9 +19,9 @@ import java.util.logging.Logger;
  */
 public class TsjakkaFile implements Serializable {
 
-    private String filename;
-    private double fileSize;
-    private String directory;
+//    private String filename;
+//    private double fileSize;
+//    private String directory;
     private File file;
     private String ip;
 
@@ -31,9 +31,9 @@ public class TsjakkaFile implements Serializable {
      * @param path the file of which you want to make a TsjakkaFile
      */
     public TsjakkaFile(File file) {
-        this.filename = file.getName();
-        this.fileSize = file.length();
-        this.directory = file.getPath();
+//        this.filename = file.getName();
+//        this.fileSize = file.length();
+//        this.directory = file.getPath();
         this.file = file;
         try {
             this.ip = InetAddress.getLocalHost().getHostName();
@@ -41,7 +41,6 @@ public class TsjakkaFile implements Serializable {
             //TODO exception here
             Logger.getLogger(TsjakkaFile.class.getName()).log(Level.SEVERE, null, ex);
         }
-//        this.ip = ip;
     }
 
     /**
@@ -50,7 +49,7 @@ public class TsjakkaFile implements Serializable {
      * @return the name
      */
     public String getFilename() {
-        return filename;
+        return file.getName();
     }
     
     /**
@@ -69,11 +68,7 @@ public class TsjakkaFile implements Serializable {
      * @return the directory
      */
     public String getDirectory() {
-        return directory;
-    }
-    
-    public double getFileSize() {
-        return fileSize;
+        return file.getPath();
     }
     
     /**
@@ -81,9 +76,9 @@ public class TsjakkaFile implements Serializable {
      * 
      * @return the size in bytes
      */
-//    public long getFileSizeInByte() {
-//        return fileSize;
-//    }
+    public long getFileSizeInByte() {
+        return file.length();
+    }
     
 //    public double getFileSizeInKiloByte() {
 //        return (double)getFileSizeInByte() / 1024;
@@ -96,7 +91,7 @@ public class TsjakkaFile implements Serializable {
      */
     public double getFileSizeInMegaByte() {
 //        return (double)getFileSizeInKiloByte() / 1024;
-        double inbetweenresult = (fileSize / 1048576) * 100;
+        double inbetweenresult = (double)(getFileSizeInByte() / 1048576) * 100;
         inbetweenresult = Math.round(inbetweenresult);
         inbetweenresult = inbetweenresult / 100;
         return inbetweenresult;
