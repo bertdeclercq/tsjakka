@@ -149,7 +149,7 @@ public class DomeinController extends Observable {
             while (!(!oldList.isEmpty() && !newList.isEmpty())) {
                 for (TsjakkaFile fileNew : newList) {
                     for (TsjakkaFile fileOld : oldList) {
-                        if (fileNew.getFilename().equals(fileOld.getFilename()) && fileNew.getFileSize() == fileOld.getFileSize()) {
+                        if (fileNew.getFilename().equals(fileOld.getFilename()) && fileNew.getFileSizeInByte() == fileOld.getFileSizeInByte()) {
                             newList.remove(fileNew);
                             oldList.remove(fileOld);
                         }
