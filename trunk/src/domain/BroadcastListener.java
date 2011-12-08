@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The BroadcastListener class listens for broadcast and analyzes them. It then forwards info from the message to DomeinController.
+ * The BroadcastListener class listens for broadcasts and analyzes them. It then forwards info from the message to DomeinController.
  */
 public class BroadcastListener implements Runnable {
 
@@ -31,7 +31,7 @@ public class BroadcastListener implements Runnable {
     }
 
     /**
-     * Listens for a broadcast messages and analyze them.
+     * Listens for broadcast messages and analyzes them.
      */
     @Override
     public void run() {
