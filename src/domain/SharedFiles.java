@@ -68,7 +68,7 @@ public class SharedFiles {
         if (children != null) {
             for (int i = 0; i < children.length; i++) {
                 if (!children[i].isDirectory()) {
-                    sharedList.add(new TsjakkaFile(children[i]));
+                    sharedList.add(new TsjakkaFile(children[i], ip));
                 } else {
                     findShared(children[i].getPath());
                 }
